@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
         <script type="text/javascript" src="index.js"></script>
       </head>
       <body className={styles.main}>
-        {/* {children} */}
+      <div className={styles.children}>{children}</div>
         <div className={styles.navbar}>
           <Navbar />
         </div>

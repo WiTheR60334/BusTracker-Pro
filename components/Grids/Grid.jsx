@@ -16,14 +16,10 @@ const getTextColorClassName = (text) => {
 function Grid() {
   return (
     <div className={styles.container}>
-      <div className={styles.card}>
-        <div className={styles.block}>
-          <h1 className={styles.title}> Performance </h1>
-          <span className={getTextColorClassName("High")}>High</span>
-        </div>
-        <span className={styles.textt}>
-          Price return has been average, nothing exciting hehe haha
-        </span>
+      <div className={styles.card1}>
+        <div className={styles.align}>Logo</div>
+        <div className={styles.align}>Logo</div>
+        <div className={styles.align}>Logo</div>
       </div>
       <div className={styles.card}>
         <div className={styles.block}>

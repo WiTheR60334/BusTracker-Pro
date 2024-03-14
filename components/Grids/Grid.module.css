@@ -1,0 +1,103 @@
+.container{
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.card{
+    border-radius: 3rem;
+    background: white;
+    width: 100%;
+    height: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.title{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.block{
+    display: flex;
+    width: 100%;
+    margin-top: 1rem;
+    justify-content: flex-start;
+    padding-left: 1.2rem;
+    align-items: center;
+    margin-bottom: 1.1rem;
+}
+
+.greenText{
+    background-color: #2b2e36;
+    margin-top: .1rem;
+    padding: 0.25rem 0.5rem; 
+    border-radius: 6px;
+    align-items: center;
+    margin-left: 1.5rem;
+    color: #1ECB4F;
+}
+
+.yellowText{
+    background-color: #2b2e36;
+    margin-top: .1rem;
+    padding: 0.25rem 0.5rem; 
+    border-radius: 6px;
+    align-items: center;
+    margin-left: 1.5rem;
+    color: yellow;
+}
+
+.redText{
+    background-color: #2b2e36;
+    margin-top: .1rem;
+    padding: 0.25rem 0.5rem; 
+    border-radius: 6px;
+    align-items: center;
+    margin-left: 1.5rem;
+    color: red;
+}
+
+.textt{
+    margin-left: 1rem;
+    display: flex;
+    width: 85%;
+}
+
+@media (max-width: 1024px) {
+    .card{
+        padding-left: 4px;
+        padding-right: 3px;
+    }
+    .title{
+        font-size: 18px;
+        font-weight: 500;
+        margin-top: -5px;
+    }
+    .greenText{
+        display: flex;
+        margin-top: -.2rem;
+        padding: 3px 5px;
+        margin-left: 1.2rem;
+        align-items: center;
+    }
+    .yellowText{
+        display: flex;
+        margin-top: -.2rem;
+        padding: 3px 5px;
+        margin-left: 1.2rem;
+        align-items: center;
+    }
+    .redText{
+        display: flex;
+        margin-top: -.25rem;
+        padding: 3px 5px;
+        margin-left: 1.2rem;
+        align-items: center;
+    }
+    .textt{
+        font-size: 12.5px;
+        margin-top: -.3rem;
+    }
+}

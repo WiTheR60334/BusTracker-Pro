@@ -17,9 +17,12 @@ function Grid() {
   return (
     <div className={styles.container}>
       <div className={styles.card1}>
+        <div className={styles.cont}>
         <div className={styles.align}>Logo</div>
-        <div className={styles.align}>Logo</div>
-        <div className={styles.align}>Logo</div>
+        <div className={styles.align}>Buses</div>
+        <div className={styles.align}>27</div>
+        </div>
+        
       </div>
       <div className={styles.card}>
         <div className={styles.block}>

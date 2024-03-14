@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.6.3",
+    "fill-range": "^7.0.1",
     "next": "12.1.4",
     "react": "18.0.0",
     "react-dom": "18.0.0",

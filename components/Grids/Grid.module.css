@@ -26,7 +26,26 @@
 }
 
 .cont{
-    margin-top: 3.5rem;
+    margin-top: 4.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo{
+    font-size: 1.5rem;
+    color: blue;
+}
+
+.title1{
+    font-weight: bolder;
+    font-size: 1.2rem;
+}
+
+.text{
+    font-size: .8rem;
+    color: #333;
 }
 
 .title{

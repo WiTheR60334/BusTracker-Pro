@@ -1,55 +1,49 @@
 import React from "react";
+import { FaBus } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+import { FaRoute } from "react-icons/fa";
+import { PiStudentBold } from "react-icons/pi";
 import styles from "./Grid.module.css";
 
-const getTextColorClassName = (text) => {
-  if (text === "High") {
-    return styles.greenText;
-  } else if (text === "Avg") {
-    return styles.yellowText;
-  } else if (text === "Low") {
-    return styles.redText;
-  } else {
-    return "";
-  }
-};
 
 function Grid() {
   return (
     <div className={styles.container}>
       <div className={styles.card1}>
         <div className={styles.cont}>
-        <div className={styles.align}>Logo</div>
-        <div className={styles.align}>Buses</div>
-        <div className={styles.align}>27</div>
-        </div>
-        
-      </div>
-      <div className={styles.card}>
-        <div className={styles.block}>
-          <h1 className={styles.title}> Intrinsic Value</h1>
-          <span className={getTextColorClassName("Avg")}>Avg</span>
-        </div>
-        <div className={styles.textt}>
-          Current value is less than Intrinsic value not sure but
+          <div className={styles.logo}>
+            <FaBus />
+          </div>
+          <div className={styles.title1}>Buses</div>
+          <div className={styles.text}>27 Total</div>
         </div>
       </div>
-      <div className={styles.card}>
-        <div className={styles.block}>
-          <h1 className={styles.title}> Growth</h1>
-          <span className={getTextColorClassName("Low")}>Low</span>
+      <div className={styles.card1}>
+        <div className={styles.cont}>
+          <div className={styles.logo}>
+            <FaUser />
+          </div>
+          <div className={styles.title1}>Drivers</div>
+          <div className={styles.text}>27 Total</div>
         </div>
-        <span className={styles.textt}>
-          Lagging behind the market in financials growth assessment
-        </span>
       </div>
-      <div className={styles.card}>
-        <div className={styles.block}>
-          <h1 className={styles.title}> Growth</h1>
-          <span className={getTextColorClassName("Low")}>Low</span>
+      <div className={styles.card1}>
+        <div className={styles.cont}>
+          <div className={styles.logo}>
+            <FaRoute />
+          </div>
+          <div className={styles.title1}>Routes</div>
+          <div className={styles.text}>17 Total</div>
         </div>
-        <span className={styles.textt}>
-          Lagging behind the market in financials growth assessment
-        </span>
+      </div>
+      <div className={styles.card1}>
+        <div className={styles.cont}>
+          <div className={styles.logo}>
+            <PiStudentBold />
+          </div>
+          <div className={styles.title1}>Students</div>
+          <div className={styles.text}>230 Total</div>
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,17 @@
+.main {
+    display: flex;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #000000;
+    font-style: normal;
+}
+
+.navbar{
+    width: 256px;
+    z-index: 1000;
+    height: 100vh;
+    border-radius: 13px;
+    color: white;
+    background-color: #222;
+}

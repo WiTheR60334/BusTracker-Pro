@@ -3,9 +3,6 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Disclosure } from "@headlessui/react";
 import {
   MdOutlineSpaceDashboard,
-  MdOutlineAnalytics,
-  MdOutlineIntegrationInstructions,
-  MdOutlineMoreHoriz,
   MdOutlineSettings,
   MdOutlineLogout,
 } from "react-icons/md";
@@ -31,37 +28,37 @@ function SideNavbar() {
               Dashboard
             </h1>
             <div className=" my-4 border-b border-gray-100 pb-4">
-              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-blue-600 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                 <MdOutlineSpaceDashboard className="text-2xl text-gray-600 group-hover:text-white " />
                 <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                   Overview
                 </h3>
               </div>
-              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-blue-600 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                 <FaBus className="text-xl text-gray-600 group-hover:text-white " />
                 <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                   Manage Buses
                 </h3>
               </div>
-              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-blue-600 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                 <FaUser className="text-xl text-gray-600 group-hover:text-white " />
                 <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                   Manage Drivers
                 </h3>
               </div>
-              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-blue-600 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                 <FaRoute className="text-xl text-gray-600 group-hover:text-white " />
                 <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                   Manage Routes
                 </h3>
               </div>
-              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bbg-blue-600 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                 <PiStudentBold className="text-xl text-gray-600 group-hover:text-white " />
                 <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                   Manage Students
                 </h3>
               </div>
-              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-blue-600 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                 <CgProfile className="text-2xl text-gray-600 group-hover:text-white " />
                 <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                   Profile
@@ -85,7 +82,7 @@ function SideNavbar() {
             </div> */}
             {/* logout */}
             <div className=" my-4">
-              <div className="flex mb-2 justify-start items-center gap-4 pl-5 border border-gray-200  hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+              <div className="flex mb-2 justify-start items-center gap-4 pl-5 border border-gray-200  hover:bg-blue-600 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                 <MdOutlineLogout className="text-2xl text-gray-600 group-hover:text-white " />
                 <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                   Logout

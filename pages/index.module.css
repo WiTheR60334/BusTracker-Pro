@@ -36,3 +36,12 @@
     height: 200px;
     margin-bottom: 4.2rem;
 }
+
+.detailss{
+    margin-top: 4rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: 340px;
+    margin-bottom: 4.2rem;
+}

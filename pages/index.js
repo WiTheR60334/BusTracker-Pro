@@ -2,6 +2,7 @@ import Head from "next/head";
 import SideNavbar from "../components/SideNavbar";
 import styles from "./index.module.css";
 import Grid from "../components/Grids/Grid";
+import Info from "../components/Info/Info";
 
 export default function Home() {
   return (
@@ -23,6 +24,9 @@ export default function Home() {
         </div>
         <div className={styles.dock}>
           <Grid />
+        </div>
+        <div className={styles.detailss}>
+          <Info />
         </div>
       </div>
     </div>

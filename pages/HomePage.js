@@ -1,10 +1,9 @@
 import Head from "next/head";
-import SideNavbar from "../components/SideNavbar";
 import styles from "./index.module.css";
 import Grid from "../components/Grids/Grid";
 import Info from "../components/Info/Info";
 
-export default function Home() {
+export default function HomePage() {
   return (
       <div className={styles.main}>
         <div className={styles.sidebar}>
@@ -17,18 +16,7 @@ export default function Home() {
             <SideNavbar />
           </div>
         </div>
-        
-        <div className={styles.rest}>
-          <div className={styles.title}>
-            Bus Tracker Pro
+    
           </div>
-          <div className={styles.dock}>
-            <Grid />
-          </div>
-          <div className={styles.detailss}>
-            <Info />
-          </div>
-        </div>
-      </div>
   );
 }

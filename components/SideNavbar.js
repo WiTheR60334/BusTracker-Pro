@@ -28,18 +28,22 @@ function SideNavbar() {
               Dashboard
             </h1>
             <div className=" my-4 border-b border-gray-100 pb-4">
+            <a href="/" className="block">
               <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-blue-600 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                 <MdOutlineSpaceDashboard className="text-2xl text-gray-600 group-hover:text-white " />
                 <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                   Overview
                 </h3>
               </div>
+              </a>
+              <a href="/Manage-Buses" className="block">
               <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-blue-600 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                 <FaBus className="text-xl text-gray-600 group-hover:text-white " />
                 <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                   Manage Buses
                 </h3>
               </div>
+              </a>
               <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-blue-600 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                 <FaUser className="text-xl text-gray-600 group-hover:text-white " />
                 <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">

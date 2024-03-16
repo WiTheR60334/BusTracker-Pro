@@ -11,15 +11,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" style={{height: '100%'}}>
+      <body className={inter.className} style={{margin: '0px', height: '100%'}}>
         <div className={styles.main}>
-        <div className={styles.rest}>
-          <div className={styles.title}>
-            Bus Tracker Pro
+          <div className={styles.rest}>
+            <div className={styles.title}>
+              Bus Tracker Pro
+            </div>
           </div>
-        </div>
-        <div className={styles.dock}>{children}</div>
+          <div className={styles.dock}>
+            {children}
+          </div>
         </div>
       </body>
     </html>

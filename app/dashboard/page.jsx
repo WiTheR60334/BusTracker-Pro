@@ -1,12 +1,12 @@
-import Grid from "@/components/Grids/Grid";
-import Info from "@/components/Grids/Info/Info";
 import React from "react";
 
 function Dashboard() {
-  return <div>
-    <Grid />
-    <Info />
-  </div>;
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <p>Dashboard Page</p>
+    </div>
+  );
 }
 
 export default Dashboard;

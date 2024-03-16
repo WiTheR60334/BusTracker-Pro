@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import styles from "./layout.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,8 +12,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}
-      <h1> Hi </h1>
+      <body className={inter.className}>
+        <div className={styles.main}>
+        <div className={styles.rest}>
+          <div className={styles.title}>
+            Bus Tracker Pro
+          </div>
+        </div>
+        <div className={styles.dock}>{children}</div>
+        </div>
       </body>
     </html>
   );

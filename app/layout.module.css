@@ -1,0 +1,51 @@
+.main {
+    display: flex;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-style: normal;
+    background-color: #e1dfdf;
+}
+
+.sidebar{
+    width: 15rem;
+    z-index: 1000;
+    margin: 1.2rem;
+}
+
+.rest {
+    width: 100%;
+    display: flex;
+    position: absolute;
+    margin-bottom: 10rem;
+}
+
+.title{
+    width: 100%;
+    height: 80px;
+    /* position: absolute; */
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bolder;
+    font-size: 25px;
+}
+
+.dock {
+    margin-top: 4rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: 200px;
+    margin-bottom: 4.2rem;
+}
+
+.detailss{
+    margin-top: 4rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: 340px;
+    margin-bottom: 4.2rem;
+}

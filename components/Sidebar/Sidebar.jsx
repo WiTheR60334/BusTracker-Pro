@@ -7,14 +7,33 @@ function Sidebar() {
     <div className={styles.container}>
       <div className={styles.logo}>Logo</div>
       <div className={styles.content}>
-        <Link href="/dashboard">
+        <Link href="/dashboard" style={{ color: "inherit", textDecoration: "none" }}>
           <div className={styles.item}>Dashboard</div>
         </Link>
-
-        <div className={styles.item}>Dashboard</div>
-        <div className={styles.item}>Dashboard</div>
-        <div className={styles.item}>Dashboard</div>
-        <div className={styles.item}>Dashboard</div>
+        <Link
+          href="/ManageBuses"
+          style={{ color: "inherit", textDecoration: "none" }}
+        >
+          <div className={styles.item}>Manage Buses</div>
+        </Link>
+        <Link
+          href="/ManageDrivers"
+          style={{ color: "inherit", textDecoration: "none" }}
+        >
+          <div className={styles.item}>Manage Drivers</div>
+        </Link>
+        <Link
+          href="/ManageStudents"
+          style={{ color: "inherit", textDecoration: "none" }}
+        >
+          <div className={styles.item}>Manage Students</div>
+        </Link>
+        <Link
+          href="/SetRoutes"
+          style={{ color: "inherit", textDecoration: "none" }}
+        >
+          <div className={styles.item}>Set Routes</div>
+        </Link>
       </div>
     </div>
   );

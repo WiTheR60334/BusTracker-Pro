@@ -23,7 +23,12 @@ function Sidebar() {
         >
           <div className={styles.item}>
             <MdOutlineSpaceDashboard
-              style={{ color: "#235ff4", fontSize: "23px", marginRight: "8px" }}
+              style={{
+                color: "#235ff4",
+                fontSize: "23px",
+                marginRight: "7px",
+                marginLeft: "-2px",
+              }}
             />
             {"   "}
             Dashboard
@@ -35,7 +40,11 @@ function Sidebar() {
         >
           <div className={styles.item}>
             <FaBus
-              style={{ color: "#235ff4", fontSize: "18px", marginRight: "8px" }}
+              style={{
+                color: "#235ff4",
+                fontSize: "18px",
+                marginRight: "10px",
+              }}
             />
             Manage Buses
           </div>
@@ -46,7 +55,11 @@ function Sidebar() {
         >
           <div className={styles.item}>
             <FaUser
-              style={{ color: "#235ff4", fontSize: "18px", marginRight: "8px" }}
+              style={{
+                color: "#235ff4",
+                fontSize: "18px",
+                marginRight: "10px",
+              }}
             />
             Manage Drivers
           </div>
@@ -57,7 +70,11 @@ function Sidebar() {
         >
           <div className={styles.item}>
             <PiStudentBold
-              style={{ color: "#235ff4", fontSize: "23px", marginRight: "8px" }}
+              style={{
+                color: "#235ff4",
+                fontSize: "23px",
+                marginRight: "5px",
+              }}
             />
             Manage Students
           </div>
@@ -68,7 +85,11 @@ function Sidebar() {
         >
           <div className={styles.item}>
             <FaRoute
-              style={{ color: "#235ff4", fontSize: "18px", marginRight: "8px" }}
+              style={{
+                color: "#235ff4",
+                fontSize: "18px",
+                marginRight: "10px",
+              }}
             />
             Set Routes
           </div>

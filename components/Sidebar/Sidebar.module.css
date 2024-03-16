@@ -25,3 +25,6 @@
     background-color: #235ff4;
 }
 
+.item:hover svg {
+    fill: white; /* Change color to white on hover */
+  }

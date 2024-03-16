@@ -1,0 +1,31 @@
+.container{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.content{
+    margin-top: 2.5rem;
+    width: 100%;
+    text-align: center;
+}
+
+.item{
+    width: 100%;
+    flex: 1; 
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    border-radius: 7px;
+    height: 55%;
+    color: inherit; 
+    text-decoration: none;
+}
+
+.item:hover{
+    background-color: blue;
+}
+

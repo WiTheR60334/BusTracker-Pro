@@ -4,17 +4,17 @@
     overflow-y: auto;
     overflow-x: hidden;
     font-style: normal;
-    background-color: aqua;
     height: 100%;
 }
 
 .sidebar{
     width: 19rem;
-    z-index: 1000;
     background-color: #222;
     color: white;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    align-items: center;
 }
 
 .right{

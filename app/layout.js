@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import styles from "./layout.module.css";
+import SideNavbar from "../components/SideNavbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,13 +15,18 @@ export default function RootLayout({ children }) {
     <html lang="en" style={{height: '100%'}}>
       <body className={inter.className} style={{margin: '0px', height: '100%'}}>
         <div className={styles.main}>
-          <div className={styles.rest}>
-            <div className={styles.title}>
-              Bus Tracker Pro
-            </div>
+          <div className={styles.sidebar}>
+            Hi
           </div>
-          <div className={styles.dock}>
-            {children}
+          <div className={styles.right}>
+            <div className={styles.rest}>
+              <div className={styles.title}>
+                Bus Tracker Pro
+              </div>
+            </div>
+            <div className={styles.dock}>
+              {children}
+            </div>
           </div>
         </div>
       </body>

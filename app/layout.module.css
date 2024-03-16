@@ -1,6 +1,5 @@
 .main {
     display: flex;
-    flex-direction: column;
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -10,9 +9,18 @@
 }
 
 .sidebar{
-    width: 15rem;
+    width: 19rem;
     z-index: 1000;
-    margin: 1.2rem;
+    background-color: #222;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.right{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
 }
 
 .rest {

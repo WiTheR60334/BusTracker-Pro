@@ -1,6 +1,7 @@
+"use client"
 import { Disclosure } from "@headlessui/react";
 import Link from "next/link";
-import React from "react";
+import {React,useState} from "react";
 import { CgProfile } from "react-icons/cg";
 import { FaBus, FaRoute, FaUser } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -10,6 +11,7 @@ import {
   MdOutlineSpaceDashboard,
 } from "react-icons/md";
 import { PiStudentBold } from "react-icons/pi";
+import { MdLogout } from "react-icons/md";
 import styles from "./Sidebar.module.css";
 
 function Sidebar() {
@@ -27,8 +29,8 @@ function Sidebar() {
             <MdOutlineSpaceDashboard
               style={{
                 color: "#235ff4",
-                fontSize: "23px",
-                marginRight: "7px",
+                fontSize: "20px",
+                marginRight: "9px",
                 marginLeft: "-2px",
               }}
             />
@@ -74,8 +76,8 @@ function Sidebar() {
             <PiStudentBold
               style={{
                 color: "#235ff4",
-                fontSize: "23px",
-                marginRight: "5px",
+                fontSize: "20px",
+                marginRight: "8px",
               }}
             />
             Manage Students
@@ -94,6 +96,23 @@ function Sidebar() {
               }}
             />
             Set Routes
+          </div>
+        </Link>
+        <Link
+          href="/SetRoutes"
+          style={{ color: "inherit", textDecoration: "none" }}
+        >
+          <div className={styles.item}>
+            <MdLogout
+              icon="fas fa-sign-out-alt"
+              style={{
+                fontWeight: "bolder",
+                color: "#235ff4",
+                fontSize: "20px",
+                marginRight: "10px",
+              }}
+            />
+            Log Out
           </div>
         </Link>
       </div>

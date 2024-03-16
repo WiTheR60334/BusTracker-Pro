@@ -54,3 +54,9 @@
     height: 340px;
     margin-bottom: 4.2rem;
 }
+
+@media (max-width: 768px) {
+    .sidebar{
+        width: 25rem;
+    }
+}

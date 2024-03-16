@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
+import Sidebar from "../components/Sidebar/Sidebar";
+import Providers from "./Providers";
 import "./globals.css";
 import styles from "./layout.module.css";
-import Sidebar from "../components/Sidebar/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,23 +13,24 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" style={{height: '100%'}}>
-      <body className={inter.className} style={{margin: '0px', height: '100%'}}>
-        <div className={styles.main}>
-          <div className={styles.sidebar}>
-            <Sidebar />
-          </div>
-          <div className={styles.right}>
-            <div className={styles.rest}>
-              <div className={styles.title}>
-                Bus Tracker Pro
+    <html lang="en" style={{ height: "100%" }}>
+      <body
+        className={inter.className}
+        style={{ margin: "0px", height: "100%" }}
+      >
+        <Providers>
+          <div className={styles.main}>
+            <div className={styles.sidebar}>
+              <Sidebar />
+            </div>
+            <div className={styles.right}>
+              <div className={styles.rest}>
+                <div className={styles.title}>Bus Tracker Pro</div>
               </div>
-            </div>
-            <div className={styles.dock}>
-              {children}
+              <div className={styles.dock}>{children}</div>
             </div>
           </div>
-        </div>
+        </Providers>
       </body>
     </html>
   );

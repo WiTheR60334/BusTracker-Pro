@@ -1,21 +1,23 @@
-import React from "react";
-import styles from "./Sidebar.module.css";
-import Link from "next/link";
-import { GiHamburgerMenu } from "react-icons/gi";
 import { Disclosure } from "@headlessui/react";
-import {
-  MdOutlineSpaceDashboard,
-  MdOutlineSettings,
-  MdOutlineLogout,
-} from "react-icons/md";
-import { FaBus, FaRoute, FaUser } from "react-icons/fa";
-import { PiStudentBold } from "react-icons/pi";
+import Link from "next/link";
+import React from "react";
 import { CgProfile } from "react-icons/cg";
+import { FaBus, FaRoute, FaUser } from "react-icons/fa";
+import { GiHamburgerMenu } from "react-icons/gi";
+import {
+  MdOutlineLogout,
+  MdOutlineSettings,
+  MdOutlineSpaceDashboard,
+} from "react-icons/md";
+import { PiStudentBold } from "react-icons/pi";
+import styles from "./Sidebar.module.css";
 
 function Sidebar() {
   return (
     <div className={styles.container}>
-      <div className={styles.logo}>Logo</div>
+      <Link href="/" style={{ color: "inherit", textDecoration: "none" }}>
+        <div className={styles.logo}>Logo</div>
+      </Link>
       <div className={styles.content}>
         <Link
           href="/dashboard"

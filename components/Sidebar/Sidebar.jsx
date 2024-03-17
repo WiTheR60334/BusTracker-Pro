@@ -12,26 +12,37 @@ import {
 } from "react-icons/md";
 import { PiStudentBold } from "react-icons/pi";
 import { MdLogout } from "react-icons/md";
+import { Popconfirm, message } from "antd";
+import { useRouter } from "next/navigation";
 import styles from "./Sidebar.module.css";
 
 function Sidebar() {
   const [marginLeft, setMarginLeft] = useState("-2px");
+  const router = useRouter();
+  const handleLogout = () => {
+    console.log("Logging out...");
+    router.push("/");
+  };
+  const confirmLogout = () => {
+    message.success("You have logged out.");
+    handleLogout();
+  };
+
+  const cancelLogout = () => {
+    message.info("Cancelled logout.");
+  };
 
   useEffect(() => {
-    // Function to update marginLeft based on window width
     function updateMarginLeft() {
       const windowWidth = window.innerWidth;
-      setMarginLeft(windowWidth < 351 ? '-15px' : '-2px');
+      setMarginLeft(windowWidth < 351 ? "-15px" : "-2px");
     }
 
-    // Update marginLeft when the component mounts
     updateMarginLeft();
 
-    // Event listener to update marginLeft when the window is resized
-    window.addEventListener('resize', updateMarginLeft);
+    window.addEventListener("resize", updateMarginLeft);
 
-    // Clean up the event listener
-    return () => window.removeEventListener('resize', updateMarginLeft);
+    return () => window.removeEventListener("resize", updateMarginLeft);
   }, []);
 
   return (
@@ -68,7 +79,6 @@ function Sidebar() {
                 fontSize: "18px",
                 marginRight: "10px",
                 marginLeft: marginLeft,
-
               }}
             />
             Manage Buses
@@ -85,7 +95,6 @@ function Sidebar() {
                 fontSize: "18px",
                 marginRight: "10px",
                 marginLeft: marginLeft,
-
               }}
             />
             Manage Drivers
@@ -102,7 +111,6 @@ function Sidebar() {
                 fontSize: "20px",
                 marginRight: "8px",
                 marginLeft: marginLeft,
-
               }}
             />
             Manage Students
@@ -119,13 +127,33 @@ function Sidebar() {
                 fontSize: "18px",
                 marginRight: "10px",
                 marginLeft: marginLeft,
-
               }}
             />
             Set Routes
           </div>
         </Link>
-        <Link
+        <Popconfirm
+          title="Are you sure you want to log out?"
+          onConfirm={confirmLogout}
+          onCancel={cancelLogout}
+          okText="Yes"
+          cancelText="No"
+        >
+          <div className={styles.item}>
+            <MdLogout
+              icon="fas fa-sign-out-alt"
+              style={{
+                fontWeight: "bolder",
+                color: "#235ff4",
+                fontSize: "20px",
+                marginRight: "10px",
+                marginLeft: marginLeft,
+              }}
+            />
+            Log Out
+          </div>
+        </Popconfirm>
+        {/* <Link
           href="/SetRoutes"
           style={{ color: "inherit", textDecoration: "none" }}
         >
@@ -138,12 +166,11 @@ function Sidebar() {
                 fontSize: "20px",
                 marginRight: "10px",
                 marginLeft: marginLeft,
-
               }}
             />
             Log Out
           </div>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

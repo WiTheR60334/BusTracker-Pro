@@ -15,8 +15,9 @@ import { MdLogout } from "react-icons/md";
 import { Popconfirm, message } from "antd";
 import { useRouter } from "next/navigation";
 import styles from "./Sidebar.module.css";
+import { on } from "events";
 
-function Sidebar() {
+function Sidebar({ onLinkClick }) {
   const [marginLeft, setMarginLeft] = useState("-2px");
   const router = useRouter();
   const handleLogout = () => {
@@ -24,7 +25,8 @@ function Sidebar() {
     router.push("/");
   };
   const confirmLogout = () => {
-    message.success("You have logged out.");
+    onLinkClick();
+    message.success("You have successfully logged out.");
     handleLogout();
   };
 
@@ -54,14 +56,15 @@ function Sidebar() {
         <Link
           href="/dashboard"
           style={{ color: "inherit", textDecoration: "none" }}
+          onClick={onLinkClick}
         >
           <div className={styles.item}>
             <MdOutlineSpaceDashboard
               style={{
                 color: "#235ff4",
-                fontSize: "20px",
-                marginRight: "9px",
-                marginLeft: marginLeft,
+                fontSize: "23px",
+                marginRight: "8px",
+                marginLeft: parseInt(marginLeft) - 2,
               }}
             />
             {"   "}
@@ -71,6 +74,7 @@ function Sidebar() {
         <Link
           href="/ManageBuses"
           style={{ color: "inherit", textDecoration: "none" }}
+          onClick={onLinkClick}
         >
           <div className={styles.item}>
             <FaBus
@@ -87,6 +91,7 @@ function Sidebar() {
         <Link
           href="/ManageDrivers"
           style={{ color: "inherit", textDecoration: "none" }}
+          onClick={onLinkClick}
         >
           <div className={styles.item}>
             <FaUser
@@ -103,6 +108,7 @@ function Sidebar() {
         <Link
           href="/ManageStudents"
           style={{ color: "inherit", textDecoration: "none" }}
+          onClick={onLinkClick}
         >
           <div className={styles.item}>
             <PiStudentBold
@@ -119,6 +125,7 @@ function Sidebar() {
         <Link
           href="/SetRoutes"
           style={{ color: "inherit", textDecoration: "none" }}
+          onClick={onLinkClick}
         >
           <div className={styles.item}>
             <FaRoute

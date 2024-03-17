@@ -16,6 +16,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   const [isActive, setIsActive] = useState(true);
+  const [SidebarIsActive, setSidebarIsActive] = useState(true);
   const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
@@ -36,7 +37,16 @@ export default function RootLayout({ children }) {
 
   const toggleMenu = () => {
     setIsActive(!isActive);
+    setSidebarIsActive(true);
     console.log('clicked!!', isActive);
+  };
+  
+  const handleLinkClick = () => {
+    if (windowWidth < 768) {
+      setSidebarIsActive(false);
+      setIsActive(false);
+      console.log('done!!', SidebarIsActive);
+    }
   };
 
   return (
@@ -47,28 +57,28 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <div className={styles.main}>
-            <div
-              className={`${styles.sidebar} ${isActive ? 'active' : ''}`}
-              style={{
-                transform: isActive ? 'scale(1)' : 'scale(0)',
-                width: windowWidth < 651 ? '14rem' : (isActive ? '19rem' : '0'),
-                display: isActive ? 'flex' : 'none',
-                position: isActive ? 'fixed' : 'none'
-              }}
-            >
-              <Sidebar />
-            </div>
+          <div
+            className={`${styles.sidebar} ${isActive ? 'active' : ''} ${SidebarIsActive ? 'active' : ''}`}
+            style={{
+              transform: (isActive && SidebarIsActive) ? 'scale(1)' : 'scale(0)',
+              width: (windowWidth < 651 && isActive && SidebarIsActive) ? '14rem' : ((isActive && SidebarIsActive) ? '19rem' : '0'),
+              display: (isActive && SidebarIsActive) ? 'flex' : 'none',
+              position: (isActive && SidebarIsActive) ? 'fixed' : 'none'
+            }}
+          >
+            <Sidebar onLinkClick={handleLinkClick} />
+          </div>
             <div
               className={styles.right}
               style={{
-                marginLeft: isActive ? (windowWidth < 651 ? '14rem' : '19rem') : '0',
-                display: windowWidth < 769 ? 'flex' : 'block',
+                marginLeft: (isActive && SidebarIsActive) ? (windowWidth < 651 ? '14rem' : '19rem') : '0',
+                display: (windowWidth < 768 && isActive && SidebarIsActive) ? 'flex' : 'block',
                 flexDirection: 'column'
               }}
             >
               <div className={styles.rest}>
                 <div className={styles.title}>
-                  {typeof window !== 'undefined' && window.innerWidth < 769 && (
+                  {typeof window !== 'undefined' && window.innerWidth < 768 && (
                     <MdOutlineMenu className={styles.menuIcon} onClick={toggleMenu} />
                   )}
                   <div className={styles.bus}>Bus Tracker Pro</div>

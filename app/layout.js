@@ -4,7 +4,8 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import Providers from "./Providers";
 import "./globals.css";
 import styles from "./layout.module.css";
-import {React, useState} from "react";
+import {React, useState, useEffect} from "react";
+import { MdOutlineMenu } from 'react-icons/md'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,10 +15,29 @@ const inter = Inter({ subsets: ["latin"] });
 // };
 
 export default function RootLayout({ children }) {
-  const [isSidebarVisible, setSidebarVisible] = useState(false);
+  const [isActive, setIsActive] = useState(true);
+  const [windowWidth, setWindowWidth] = useState(0);
 
-  const toggleSidebar = () => {
-    setSidebarVisible(!isSidebarVisible);
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    }
+
+    setWindowWidth(window.innerWidth);
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    setIsActive(windowWidth >= 768);
+  }, [windowWidth]);
+
+
+  const toggleMenu = () => {
+    setIsActive(!isActive);
+    console.log('clicked!!', isActive);
   };
   return (
     <html lang="en" style={{ height: "100%" }}>
@@ -27,12 +47,15 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <div className={styles.main}>
-            <div className={styles.sidebar}>
-              <Sidebar />
-            </div>
-            <div className={styles.right}>
+          <div className={`${styles.sidebar} ${isActive ? 'active' : ''}`} style={{ transform: isActive ? 'scale(1)' : 'scale(0)', width: windowWidth < 651 ? '14rem' : (isActive ? '19rem' : '0'),width: windowWidth < 350 ? '12rem' : (isActive ? '19rem' : '0') , display: isActive ? 'flex' : 'none',position: isActive ? 'fixed' : 'none' }}>
+            <Sidebar />
+          </div>
+            <div className={styles.right} style={{ marginLeft: isActive ? '19rem' : '0', marginLeft: windowWidth < 651 ? (isActive ? '14rem' : '0') : (isActive ? '19rem' : '0'), marginLeft: windowWidth < 350 ? (isActive ? '12rem' : '0') : (isActive ? '19rem' : '0')}}>
               <div className={styles.rest}>
-                <div className={styles.title}>Bus Tracker Pro</div>
+                <div className={styles.title}>
+                {window.innerWidth < 768 && <MdOutlineMenu style={{marginLeft: '15px'}} onClick={toggleMenu} />}
+                  <div className={styles.bus}>Bus Tracker Pro</div>
+                </div>
               </div>
               <div className={styles.dock}>{children}</div>
             </div>

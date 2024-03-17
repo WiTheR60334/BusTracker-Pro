@@ -1,7 +1,7 @@
-"use client"
+"use client";
 import { Disclosure } from "@headlessui/react";
 import Link from "next/link";
-import {React,useState} from "react";
+import { React, useState, useEffect } from "react";
 import { CgProfile } from "react-icons/cg";
 import { FaBus, FaRoute, FaUser } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -15,6 +15,29 @@ import { MdLogout } from "react-icons/md";
 import styles from "./Sidebar.module.css";
 
 function Sidebar() {
+  const [marginLeft, setMarginLeft] = useState("-2px");
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    }
+
+    // Initial window width
+    setWindowWidth(window.innerWidth);
+
+    // Event listener to update window width on resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    // Update marginLeft based on window width
+    setMarginLeft(windowWidth < 351 ? "-15px" : "-2px");
+  }, [windowWidth]);
+
   return (
     <div className={styles.container}>
       <Link href="/" style={{ color: "inherit", textDecoration: "none" }}>
@@ -31,7 +54,7 @@ function Sidebar() {
                 color: "#235ff4",
                 fontSize: "20px",
                 marginRight: "9px",
-                marginLeft: "-2px",
+                marginLeft: marginLeft,
               }}
             />
             {"   "}
@@ -48,6 +71,8 @@ function Sidebar() {
                 color: "#235ff4",
                 fontSize: "18px",
                 marginRight: "10px",
+                marginLeft: marginLeft,
+
               }}
             />
             Manage Buses
@@ -63,6 +88,8 @@ function Sidebar() {
                 color: "#235ff4",
                 fontSize: "18px",
                 marginRight: "10px",
+                marginLeft: marginLeft,
+
               }}
             />
             Manage Drivers
@@ -78,6 +105,8 @@ function Sidebar() {
                 color: "#235ff4",
                 fontSize: "20px",
                 marginRight: "8px",
+                marginLeft: marginLeft,
+
               }}
             />
             Manage Students
@@ -93,6 +122,8 @@ function Sidebar() {
                 color: "#235ff4",
                 fontSize: "18px",
                 marginRight: "10px",
+                marginLeft: marginLeft,
+
               }}
             />
             Set Routes
@@ -110,6 +141,8 @@ function Sidebar() {
                 color: "#235ff4",
                 fontSize: "20px",
                 marginRight: "10px",
+                marginLeft: marginLeft,
+
               }}
             />
             Log Out

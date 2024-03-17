@@ -112,6 +112,9 @@
       grid-template-columns: 1fr; 
       margin-right: 1.2rem;
     }
+    .container{
+        width: 82%;
+    }
 }
 
 @media (max-width: 1024px) {

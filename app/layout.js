@@ -34,11 +34,11 @@ export default function RootLayout({ children }) {
     setIsActive(windowWidth >= 768);
   }, [windowWidth]);
 
-
   const toggleMenu = () => {
     setIsActive(!isActive);
     console.log('clicked!!', isActive);
   };
+
   return (
     <html lang="en" style={{ height: "100%" }}>
       <body
@@ -47,13 +47,30 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <div className={styles.main}>
-          <div className={`${styles.sidebar} ${isActive ? 'active' : ''}`} style={{ transform: isActive ? 'scale(1)' : 'scale(0)', width: windowWidth < 651 ? '14rem' : (isActive ? '19rem' : '0'),width: windowWidth < 350 ? '12rem' : (isActive ? '19rem' : '0') , display: isActive ? 'flex' : 'none',position: isActive ? 'fixed' : 'none' }}>
-            <Sidebar />
-          </div>
-            <div className={styles.right} style={{ marginLeft: isActive ? '19rem' : '0', marginLeft: windowWidth < 651 ? (isActive ? '14rem' : '0') : (isActive ? '19rem' : '0'), marginLeft: windowWidth < 350 ? (isActive ? '12rem' : '0') : (isActive ? '19rem' : '0')}}>
+            <div
+              className={`${styles.sidebar} ${isActive ? 'active' : ''}`}
+              style={{
+                transform: isActive ? 'scale(1)' : 'scale(0)',
+                width: windowWidth < 651 ? '14rem' : (isActive ? '19rem' : '0'),
+                display: isActive ? 'flex' : 'none',
+                position: isActive ? 'fixed' : 'none'
+              }}
+            >
+              <Sidebar />
+            </div>
+            <div
+              className={styles.right}
+              style={{
+                marginLeft: isActive ? (windowWidth < 651 ? '14rem' : '19rem') : '0',
+                display: windowWidth < 768 ? 'flex' : 'block',
+                flexDirection: 'column'
+              }}
+            >
               <div className={styles.rest}>
                 <div className={styles.title}>
-                {window.innerWidth < 768 && <MdOutlineMenu style={{marginLeft: '15px'}} onClick={toggleMenu} />}
+                  {typeof window !== 'undefined' && window.innerWidth < 768 && (
+                    <MdOutlineMenu className={styles.menuIcon} onClick={toggleMenu} />
+                  )}
                   <div className={styles.bus}>Bus Tracker Pro</div>
                 </div>
               </div>

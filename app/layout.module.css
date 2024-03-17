@@ -51,6 +51,10 @@
     height: 100%;
 }
 
+.menuIcon{
+    margin-left: 15px;
+}
+
 .detailss{
     margin-top: 4rem;
     display: flex;

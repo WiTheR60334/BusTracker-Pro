@@ -16,27 +16,23 @@ import styles from "./Sidebar.module.css";
 
 function Sidebar() {
   const [marginLeft, setMarginLeft] = useState("-2px");
-  const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth);
+    // Function to update marginLeft based on window width
+    function updateMarginLeft() {
+      const windowWidth = window.innerWidth;
+      setMarginLeft(windowWidth < 351 ? '-15px' : '-2px');
     }
 
-    // Initial window width
-    setWindowWidth(window.innerWidth);
+    // Update marginLeft when the component mounts
+    updateMarginLeft();
 
-    // Event listener to update window width on resize
-    window.addEventListener("resize", handleResize);
+    // Event listener to update marginLeft when the window is resized
+    window.addEventListener('resize', updateMarginLeft);
 
-    // Clean up
-    return () => window.removeEventListener("resize", handleResize);
+    // Clean up the event listener
+    return () => window.removeEventListener('resize', updateMarginLeft);
   }, []);
-
-  useEffect(() => {
-    // Update marginLeft based on window width
-    setMarginLeft(windowWidth < 351 ? "-15px" : "-2px");
-  }, [windowWidth]);
 
   return (
     <div className={styles.container}>

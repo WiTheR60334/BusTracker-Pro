@@ -4,6 +4,7 @@ import styles from "./Info.module.css";
 function Info() {
   return (
     <div className={styles.container}>
+      <div className={styles.wrapper}>
       <div className={styles.box}>
         <div className={styles.content}>
           <div className={styles.title}>
@@ -29,6 +30,8 @@ function Info() {
           </div>
           <div className={styles.value}>27</div>
         </div>
+      </div>
+
       </div>
     </div>
   );

@@ -62,13 +62,13 @@ export default function RootLayout({ children }) {
               className={styles.right}
               style={{
                 marginLeft: isActive ? (windowWidth < 651 ? '14rem' : '19rem') : '0',
-                display: windowWidth < 768 ? 'flex' : 'block',
+                display: windowWidth < 769 ? 'flex' : 'block',
                 flexDirection: 'column'
               }}
             >
               <div className={styles.rest}>
                 <div className={styles.title}>
-                  {typeof window !== 'undefined' && window.innerWidth < 768 && (
+                  {typeof window !== 'undefined' && window.innerWidth < 769 && (
                     <MdOutlineMenu className={styles.menuIcon} onClick={toggleMenu} />
                   )}
                   <div className={styles.bus}>Bus Tracker Pro</div>

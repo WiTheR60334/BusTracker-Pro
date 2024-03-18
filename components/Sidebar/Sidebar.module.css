@@ -23,6 +23,12 @@
     padding-left: 2rem;
 }
 
+.logo{
+    display: flex;
+    justify-content: center;
+    width: 100%;;
+    align-items: center;
+}
 
 .item:hover{
     background-color: #235ff4;

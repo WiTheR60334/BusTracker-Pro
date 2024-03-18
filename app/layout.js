@@ -63,7 +63,8 @@ export default function RootLayout({ children }) {
               transform: (isActive && SidebarIsActive) ? 'scale(1)' : 'scale(0)',
               width: (windowWidth < 651 && isActive && SidebarIsActive) ? '14rem' : ((isActive && SidebarIsActive) ? '19rem' : '0'),
               display: (isActive && SidebarIsActive) ? 'flex' : 'none',
-              position: (isActive && SidebarIsActive) ? 'fixed' : 'none'
+              position: (isActive && SidebarIsActive) ? 'fixed' : 'none',
+              // animation: isActive && SidebarIsActive ? 'showMenu .8s' : 'hideMenu .8s'
             }}
           >
             <Sidebar onLinkClick={handleLinkClick} />
@@ -73,12 +74,14 @@ export default function RootLayout({ children }) {
               style={{
                 marginLeft: (isActive && SidebarIsActive) ? (windowWidth < 651 ? '14rem' : '19rem') : '0',
                 display: (windowWidth < 768 && isActive && SidebarIsActive) ? 'flex' : 'block',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                // animation: isActive && SidebarIsActive ? 'showMenu .8s' : 'hideRight .8s'
               }}
             >
               <div className={styles.rest}>
                 <div className={styles.title}>
-                  {typeof window !== 'undefined' && window.innerWidth < 768 && (
+                  {typeof window !== 'undefined' && window.innerWidth < 768  &&
+                    !isActive && (
                     <MdOutlineMenu className={styles.menuIcon} onClick={toggleMenu} />
                   )}
                   <div className={styles.bus}>Bus Tracker Pro</div>
@@ -88,6 +91,33 @@ export default function RootLayout({ children }) {
             </div>
           </div>
         </Providers>
+        <style jsx>{`
+          @keyframes showMenu {
+            from {
+              transform: translateX(-100%);
+            }
+            to {
+              transform: translateX(0%);
+            }
+          }
+          @keyframes hideMenu {
+            from {
+              transform: translateX(0%);
+            }
+            to {
+              transform: translateX(-100%);
+            }
+          }
+
+          @keyframes hideRight {
+            from {
+              transform: translateX(100%);
+            }
+            to {
+              transform: translateX(0%);
+            }
+          }
+        `}</style>
       </body>
     </html>
   );

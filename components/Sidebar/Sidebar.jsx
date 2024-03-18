@@ -13,17 +13,26 @@ import {
 import { PiStudentBold } from "react-icons/pi";
 import { MdLogout } from "react-icons/md";
 import { Popconfirm, message } from "antd";
+import { IoCloseSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import styles from "./Sidebar.module.css";
-import { on } from "events";
 
 function Sidebar({ onLinkClick }) {
   const [marginLeft, setMarginLeft] = useState("-2px");
+  const [showCloseIcon, setShowCloseIcon] = useState(false);
   const router = useRouter();
-  const handleLogout = () => {
-    console.log("Logging out...");
-    router.push("/");
+  const closeSidebar = () => {
+    onLinkClick();
+    handleLogout(false);
   };
+
+  const handleLogout = (redirect = true) => {
+    console.log("Logging out...");
+    if (redirect) {
+      router.push("/");
+    }
+  };
+
   const confirmLogout = () => {
     onLinkClick();
     message.success("You have successfully logged out.");
@@ -33,6 +42,19 @@ function Sidebar({ onLinkClick }) {
   const cancelLogout = () => {
     message.info("Cancelled logout.");
   };
+
+  useEffect(() => {
+    function handleResize() {
+      const windowWidth = window.innerWidth;
+      setShowCloseIcon(windowWidth < 769);
+    }
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     function updateMarginLeft() {
@@ -49,9 +71,21 @@ function Sidebar({ onLinkClick }) {
 
   return (
     <div className={styles.container}>
-      <Link href="/" style={{ color: "inherit", textDecoration: "none" }}>
-        <div className={styles.logo}>Logo</div>
-      </Link>
+      <div style={{ color: "inherit", textDecoration: "none" }}>
+        <div className={styles.logo}>
+          <span style={{ flex: 1, textAlign: "center" }}>Logo</span>
+          {showCloseIcon && (
+            <IoCloseSharp
+              style={{
+                fontSize: "25px",
+                alignSelf: "center",
+                marginRight: "15px",
+              }}
+              onClick={closeSidebar}
+            />
+          )}
+        </div>
+      </div>
       <div className={styles.content}>
         <Link
           href="/dashboard"

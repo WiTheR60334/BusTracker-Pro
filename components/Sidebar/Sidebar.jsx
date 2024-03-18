@@ -1,10 +1,7 @@
 "use client";
-import { Disclosure } from "@headlessui/react";
 import Link from "next/link";
 import { React, useState, useEffect } from "react";
-import { CgProfile } from "react-icons/cg";
 import { FaBus, FaRoute, FaUser } from "react-icons/fa";
-import { GiHamburgerMenu } from "react-icons/gi";
 import {
   MdOutlineLogout,
   MdOutlineSettings,
@@ -15,6 +12,7 @@ import { MdLogout } from "react-icons/md";
 import { Popconfirm, message } from "antd";
 import { IoCloseSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import { FaUserCircle } from "react-icons/fa";
 import styles from "./Sidebar.module.css";
 
 function Sidebar({ onLinkClick }) {
@@ -171,6 +169,23 @@ function Sidebar({ onLinkClick }) {
               }}
             />
             Set Routes
+          </div>
+        </Link>
+        <Link
+          href="/Profile"
+          style={{ color: "inherit", textDecoration: "none" }}
+          onClick={onLinkClick}
+        >
+          <div className={styles.item}>
+            <FaUserCircle
+              style={{
+                color: "#235ff4",
+                fontSize: "20px",
+                marginRight: "10px",
+                marginLeft: marginLeft,
+              }}
+            />
+            Profile
           </div>
         </Link>
         <Popconfirm

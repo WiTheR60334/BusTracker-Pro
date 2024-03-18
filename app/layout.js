@@ -6,6 +6,7 @@ import "./globals.css";
 import styles from "./layout.module.css";
 import {React, useState, useEffect} from "react";
 import { MdOutlineMenu } from 'react-icons/md'
+import { PrimeReactProvider } from 'primereact/api';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,6 +51,7 @@ export default function RootLayout({ children }) {
   };
 
   return (
+    <PrimeReactProvider>
     <html lang="en" style={{ height: "100%" }}>
       <body
         className={inter.className}
@@ -120,5 +122,6 @@ export default function RootLayout({ children }) {
         `}</style>
       </body>
     </html>
+    </PrimeReactProvider>
   );
 }

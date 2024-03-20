@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Dashboard.module.css";
+import styles from "./dashboard.module.css";
 import Grid from "../../components/Grid/Grid";
 import Info from "../../components/Info/Info";
 import BasicTimeline from "../../components/BasicTimeline/BasicTimeline";

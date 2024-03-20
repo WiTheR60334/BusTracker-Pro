@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./Dashboard.module.css";
 import Grid from "../../components/Grid/Grid";
 import Info from "../../components/Info/Info";
 import BasicTimeline from "../../components/BasicTimeline/BasicTimeline";
@@ -15,8 +16,8 @@ function Dashboard() {
           marginBottom: "4rem",
         }}
       >
-        <Grid />
-        <Info />
+        {/* <Grid />
+        <Info /> */}
       </div>
       <div
         style={{
@@ -28,7 +29,6 @@ function Dashboard() {
           width: "100%",
         }}
       >
-        {/* <div> */}
         <BasicTimeline />
         {/* </div> */}
       </div>

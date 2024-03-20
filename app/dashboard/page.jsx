@@ -3,34 +3,20 @@ import styles from "./dashboard.module.css";
 import Grid from "../../components/Grid/Grid";
 import Info from "../../components/Info/Info";
 import BasicTimeline from "../../components/BasicTimeline/BasicTimeline";
+import BusDriverDetails from "../../components/BusDriverDetails/BusDriverDetails";
 
 function Dashboard() {
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          marginBottom: "4rem",
-        }}
-      >
-        {/* <Grid />
-        <Info /> */}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          // marginTop: "2rem",
-          width: "100%",
-        }}
-      >
+      {/* <div className={styles.adminPanel}>
+        <Grid />
+        <Info />
+      </div> */}
+      <div className={styles.userPanel}>
+        <div className={styles.busTitle}>Bus Details : </div>
         <BasicTimeline />
-        {/* </div> */}
+        <div className={styles.busDriverTitle}>Bus Driver Details : </div>
+        <BusDriverDetails />
       </div>
     </div>
   );

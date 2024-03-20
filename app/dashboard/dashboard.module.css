@@ -1,0 +1,32 @@
+.adminPanel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+
+.userPanel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.busTitle{
+    width: 90%;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 1.35rem;
+    margin-bottom: 2rem;
+}
+
+.busDriverTitle{
+    width: 90%;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 1.35rem;
+    margin-bottom: 2rem;
+    margin-top: 4rem;
+}

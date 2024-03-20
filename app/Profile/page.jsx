@@ -2,15 +2,25 @@
 import React, { useState, useRef } from "react";
 import styles from "./StudentProfile.module.css";
 import { Popconfirm, message } from "antd";
-import img from "./profile.png";
 
 function Profile() {
-  const hiddenFileInput = useRef(null);
-  const [img, setImg] = useState(null);
-  const [imgCrop, setImgCrop] = useState("");
-  const [src, setsrc] = useState(false);
-  const [profile, setprofile] = useState([]);
-  const [pview, setpview] = useState(false);
+  const [imageSrc, setImageSrc] = useState(""); 
+  const inputRef = useRef(null); 
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0]; 
+    if (file) {
+      const reader = new FileReader(); 
+      reader.onloadend = () => {
+        setImageSrc(reader.result); 
+      };
+      reader.readAsDataURL(file); 
+    }
+  };
+
+  const handleImageClick = () => {
+    inputRef.current.click(); 
+  };
 
   const confirm = () => {
     message.success("Updated your details successfully!!!");
@@ -24,18 +34,32 @@ function Profile() {
     <div className={styles.container}>
       <div className={styles.box}>
         <div className={styles.avatar}>
-          {/* <img
+          <img
             style={{
-              width: "100px",
-              height: "100px",
+              width: "150px",
+              height: "150px",
               borderRadius: "50%",
               objectFit: "cover",
-              border: "4px solid #eae7e7be",
+              border: "5px solid #eae7e7be",
             }}
-            src={"./profile.png"}
+            src={
+              imageSrc ||
+              "https://media.istockphoto.com/id/1200064810/vector/user-profile-login-or-access-authentication-icon-button-people-account-sign-in-logo-sign.jpg?s=612x612&w=0&k=20&c=p7KoaWP5NLXGldaUjJ1daqJhDK2YNYB_fbz7X-TmpyQ="
+              // "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+            }
             alt=""
+            onClick={handleImageClick}
           />
-          <input type="file" /> */}
+          <input
+            ref={inputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+          />
+          <div style={{ marginTop: "1rem", fontSize: "20px" }}>
+            Romir Bedekar
+          </div>
         </div>
         <div className={styles.details}>
           <div className={styles.detailsContainer}>

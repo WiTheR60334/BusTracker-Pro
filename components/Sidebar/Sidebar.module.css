@@ -18,7 +18,7 @@
     align-items: center; 
     /* justify-content: center;  */
     border-radius: 10px;
-    height: 46%;
+    height: 40%;
     text-align: start;
     padding-left: 2rem;
 }
@@ -50,7 +50,7 @@
         font-size: 13px;
         margin-left: 1rem;
         margin-right: 1rem;
-        height: 50%;
+        height: 40%;
     }
     .container{
         width: 95%;

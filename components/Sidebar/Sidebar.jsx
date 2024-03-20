@@ -13,12 +13,16 @@ import { Popconfirm, message } from "antd";
 import { IoCloseSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { FaUserCircle } from "react-icons/fa";
+import { IoNotificationsSharp } from "react-icons/io5";
+import Box from "@mui/material/Box";
+import Badge from "@mui/material/Badge";
 import styles from "./Sidebar.module.css";
 
 function Sidebar({ onLinkClick }) {
   const [marginLeft, setMarginLeft] = useState("-2px");
   const [showCloseIcon, setShowCloseIcon] = useState(false);
   const router = useRouter();
+
   const closeSidebar = () => {
     onLinkClick();
     handleLogout(false);
@@ -101,6 +105,34 @@ function Sidebar({ onLinkClick }) {
             />
             {"   "}
             Dashboard
+          </div>
+        </Link>
+        <Link
+          href="/Notifications"
+          style={{ color: "inherit", textDecoration: "none" }}
+          onClick={onLinkClick}
+        >
+          <div className={styles.item}>
+            <Box sx={{ color: "action.active" }} style={{ marginRight: "2px" }}>
+              <Badge
+                color="error"
+                overlap="circular"
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                style={{ marginRight: "5px" }}
+                variant="dot"
+              >
+                <IoNotificationsSharp
+                  style={{
+                    color: "#235ff4",
+                    fontSize: "23px",
+                    marginRight: "8px",
+                    marginLeft:"-5px"
+                  }}
+                />
+              </Badge>
+            </Box>
+            {"   "}
+            Notifications
           </div>
         </Link>
         <Link

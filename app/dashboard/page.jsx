@@ -12,15 +12,25 @@ function Dashboard() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          marginBottom: "4rem",
         }}
       >
         <Grid />
         <Info />
       </div>
-      <div>
-        <div>
-          <BasicTimeline />
-        </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          // marginTop: "2rem",
+          width: "100%",
+        }}
+      >
+        {/* <div> */}
+        <BasicTimeline />
+        {/* </div> */}
       </div>
     </div>
   );

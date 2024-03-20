@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./StudentProfile.module.css";
 import { Popconfirm, message } from "antd";
 import img from "./profile.png";
 
 function Profile() {
-  const [img, setImg] = useState("");
+  const hiddenFileInput = useRef(null);
+  const [img, setImg] = useState(null);
   const [imgCrop, setImgCrop] = useState("");
   const [src, setsrc] = useState(false);
   const [profile, setprofile] = useState([]);
@@ -23,7 +24,7 @@ function Profile() {
     <div className={styles.container}>
       <div className={styles.box}>
         <div className={styles.avatar}>
-          <img
+          {/* <img
             style={{
               width: "100px",
               height: "100px",
@@ -31,9 +32,10 @@ function Profile() {
               objectFit: "cover",
               border: "4px solid #eae7e7be",
             }}
-            src={"profile.png"}
+            src={"./profile.png"}
             alt=""
           />
+          <input type="file" /> */}
         </div>
         <div className={styles.details}>
           <div className={styles.detailsContainer}>

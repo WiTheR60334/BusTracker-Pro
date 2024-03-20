@@ -18,7 +18,7 @@ const authOptions = NextAuth({
 
   callbacks: {
     async signIn({ user, account, credentials, email, profile }) {
-      const db = (await clientPromise).db("leetcodeleaderboard");
+      const db = (await clientPromise).db("BusTrackerPro");
       const users = db.collection("Users");
       const userOnDB = await users.findOne({ email });
 

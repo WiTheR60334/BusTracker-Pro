@@ -74,7 +74,7 @@ function Profile() {
 
   const confirm = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/${student.id}`, {
+      const res = await fetch(`/api/${student.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

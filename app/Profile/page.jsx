@@ -21,7 +21,7 @@ function Profile() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://localhost:3000/api/Student", {
+        const res = await fetch("/api/Student", {
           cache: "no-store",
         });
         if (!res.ok) throw new Error("Failed to fetch data");

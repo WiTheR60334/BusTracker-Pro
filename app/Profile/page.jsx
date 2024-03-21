@@ -1,33 +1,95 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./StudentProfile.module.css";
 import { Popconfirm, message } from "antd";
+import { notFound } from "next/navigation";
 
 function Profile() {
-  const [imageSrc, setImageSrc] = useState(""); 
-  const inputRef = useRef(null); 
+  const [imageSrc, setImageSrc] = useState("");
+  const inputRef = useRef(null);
+
+  const [student, setStudent] = useState({
+    id: "",
+    name: "",
+    surname: "",
+    enrollment_no: "",
+    address: "",
+    father_mobile: "",
+    mother_mobile: "",
+  });
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch("http://localhost:3000/api/Student", {
+          cache: "no-store",
+        });
+        if (!res.ok) throw new Error("Failed to fetch data");
+        const data = await res.json();
+        if (data && data.length > 0) {
+          const fetchedStudent = data[0];
+          setStudent({
+            id: fetchedStudent._id,
+            name: fetchedStudent.name,
+            surname: fetchedStudent.surname,
+            enrollment_no: fetchedStudent.enrollment_no,
+            address: fetchedStudent.address,
+            father_mobile: fetchedStudent.father_mobile,
+            mother_mobile: fetchedStudent.mother_mobile,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching student data:", error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setStudent((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0]; 
+    const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader(); 
+      const reader = new FileReader();
       reader.onloadend = () => {
-        setImageSrc(reader.result); 
+        setImageSrc(reader.result);
       };
-      reader.readAsDataURL(file); 
+      reader.readAsDataURL(file);
     }
   };
 
   const handleImageClick = () => {
-    inputRef.current.click(); 
-  };
-
-  const confirm = () => {
-    message.success("Updated your details successfully!!!");
+    inputRef.current.click();
   };
 
   const cancel = () => {
     message.info("Details not updated");
+  };
+
+  const confirm = async () => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/${student.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(student),
+      });
+      if (res.ok) {
+        message.success("Details updated successfully!");
+      } else {
+        throw new Error("Failed to update details");
+      }
+    } catch (error) {
+      console.error("Error updating student details:", error);
+      message.error("Failed to update details");
+    }
   };
 
   return (
@@ -58,7 +120,7 @@ function Profile() {
             style={{ display: "none" }}
           />
           <div style={{ marginTop: "1rem", fontSize: "20px" }}>
-            Romir Bedekar
+            {student.name} {student.surname}
           </div>
         </div>
         <div className={styles.details}>
@@ -68,8 +130,9 @@ function Profile() {
               <div>
                 <input
                   type="text"
-                  placeholder="Enter your name"
+                  placeholder={student.name}
                   className={styles.input}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -78,8 +141,9 @@ function Profile() {
               <div>
                 <input
                   type="text"
-                  placeholder="Enter your name"
+                  placeholder={student.enrollment_no}
                   className={styles.input}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -88,8 +152,9 @@ function Profile() {
               <div>
                 <input
                   type="text"
-                  placeholder="Enter your name"
+                  placeholder={student.address.street}
                   className={styles.input}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -98,8 +163,9 @@ function Profile() {
               <div>
                 <input
                   type="text"
-                  placeholder="Enter your name"
+                  placeholder={student.father_mobile}
                   className={styles.input}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -108,8 +174,9 @@ function Profile() {
               <div>
                 <input
                   type="text"
-                  placeholder="Enter your name"
+                  placeholder={student.mother_mobile}
                   className={styles.input}
+                  onChange={handleChange}
                 />
               </div>
             </div>

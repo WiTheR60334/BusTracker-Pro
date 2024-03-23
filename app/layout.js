@@ -1,12 +1,11 @@
 "use client";
 import { Inter } from "next/font/google";
 import Sidebar from "../components/Sidebar/Sidebar";
-import Providers from "./Providers";
+import {Providers} from "./Providers";
 import "./globals.css";
 import styles from "./layout.module.css";
 import {React, useState, useEffect} from "react";
-import { MdOutlineMenu } from 'react-icons/md'
-import { PrimeReactProvider } from 'primereact/api';
+import { MdOutlineMenu } from 'react-icons/md';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -51,7 +50,6 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <PrimeReactProvider>
     <html lang="en" style={{ height: "100%" }}>
       <body
         className={inter.className}
@@ -59,7 +57,7 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <div className={styles.main}>
-          <div
+            <div
             className={`${styles.sidebar} ${isActive ? 'active' : ''} ${SidebarIsActive ? 'active' : ''}`}
             style={{
               transform: (isActive && SidebarIsActive) ? 'scale(1)' : 'scale(0)',
@@ -71,6 +69,7 @@ export default function RootLayout({ children }) {
           >
             <Sidebar onLinkClick={handleLinkClick} />
           </div>
+
             <div
               className={styles.right}
               style={{
@@ -92,7 +91,6 @@ export default function RootLayout({ children }) {
               <div className={styles.dock}>{children}</div>
             </div>
           </div>
-        </Providers>
         <style jsx>{`
           @keyframes showMenu {
             from {
@@ -120,8 +118,8 @@ export default function RootLayout({ children }) {
             }
           }
         `}</style>
+        </Providers>
       </body>
     </html>
-    </PrimeReactProvider>
   );
 }

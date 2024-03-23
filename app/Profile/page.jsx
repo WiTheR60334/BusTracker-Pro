@@ -16,6 +16,7 @@ function Profile() {
     address: "",
     father_mobile: "",
     mother_mobile: "",
+    picture: "",
   });
 
   useEffect(() => {
@@ -36,6 +37,7 @@ function Profile() {
             address: fetchedStudent.address,
             father_mobile: fetchedStudent.father_mobile,
             mother_mobile: fetchedStudent.mother_mobile,
+            picture: fetchedStudent.picture,
           });
         }
       } catch (error) {
@@ -45,11 +47,21 @@ function Profile() {
     fetchData();
   }, []);
 
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setStudent((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const fieldName = e.target.name;
+    const fieldValue = e.target.value;
+
     setStudent((prevState) => ({
       ...prevState,
-      [name]: value,
+      [fieldName]: fieldValue,
     }));
   };
 
@@ -72,7 +84,8 @@ function Profile() {
     message.info("Details not updated");
   };
 
-  const confirm = async () => {
+  const confirm = async (event) => {
+    event.preventDefault();
     try {
       const res = await fetch(`/api/${student.id}`, {
         method: "PUT",
@@ -104,11 +117,11 @@ function Profile() {
               objectFit: "cover",
               border: "5px solid #eae7e7be",
             }}
-            src={
-              imageSrc ||
-              "https://media.istockphoto.com/id/1200064810/vector/user-profile-login-or-access-authentication-icon-button-people-account-sign-in-logo-sign.jpg?s=612x612&w=0&k=20&c=p7KoaWP5NLXGldaUjJ1daqJhDK2YNYB_fbz7X-TmpyQ="
-              // "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
-            }
+            src={imageSrc || student.picture}
+            // imageSrc ||
+            // "https://media.istockphoto.com/id/1200064810/vector/user-profile-login-or-access-authentication-icon-button-people-account-sign-in-logo-sign.jpg?s=612x612&w=0&k=20&c=p7KoaWP5NLXGldaUjJ1daqJhDK2YNYB_fbz7X-TmpyQ="
+            // "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+
             alt=""
             onClick={handleImageClick}
           />
@@ -123,76 +136,81 @@ function Profile() {
             {student.name} {student.surname}
           </div>
         </div>
-        <div className={styles.details}>
-          <div className={styles.detailsContainer}>
-            <div className={styles.name}>
-              <div className={styles.title}>Name</div>
-              <div>
-                <input
-                  type="text"
-                  placeholder={student.name}
-                  className={styles.input}
-                  onChange={handleChange}
-                />
+        <form onSubmit={confirm}>
+          <div className={styles.details}>
+            <div className={styles.detailsContainer}>
+              <div className={styles.name}>
+                <div className={styles.title}>Name</div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder={student.name}
+                    className={styles.input}
+                    onChange={handleChange}
+                    name="name"
+                    value={student.name}
+                  />
+                </div>
+              </div>
+              <div className={styles.name}>
+                <div className={styles.title}>Enrollment No</div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder={student.enrollment_no}
+                    className={styles.input}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className={styles.name}>
+                <div className={styles.title}>Address</div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder={student.address.street}
+                    className={styles.input}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className={styles.name}>
+                <div className={styles.title}>Parents Mobile No</div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder={student.father_mobile}
+                    className={styles.input}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className={styles.name}>
+                <div className={styles.title}>Alternate Mobile No</div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder={student.mother_mobile}
+                    className={styles.input}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
             </div>
-            <div className={styles.name}>
-              <div className={styles.title}>Enrollment No</div>
-              <div>
-                <input
-                  type="text"
-                  placeholder={student.enrollment_no}
-                  className={styles.input}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className={styles.name}>
-              <div className={styles.title}>Address</div>
-              <div>
-                <input
-                  type="text"
-                  placeholder={student.address.street}
-                  className={styles.input}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className={styles.name}>
-              <div className={styles.title}>Parents Mobile No</div>
-              <div>
-                <input
-                  type="text"
-                  placeholder={student.father_mobile}
-                  className={styles.input}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className={styles.name}>
-              <div className={styles.title}>Alternate Mobile No</div>
-              <div>
-                <input
-                  type="text"
-                  placeholder={student.mother_mobile}
-                  className={styles.input}
-                  onChange={handleChange}
-                />
-              </div>
+            <div className={styles.update}>
+              <button type="submit"> Submit</button>
+              <Popconfirm
+                title="Are you sure you want to update your details?"
+                onConfirm={confirm}
+                onCancel={cancel}
+                okText="Yes"
+                cancelText="No"
+              >
+                <div className={styles.item}>Update</div>
+              </Popconfirm>
             </div>
           </div>
-          <div className={styles.update}>
-            <Popconfirm
-              title="Are you sure you want to update your details?"
-              onConfirm={confirm}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
-            >
-              <div className={styles.item}>Update</div>
-            </Popconfirm>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   );

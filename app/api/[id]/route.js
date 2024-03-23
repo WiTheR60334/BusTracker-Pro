@@ -2,11 +2,14 @@ import connectDB from "../../../util/DB";
 import Student from "../../../models/Student";
 import { NextResponse } from "next/server";
 
+
 export async function PUT(request, { params }) {
   try {
     const { id } = params;
+    console.log("Received PUT request for student ID:", id);
     const { name, enrollment_no, address, father_mobile, mother_mobile } = request.body;
-
+    console.log("Received data:", { name, enrollment_no, address, father_mobile, mother_mobile });
+    
     await connectDB();
 
     const updatedStudent = await Student.findByIdAndUpdate(id, {

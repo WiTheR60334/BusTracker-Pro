@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { React, useState, useEffect } from "react";
 import { FaBus, FaRoute, FaUser } from "react-icons/fa";
 import {
@@ -21,7 +22,13 @@ import styles from "./Sidebar.module.css";
 function Sidebar({ onLinkClick }) {
   const [marginLeft, setMarginLeft] = useState("-2px");
   const [showCloseIcon, setShowCloseIcon] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+  const { status } = useSession();
   const router = useRouter();
+
+  const onClick = () => {
+    setIsClicked(true);
+  };
 
   const closeSidebar = () => {
     onLinkClick();
@@ -31,7 +38,7 @@ function Sidebar({ onLinkClick }) {
   const handleLogout = (redirect = true) => {
     console.log("Logging out...");
     if (redirect) {
-      router.push("/");
+      signOut({ callbackUrl: "/" });
     }
   };
 
@@ -72,195 +79,217 @@ function Sidebar({ onLinkClick }) {
   }, []);
 
   return (
-    <div className={styles.container}>
-      <div style={{ color: "inherit", textDecoration: "none" }}>
-        <div className={styles.logo}>
-          <span style={{ flex: 1, textAlign: "center" }}>Logo</span>
-          {showCloseIcon && (
-            <IoCloseSharp
-              style={{
-                fontSize: "25px",
-                alignSelf: "center",
-                marginRight: "15px",
-              }}
-              onClick={closeSidebar}
-            />
-          )}
-        </div>
-      </div>
-      <div className={styles.content}>
-        <Link
-          href="/dashboard"
-          style={{ color: "inherit", textDecoration: "none" }}
-          onClick={onLinkClick}
-        >
-          <div className={styles.item}>
-            <MdOutlineSpaceDashboard
-              style={{
-                color: "#235ff4",
-                fontSize: "23px",
-                marginRight: "8px",
-                marginLeft: parseInt(marginLeft) - 2,
-              }}
-            />
-            {"   "}
-            Dashboard
+    <>
+    {status === "authenticated" ? (
+          <div className={styles.container}>
+          <div style={{ color: "inherit", textDecoration: "none" }}>
+            <div className={styles.logo}>
+              <span style={{ flex: 1, textAlign: "center" }}>Logo</span>
+              {showCloseIcon && (
+                <IoCloseSharp
+                  style={{
+                    fontSize: "25px",
+                    alignSelf: "center",
+                    marginRight: "15px",
+                  }}
+                  onClick={closeSidebar}
+                />
+              )}
+            </div>
           </div>
-        </Link>
-        <Link
-          href="/Notifications"
-          style={{ color: "inherit", textDecoration: "none" }}
-          onClick={onLinkClick}
-        >
-          <div className={styles.item}>
-            <Box sx={{ color: "action.active" }} style={{ marginRight: "2px" }}>
-              <Badge
-                color="error"
-                overlap="circular"
-                anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                style={{ marginRight: "5px" }}
-                variant="dot"
-              >
-                <IoNotificationsSharp
+          <div className={styles.content}>
+            <Link
+              href="/dashboard"
+              style={{ color: "inherit", textDecoration: "none" }}
+              onClick={onLinkClick}
+            >
+              <div className={styles.item}>
+                <MdOutlineSpaceDashboard
                   style={{
                     color: "#235ff4",
                     fontSize: "23px",
                     marginRight: "8px",
-                    marginLeft:"-5px"
+                    marginLeft: parseInt(marginLeft) - 2,
                   }}
                 />
-              </Badge>
-            </Box>
-            {"   "}
-            Notifications
+                {"   "}
+                Dashboard
+              </div>
+            </Link>
+            <Link
+              href="/Notifications"
+              style={{ color: "inherit", textDecoration: "none" }}
+              onClick={onLinkClick}
+            >
+              <div className={styles.item} onClick={onClick}>
+                <Box sx={{ color: "action.active" }} style={{ marginRight: "2px" }}>
+                  {isClicked ? (
+                    <Badge
+                      color="error"
+                      overlap="circular"
+                      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                    >
+                      <IoNotificationsSharp
+                        style={{
+                          color: "#235ff4",
+                          fontSize: "23px",
+                          marginRight: "8px",
+                          marginLeft: "-5px",
+                        }}
+                      />
+                    </Badge>
+                  ) : (
+                    <Badge
+                      color="error"
+                      overlap="circular"
+                      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                      style={{ marginRight: "5px" }}
+                      variant="dot"
+                    >
+                      <IoNotificationsSharp
+                        style={{
+                          color: "#235ff4",
+                          fontSize: "23px",
+                          marginRight: "8px",
+                          marginLeft: "-5px",
+                        }}
+                      />
+                    </Badge>
+                  )}
+                </Box>
+                {"   "}
+                Notifications
+              </div>
+            </Link>
+            <Link
+              href="/ManageBuses"
+              style={{ color: "inherit", textDecoration: "none" }}
+              onClick={onLinkClick}
+            >
+              <div className={styles.item}>
+                <FaBus
+                  style={{
+                    color: "#235ff4",
+                    fontSize: "18px",
+                    marginRight: "10px",
+                    marginLeft: marginLeft,
+                  }}
+                />
+                Manage Buses
+              </div>
+            </Link>
+            <Link
+              href="/ManageDrivers"
+              style={{ color: "inherit", textDecoration: "none" }}
+              onClick={onLinkClick}
+            >
+              <div className={styles.item}>
+                <FaUser
+                  style={{
+                    color: "#235ff4",
+                    fontSize: "18px",
+                    marginRight: "10px",
+                    marginLeft: marginLeft,
+                  }}
+                />
+                Manage Drivers
+              </div>
+            </Link>
+            <Link
+              href="/ManageStudents"
+              style={{ color: "inherit", textDecoration: "none" }}
+              onClick={onLinkClick}
+            >
+              <div className={styles.item}>
+                <PiStudentBold
+                  style={{
+                    color: "#235ff4",
+                    fontSize: "20px",
+                    marginRight: "8px",
+                    marginLeft: marginLeft,
+                  }}
+                />
+                Manage Students
+              </div>
+            </Link>
+            <Link
+              href="/SetRoutes"
+              style={{ color: "inherit", textDecoration: "none" }}
+              onClick={onLinkClick}
+            >
+              <div className={styles.item}>
+                <FaRoute
+                  style={{
+                    color: "#235ff4",
+                    fontSize: "18px",
+                    marginRight: "10px",
+                    marginLeft: marginLeft,
+                  }}
+                />
+                Set Routes
+              </div>
+            </Link>
+            <Link
+              href="/Profile"
+              style={{ color: "inherit", textDecoration: "none" }}
+              onClick={onLinkClick}
+            >
+              <div className={styles.item}>
+                <FaUserCircle
+                  style={{
+                    color: "#235ff4",
+                    fontSize: "20px",
+                    marginRight: "10px",
+                    marginLeft: marginLeft,
+                  }}
+                />
+                Profile
+              </div>
+            </Link>
+            <Popconfirm
+              title="Are you sure you want to log out?"
+              onConfirm={confirmLogout}
+              onCancel={cancelLogout}
+              okText="Yes"
+              cancelText="No"
+            >
+              <div className={styles.item}>
+                <MdLogout
+                  icon="fas fa-sign-out-alt"
+                  style={{
+                    fontWeight: "bolder",
+                    color: "#235ff4",
+                    fontSize: "20px",
+                    marginRight: "10px",
+                    marginLeft: marginLeft,
+                  }}
+                />
+                Log Out
+              </div>
+            </Popconfirm>
+            {/* <Link
+              href="/SetRoutes"
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              <div className={styles.item}>
+                <MdLogout
+                  icon="fas fa-sign-out-alt"
+                  style={{
+                    fontWeight: "bolder",
+                    color: "#235ff4",
+                    fontSize: "20px",
+                    marginRight: "10px",
+                    marginLeft: marginLeft,
+                  }}
+                />
+                Log Out
+              </div>
+            </Link> */}
           </div>
-        </Link>
-        <Link
-          href="/ManageBuses"
-          style={{ color: "inherit", textDecoration: "none" }}
-          onClick={onLinkClick}
-        >
-          <div className={styles.item}>
-            <FaBus
-              style={{
-                color: "#235ff4",
-                fontSize: "18px",
-                marginRight: "10px",
-                marginLeft: marginLeft,
-              }}
-            />
-            Manage Buses
-          </div>
-        </Link>
-        <Link
-          href="/ManageDrivers"
-          style={{ color: "inherit", textDecoration: "none" }}
-          onClick={onLinkClick}
-        >
-          <div className={styles.item}>
-            <FaUser
-              style={{
-                color: "#235ff4",
-                fontSize: "18px",
-                marginRight: "10px",
-                marginLeft: marginLeft,
-              }}
-            />
-            Manage Drivers
-          </div>
-        </Link>
-        <Link
-          href="/ManageStudents"
-          style={{ color: "inherit", textDecoration: "none" }}
-          onClick={onLinkClick}
-        >
-          <div className={styles.item}>
-            <PiStudentBold
-              style={{
-                color: "#235ff4",
-                fontSize: "20px",
-                marginRight: "8px",
-                marginLeft: marginLeft,
-              }}
-            />
-            Manage Students
-          </div>
-        </Link>
-        <Link
-          href="/SetRoutes"
-          style={{ color: "inherit", textDecoration: "none" }}
-          onClick={onLinkClick}
-        >
-          <div className={styles.item}>
-            <FaRoute
-              style={{
-                color: "#235ff4",
-                fontSize: "18px",
-                marginRight: "10px",
-                marginLeft: marginLeft,
-              }}
-            />
-            Set Routes
-          </div>
-        </Link>
-        <Link
-          href="/Profile"
-          style={{ color: "inherit", textDecoration: "none" }}
-          onClick={onLinkClick}
-        >
-          <div className={styles.item}>
-            <FaUserCircle
-              style={{
-                color: "#235ff4",
-                fontSize: "20px",
-                marginRight: "10px",
-                marginLeft: marginLeft,
-              }}
-            />
-            Profile
-          </div>
-        </Link>
-        <Popconfirm
-          title="Are you sure you want to log out?"
-          onConfirm={confirmLogout}
-          onCancel={cancelLogout}
-          okText="Yes"
-          cancelText="No"
-        >
-          <div className={styles.item}>
-            <MdLogout
-              icon="fas fa-sign-out-alt"
-              style={{
-                fontWeight: "bolder",
-                color: "#235ff4",
-                fontSize: "20px",
-                marginRight: "10px",
-                marginLeft: marginLeft,
-              }}
-            />
-            Log Out
-          </div>
-        </Popconfirm>
-        {/* <Link
-          href="/SetRoutes"
-          style={{ color: "inherit", textDecoration: "none" }}
-        >
-          <div className={styles.item}>
-            <MdLogout
-              icon="fas fa-sign-out-alt"
-              style={{
-                fontWeight: "bolder",
-                color: "#235ff4",
-                fontSize: "20px",
-                marginRight: "10px",
-                marginLeft: marginLeft,
-              }}
-            />
-            Log Out
-          </div>
-        </Link> */}
-      </div>
-    </div>
+        </div>
+    
+    ) : (<div>BYE</div>)}
+    </>
   );
 }
 

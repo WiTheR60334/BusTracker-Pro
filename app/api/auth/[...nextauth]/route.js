@@ -18,20 +18,20 @@ const authOptions = {
   callbacks: {
     async signIn({ user, account }) {
       if (account.provider === "google") {
-        const { name, email } = user;
+        const { email, password } = user;
         try {
           await connectDB();
           const userExists = await User.findOne({ email });
 
           if (!userExists) {
-            const res = await fetch("http://localhost:3000/api/Student", {
+            const res = await fetch("https://bus-tracker-pro.vercel.app/api/Student", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                name,
                 email,
+                password
               }),
             });
 

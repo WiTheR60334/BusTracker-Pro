@@ -16,8 +16,8 @@ import User from "../../../models/User";
 //     }
 // };
 export async function POST(request) {
-  const { name, email } = await request.json();
+  const { email, password } = await request.json();
   await connectDB();
-  await User.create({ name, email });
+  await User.create({ email, password });
   return NextResponse.json({ message: "User Registered" }, { status: 201 });
 }

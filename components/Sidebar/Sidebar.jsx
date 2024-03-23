@@ -80,8 +80,8 @@ function Sidebar({ onLinkClick }) {
 
   return (
     <>
-    {status === "authenticated" ? (
-          <div className={styles.container}>
+      {status === "authenticated" ? (
+        <div className={styles.container}>
           <div style={{ color: "inherit", textDecoration: "none" }}>
             <div className={styles.logo}>
               <span style={{ flex: 1, textAlign: "center" }}>Logo</span>
@@ -122,7 +122,10 @@ function Sidebar({ onLinkClick }) {
               onClick={onLinkClick}
             >
               <div className={styles.item} onClick={onClick}>
-                <Box sx={{ color: "action.active" }} style={{ marginRight: "2px" }}>
+                <Box
+                  sx={{ color: "action.active" }}
+                  style={{ marginRight: "2px" }}
+                >
                   {isClicked ? (
                     <Badge
                       color="error"
@@ -287,8 +290,45 @@ function Sidebar({ onLinkClick }) {
             </Link> */}
           </div>
         </div>
-    
-    ) : (<div>BYE</div>)}
+      ) : (
+        <div
+          style={{
+            color: "inherit",
+            textDecoration: "none",
+            marginTop: "2rem",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div className={styles.logo}>
+            <span style={{ flex: 1, textAlign: "center" }}>Logo</span>
+            {showCloseIcon && (
+              <IoCloseSharp
+                style={{
+                  fontSize: "25px",
+                  alignSelf: "center",
+                  marginRight: "15px",
+                }}
+                onClick={closeSidebar}
+              />
+            )}
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "80%",
+              height: "100%",
+            }}
+          >
+            Login in AU credentials only, to access the app
+          </div>
+        </div>
+      )}
     </>
   );
 }

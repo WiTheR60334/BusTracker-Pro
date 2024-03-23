@@ -2,9 +2,21 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./StudentProfile.module.css";
 import { Popconfirm, message } from "antd";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { notFound } from "next/navigation";
 
 function Profile() {
+  const { status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status !== "authenticated") {
+      router.push("/");
+      message.info("You need to login to access this page");
+    }
+  }, [status, router]);
+
   const [imageSrc, setImageSrc] = useState("");
   const inputRef = useRef(null);
 
@@ -106,113 +118,117 @@ function Profile() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.box}>
-        <div className={styles.avatar}>
-          <img
-            style={{
-              width: "150px",
-              height: "150px",
-              borderRadius: "50%",
-              objectFit: "cover",
-              border: "5px solid #eae7e7be",
-            }}
-            src={imageSrc || student.picture}
-            // imageSrc ||
-            // "https://media.istockphoto.com/id/1200064810/vector/user-profile-login-or-access-authentication-icon-button-people-account-sign-in-logo-sign.jpg?s=612x612&w=0&k=20&c=p7KoaWP5NLXGldaUjJ1daqJhDK2YNYB_fbz7X-TmpyQ="
-            // "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
-
-            alt=""
-            onClick={handleImageClick}
-          />
-          <input
-            ref={inputRef}
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            style={{ display: "none" }}
-          />
-          <div style={{ marginTop: "1rem", fontSize: "20px" }}>
-            {student.name} {student.surname}
-          </div>
-        </div>
-        <form onSubmit={confirm}>
-          <div className={styles.details}>
-            <div className={styles.detailsContainer}>
-              <div className={styles.name}>
-                <div className={styles.title}>Name</div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder={student.name}
-                    className={styles.input}
-                    onChange={handleChange}
-                    name="name"
-                    value={student.name}
-                  />
+    <>
+      {status === "authenticated" ? (
+          <div className={styles.container}>
+            <div className={styles.box}>
+              <div className={styles.avatar}>
+                <img
+                  style={{
+                    width: "150px",
+                    height: "150px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    border: "5px solid #eae7e7be",
+                  }}
+                  src={imageSrc || student.picture}
+                  // imageSrc ||
+                  // "https://media.istockphoto.com/id/1200064810/vector/user-profile-login-or-access-authentication-icon-button-people-account-sign-in-logo-sign.jpg?s=612x612&w=0&k=20&c=p7KoaWP5NLXGldaUjJ1daqJhDK2YNYB_fbz7X-TmpyQ="
+                  // "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+      
+                  alt=""
+                  onClick={handleImageClick}
+                />
+                <input
+                  ref={inputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  style={{ display: "none" }}
+                />
+                <div style={{ marginTop: "1rem", fontSize: "20px" }}>
+                  {student.name} {student.surname}
                 </div>
               </div>
-              <div className={styles.name}>
-                <div className={styles.title}>Enrollment No</div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder={student.enrollment_no}
-                    className={styles.input}
-                    onChange={handleChange}
-                  />
+              <form onSubmit={confirm}>
+                <div className={styles.details}>
+                  <div className={styles.detailsContainer}>
+                    <div className={styles.name}>
+                      <div className={styles.title}>Name</div>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder={student.name}
+                          className={styles.input}
+                          onChange={handleChange}
+                          name="name"
+                          value={student.name}
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.name}>
+                      <div className={styles.title}>Enrollment No</div>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder={student.enrollment_no}
+                          className={styles.input}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.name}>
+                      <div className={styles.title}>Address</div>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder={student.address.street}
+                          className={styles.input}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.name}>
+                      <div className={styles.title}>Parents Mobile No</div>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder={student.father_mobile}
+                          className={styles.input}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.name}>
+                      <div className={styles.title}>Alternate Mobile No</div>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder={student.mother_mobile}
+                          className={styles.input}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.update}>
+                    <button type="submit"> Submit</button>
+                    <Popconfirm
+                      title="Are you sure you want to update your details?"
+                      onConfirm={confirm}
+                      onCancel={cancel}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <div className={styles.item}>Update</div>
+                    </Popconfirm>
+                  </div>
                 </div>
-              </div>
-              <div className={styles.name}>
-                <div className={styles.title}>Address</div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder={student.address.street}
-                    className={styles.input}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div className={styles.name}>
-                <div className={styles.title}>Parents Mobile No</div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder={student.father_mobile}
-                    className={styles.input}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div className={styles.name}>
-                <div className={styles.title}>Alternate Mobile No</div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder={student.mother_mobile}
-                    className={styles.input}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
+              </form>
             </div>
-            <div className={styles.update}>
-              <button type="submit"> Submit</button>
-              <Popconfirm
-                title="Are you sure you want to update your details?"
-                onConfirm={confirm}
-                onCancel={cancel}
-                okText="Yes"
-                cancelText="No"
-              >
-                <div className={styles.item}>Update</div>
-              </Popconfirm>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+          </div>      
+      ) : null}
+      </>
   );
 }
 

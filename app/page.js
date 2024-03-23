@@ -15,15 +15,15 @@ export default function Home() {
 
   const router = useRouter();
   const [error, setError] = useState("");
-  const {data: session} = useSession();
+  const {status} = useSession();
 
   useEffect(() => {
-    if (session?.status === "authenticated") {
-      router.replace("/dashboard");
+    if (status === "authenticated") {
+      router.push("/dashboard");
     } else {
-      router.replace("/");
+      router.push("/");
     }
-  }, [session, router]);
+  }, [status, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,7 +55,7 @@ export default function Home() {
   };
 
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={status}>
     <div className={styles.main}>
       <div className={styles.container}>
       <div className={styles.title}>Welcome Back</div>

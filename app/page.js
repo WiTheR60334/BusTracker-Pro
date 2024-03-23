@@ -48,7 +48,7 @@ export default function Home() {
 
     if (res?.error) {
       setError("Invalid email or password");
-      if (res?.url) router.replace("/dashboard");
+      if (res?.url) router.push("/dashboard");
     } else {
       setError("");
     }

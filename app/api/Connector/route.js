@@ -13,12 +13,13 @@ export async function POST(request) {
         console.log("Student:", student);
 
         if (!student) {
-            return { status: 404, body: { error: 'Student not found' } };
+            return new NextResponse(JSON.stringify({ error: 'Student not found' }), { status: 404 });
         }
-        return NextResponse.json({ body: student }, { status: 201 });
+        
+        return new NextResponse(JSON.stringify({ body: student }), { status: 201 });
 
     } catch (err) {
         console.error(err);
-        return { status: 500, body: { error: 'Internal Server Error' } };
+        return new NextResponse(JSON.stringify({ error: 'Internal Server Error' }), { status: 500 });
     }
 }

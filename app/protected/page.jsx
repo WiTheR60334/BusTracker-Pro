@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { message } from "antd";
 
-export default function ProtectedRoute({ children }) {
+function ProtectedRoute({ children }) {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -39,3 +39,5 @@ export default function ProtectedRoute({ children }) {
         ) : null
     );
 }
+
+export default ProtectedRoute;

@@ -4,20 +4,24 @@ import styles from "./StudentProfile.module.css";
 import { Popconfirm, message } from "antd";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { notFound } from "next/navigation";
+import { Tooltip } from "antd";
 
 function Profile() {
   const { data: session, status } = useSession();
   const [student, setStudent] = useState(null);
   const [formData, setFormData] = useState({
-    id: "",
+    enrollment_no: "",
     name: "",
     surname: "",
-    enrollment_no: "",
-    address: "",
+    standard: "",
+    section: "",
+    father_name: "",
+    mother_name: "",
     father_mobile: "",
     mother_mobile: "",
     picture: "",
+    address: "",
+    busNo: "",
     email: session?.user.email,
   });
   console.log("hi");
@@ -75,16 +79,6 @@ function Profile() {
     }));
   };
 
-  // const handleChange = (e) => {
-  //   const fieldName = e.target.name;
-  //   const fieldValue = e.target.value;
-
-  //   setStudent((prevState) => ({
-  //     ...prevState,
-  //     [fieldName]: fieldValue,
-  //   }));
-  // };
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -108,7 +102,6 @@ function Profile() {
     event.preventDefault();
     try {
       const res = await fetch(`/api/${session.user.email}`, {
-        // Assuming your API endpoint for updating a student is '/api/student/:id'
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -120,7 +113,6 @@ function Profile() {
         message.success("Details updated successfully!");
         window.location.reload();
       } else {
-        // Handle specific error cases based on response status
         if (res.status === 404) {
           throw new Error("Student not found");
         } else {
@@ -129,7 +121,7 @@ function Profile() {
       }
     } catch (error) {
       console.error("Error updating student details:", error);
-      message.error(error.message); // Display the error message to the user
+      message.error(error.message);
     }
   };
 
@@ -165,7 +157,9 @@ function Profile() {
                     style={{ display: "none" }}
                   />
                   <div style={{ marginTop: "1rem", fontSize: "20px" }}>
-                    {student ? `${student.name} ${student.surname}` : "Loading..."  }
+                    {student
+                      ? `${student.name} ${student.surname}`
+                      : "Loading..."}
                   </div>
                 </div>
                 <form onSubmit={confirm}>
@@ -173,27 +167,46 @@ function Profile() {
                     <div className={styles.detailsContainer}>
                       {/* {student ? ( */}
                       <div className={styles.name}>
-                        <div className={styles.title}>Name</div>
+                        <div className={styles.title}>Class</div>
                         <div>
                           {student ? (
-                            <input
-                              type="text"
-                              placeholder={student.name}
-                              className={styles.input}
-                              onChange={handleChange}
-                              value={formData.name}
-                              name="name"
-                            />
+                            <Tooltip
+                              title="This field is not editable"
+                              color="white"
+                              overlayInnerStyle={{
+                                color: "black",
+                                fontWeight: "400",
+                              }}
+                            >
+                              <input
+                                type="text"
+                                placeholder={`${student.standard} ${student.section}`}
+                                className={styles.input}
+                                onChange={handleChange}
+                                value={formData.standard}
+                                name="standard"
+                                readOnly
+                              />
+                            </Tooltip>
                           ) : (
-                            <input
-                              type="text"
-                              placeholder="Your name is not registered yet"
-                              className={styles.input}
-                              onChange={handleChange}
-                              name="name"
-                              // value={formData.name}
-                              // value={student.name}
-                            />
+                            <Tooltip
+                              title="This field is not editable"
+                              color="white"
+                              overlayInnerStyle={{
+                                color: "black",
+                                fontWeight: "400",
+                              }}
+                            >
+                              <input
+                                type="text"
+                                placeholder="loading..."
+                                className={styles.input}
+                                onChange={handleChange}
+                                name="standard"
+                                value={formData.standard}
+                                readOnly
+                              />
+                            </Tooltip>
                           )}
                         </div>
                       </div>
@@ -201,19 +214,43 @@ function Profile() {
                         <div className={styles.title}>Enrollment No</div>
                         <div>
                           {student ? (
-                            <input
-                              type="text"
-                              placeholder={student.enrollment_no}
-                              className={styles.input}
-                              onChange={handleChange}
-                            />
+                            <Tooltip
+                              title="This field is not editable"
+                              color="white"
+                              overlayInnerStyle={{
+                                color: "black",
+                                fontWeight: "400",
+                              }}
+                            >
+                              <input
+                                type="text"
+                                placeholder={student.enrollment_no}
+                                className={styles.input}
+                                onChange={handleChange}
+                                value={formData.enrollment_no}
+                                name="enrollment_no"
+                                readOnly
+                              />
+                            </Tooltip>
                           ) : (
-                            <input
-                              type="text"
-                              placeholder="Your enrollment number is not registered yet"
-                              className={styles.input}
-                              onChange={handleChange}
-                            />
+                            <Tooltip
+                              title="This field is not editable"
+                              color="white"
+                              overlayInnerStyle={{
+                                color: "black",
+                                fontWeight: "400",
+                              }}
+                            >
+                              <input
+                                type="text"
+                                placeholder="Your enrollment number is not registered yet"
+                                className={styles.input}
+                                onChange={handleChange}
+                                value={formData.enrollment_no}
+                                name="enrollment_no"
+                                readOnly
+                              />
+                            </Tooltip>
                           )}
                         </div>
                       </div>
@@ -223,9 +260,11 @@ function Profile() {
                           {student ? (
                             <input
                               type="text"
-                              placeholder={student.address.street}
+                              placeholder={student.address}
                               className={styles.input}
                               onChange={handleChange}
+                              value={formData.address}
+                              name="address"
                             />
                           ) : (
                             <input
@@ -233,12 +272,14 @@ function Profile() {
                               placeholder="Your address is not registered yet"
                               className={styles.input}
                               onChange={handleChange}
+                              value={formData.address}
+                              name="address"
                             />
                           )}
                         </div>
                       </div>
                       <div className={styles.name}>
-                        <div className={styles.title}>Parents Mobile No</div>
+                        <div className={styles.title}>Father's Mobile No</div>
                         <div>
                           {student ? (
                             <input
@@ -246,6 +287,8 @@ function Profile() {
                               placeholder={student.father_mobile}
                               className={styles.input}
                               onChange={handleChange}
+                              value={formData.father_mobile}
+                              name="father_mobile"
                             />
                           ) : (
                             <input
@@ -253,12 +296,14 @@ function Profile() {
                               placeholder="Your father's mobile number is not registered yet"
                               className={styles.input}
                               onChange={handleChange}
+                              value={formData.father_mobile}
+                              name="father_mobile"
                             />
                           )}
                         </div>
                       </div>
                       <div className={styles.name}>
-                        <div className={styles.title}>Alternate Mobile No</div>
+                        <div className={styles.title}>Mother's Mobile No</div>
                         <div>
                           {student ? (
                             <input
@@ -266,6 +311,8 @@ function Profile() {
                               placeholder={student.mother_mobile}
                               className={styles.input}
                               onChange={handleChange}
+                              value={formData.mother_mobile}
+                              name="mother_mobile"
                             />
                           ) : (
                             <input
@@ -273,7 +320,53 @@ function Profile() {
                               placeholder="Your mother's mobile number is not registered yet"
                               className={styles.input}
                               onChange={handleChange}
+                              value={formData.mother_mobile}
+                              name="mother_mobile"
                             />
+                          )}
+                        </div>
+                      </div>
+                      <div className={styles.name}>
+                        <div className={styles.title}>Bus No</div>
+                        <div>
+                          {student ? (
+                            <Tooltip
+                              title="This field is not editable"
+                              color="white"
+                              overlayInnerStyle={{
+                                color: "black",
+                                fontWeight: "400",
+                              }}
+                            >
+                              <input
+                                type="text"
+                                placeholder={student.busNo}
+                                className={styles.input}
+                                onChange={handleChange}
+                                value={formData.busNo}
+                                name="busNo"
+                                readOnly
+                              />
+                            </Tooltip>
+                          ) : (
+                            <Tooltip
+                              title="This field is not editable"
+                              color="white"
+                              overlayInnerStyle={{
+                                color: "black",
+                                fontWeight: "400",
+                              }}
+                            >
+                              <input
+                                type="text"
+                                placeholder="loading..."
+                                className={styles.input}
+                                onChange={handleChange}
+                                value={formData.busNo}
+                                name="busNo"
+                                readOnly
+                              />
+                            </Tooltip>
                           )}
                         </div>
                       </div>

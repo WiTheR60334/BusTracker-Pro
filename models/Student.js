@@ -13,14 +13,9 @@ const studentSchema = new Schema({
     father_mobile: String,
     mother_mobile: String,
     picture: String,
-    address: {
-        street: String,
-        city: String,
-        state: String,
-        zipcode: String
-    },
+    address: String,
     email: String,
-    hashed_password: String,
+    busNo: String,
     location: {
         longitude: String,
         latitude: String

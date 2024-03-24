@@ -9,7 +9,6 @@ export async function POST(request) {
     try {
         await connectDB();
 
-        // Retrieve student document using the email
         const student = await Student.findOne({ email });
         console.log("Student:", student);
 
@@ -17,7 +16,6 @@ export async function POST(request) {
             return { status: 404, body: { error: 'Student not found' } };
         }
         return NextResponse.json({ message: "User Registered", body: student }, { status: 201 });
-    // return NextResponse.json({ message: "User Registered" }, {body: student}, { status: 201 });
 
     } catch (err) {
         console.error(err);

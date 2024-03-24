@@ -142,10 +142,6 @@ function Profile() {
                       border: "5px solid #eae7e7be",
                     }}
                     src={imageSrc || student?.picture}
-                    // imageSrc ||
-                    // "https://media.istockphoto.com/id/1200064810/vector/user-profile-login-or-access-authentication-icon-button-people-account-sign-in-logo-sign.jpg?s=612x612&w=0&k=20&c=p7KoaWP5NLXGldaUjJ1daqJhDK2YNYB_fbz7X-TmpyQ="
-                    // "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
-
                     alt=""
                     onClick={handleImageClick}
                   />
@@ -165,7 +161,6 @@ function Profile() {
                 <form onSubmit={confirm}>
                   <div className={styles.details}>
                     <div className={styles.detailsContainer}>
-                      {/* {student ? ( */}
                       <div className={styles.name}>
                         <div className={styles.title}>Class</div>
                         <div>
@@ -370,9 +365,6 @@ function Profile() {
                           )}
                         </div>
                       </div>
-                      {/* ) : (
-                        <p>Loading...</p>
-          )} */}
                     </div>
                     <div className={styles.update}>
                       <Popconfirm

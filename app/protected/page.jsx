@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { message } from "antd";
 
-function ProtectedRoute({ children }) {
+function ProtectedRoute() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -30,13 +30,7 @@ function ProtectedRoute({ children }) {
     }
   }, [session, status, router]);
 
-  // Render children only if user is authenticated
-  return (
-    session ? (
-        <>
-          {children}
-        </>
-        ) : null
+  return ( null
     );
 }
 

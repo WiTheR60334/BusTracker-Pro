@@ -31,5 +31,11 @@ export default function ProtectedRoute({ children }) {
   }, [session, status, router]);
 
   // Render children only if user is authenticated
-  return session ? <>{children}</> : null;
+  return (
+    session ? (
+        <>
+          {children}
+        </>
+        ) : null
+    );
 }

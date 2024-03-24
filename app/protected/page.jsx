@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { message } from "antd";
 
-function ProtectedRoute() {
+function ProtectedRoute(props) {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -30,7 +30,7 @@ function ProtectedRoute() {
     }
   }, [session, status, router]);
 
-  return ( null
+  return ( session ? <>{props.children}</> : null
     );
 }
 

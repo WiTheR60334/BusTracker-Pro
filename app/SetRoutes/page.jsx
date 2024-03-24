@@ -10,11 +10,9 @@ function SetRoutes() {
   const router = useRouter();
 
   return (
-    <>
-        <ProtectedRoute />
+    <ProtectedRoute>
         <div>SetRoutes</div>
-</>
-    // </ProtectedRoute>
+    </ProtectedRoute>
   )
 }
 

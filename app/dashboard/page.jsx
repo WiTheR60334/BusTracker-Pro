@@ -17,7 +17,7 @@ function Dashboard() {
 
   return (
     <>
-      <ProtectedRoute />
+      <ProtectedRoute>
         <div>
           {/* <div className={styles.adminPanel}>
             <Grid />
@@ -32,7 +32,7 @@ function Dashboard() {
             <BusDriverDetails />
           </div>
         </div>
-        {/* </ProtectedRoute> */}
+        </ProtectedRoute>
     </>
   );
 }

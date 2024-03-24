@@ -15,7 +15,7 @@ function ManageBuses() {
 
   return (
     <>
-      <ProtectedRoute />
+      <ProtectedRoute>
         <div className={styles.container}>
           <div className={styles.box}>
             <div className={styles.title}>
@@ -34,7 +34,7 @@ function ManageBuses() {
             </div>
           </div>
         </div>
-      {/* </ProtectedRoute> */}
+      </ProtectedRoute>
     </>
   );
 }

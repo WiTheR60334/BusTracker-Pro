@@ -15,7 +15,7 @@ export async function POST(request) {
         if (!student) {
             return { status: 404, body: { error: 'Student not found' } };
         }
-        return NextResponse.json({ message: "User Registered", body: student }, { status: 201 });
+        return NextResponse.json({ body: student }, { status: 201 });
 
     } catch (err) {
         console.error(err);

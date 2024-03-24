@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import connectDB from '../../../util/DB';
+const Student = require('../../../models/Student'); 
 import User from "../../../models/User";
 
 // export const GET = async (request) => {

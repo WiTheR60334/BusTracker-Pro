@@ -24,7 +24,7 @@ const authOptions = {
           const userExists = await User.findOne({ email });
 
           if (!userExists) {
-            const res = await fetch("https://bus-tracker-pro.vercel.app/api/Student", {
+            const res = await fetch("/api/Student", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

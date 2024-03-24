@@ -7,8 +7,55 @@ import { useRouter } from "next/navigation";
 import { notFound } from "next/navigation";
 
 function Profile() {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
+  const [student, setStudent] = useState(null);
+  const [formData, setFormData] = useState({
+    id: "",
+    name: "",
+    surname: "",
+    enrollment_no: "",
+    address: "",
+    father_mobile: "",
+    mother_mobile: "",
+    picture: "",
+    email: session?.user.email,
+  });
+  console.log("hi");
+
+  if (session) {
+    console.log("loggged in");
+    const { user } = session;
+  }
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchStudentData = async () => {
+      try {
+        const response = await fetch("/api/Connector", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: session.user.email }), // Change to the appropriate email
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch student data");
+        }
+
+        const data = await response.json();
+        setStudent(data.body);
+        console.log(
+          "this is the message received on client side : ",
+          data.body
+        );
+      } catch (error) {
+        console.error("Error fetching student data:", error);
+      }
+    };
+
+    fetchStudentData();
+  }, [session]);
 
   useEffect(() => {
     if (status !== "authenticated") {
@@ -20,62 +67,23 @@ function Profile() {
   const [imageSrc, setImageSrc] = useState("");
   const inputRef = useRef(null);
 
-  const [student, setStudent] = useState({
-    id: "",
-    name: "",
-    surname: "",
-    enrollment_no: "",
-    address: "",
-    father_mobile: "",
-    mother_mobile: "",
-    picture: "",
-  });
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch("/api/Student", {
-          cache: "no-store",
-        });
-        if (!res.ok) throw new Error("Failed to fetch data");
-        const data = await res.json();
-        if (data && data.length > 0) {
-          const fetchedStudent = data[0];
-          setStudent({
-            id: fetchedStudent._id,
-            name: fetchedStudent.name,
-            surname: fetchedStudent.surname,
-            enrollment_no: fetchedStudent.enrollment_no,
-            address: fetchedStudent.address,
-            father_mobile: fetchedStudent.father_mobile,
-            mother_mobile: fetchedStudent.mother_mobile,
-            picture: fetchedStudent.picture,
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching student data:", error);
-      }
-    }
-    fetchData();
-  }, []);
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setStudent((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
-
   const handleChange = (e) => {
-    const fieldName = e.target.name;
-    const fieldValue = e.target.value;
-
-    setStudent((prevState) => ({
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
       ...prevState,
-      [fieldName]: fieldValue,
+      [name]: value,
     }));
   };
+
+  // const handleChange = (e) => {
+  //   const fieldName = e.target.name;
+  //   const fieldValue = e.target.value;
+
+  //   setStudent((prevState) => ({
+  //     ...prevState,
+  //     [fieldName]: fieldValue,
+  //   }));
+  // };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -99,136 +107,199 @@ function Profile() {
   const confirm = async (event) => {
     event.preventDefault();
     try {
-      const res = await fetch(`/api/${student.id}`, {
+      const res = await fetch(`/api/${session.user.email}`, {
+        // Assuming your API endpoint for updating a student is '/api/student/:id'
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(student),
+        body: JSON.stringify(formData),
       });
+
       if (res.ok) {
         message.success("Details updated successfully!");
+        window.location.reload();
       } else {
-        throw new Error("Failed to update details");
+        // Handle specific error cases based on response status
+        if (res.status === 404) {
+          throw new Error("Student not found");
+        } else {
+          throw new Error("Failed to update details");
+        }
       }
     } catch (error) {
       console.error("Error updating student details:", error);
-      message.error("Failed to update details");
+      message.error(error.message); // Display the error message to the user
     }
   };
 
   return (
     <>
       {status === "authenticated" ? (
-          <div className={styles.container}>
-            <div className={styles.box}>
-              <div className={styles.avatar}>
-                <img
-                  style={{
-                    width: "150px",
-                    height: "150px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                    border: "5px solid #eae7e7be",
-                  }}
-                  src={imageSrc || student.picture}
-                  // imageSrc ||
-                  // "https://media.istockphoto.com/id/1200064810/vector/user-profile-login-or-access-authentication-icon-button-people-account-sign-in-logo-sign.jpg?s=612x612&w=0&k=20&c=p7KoaWP5NLXGldaUjJ1daqJhDK2YNYB_fbz7X-TmpyQ="
-                  // "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
-      
-                  alt=""
-                  onClick={handleImageClick}
-                />
-                <input
-                  ref={inputRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  style={{ display: "none" }}
-                />
-                <div style={{ marginTop: "1rem", fontSize: "20px" }}>
-                  {student.name} {student.surname}
+        <>
+          {session && (
+            <div className={styles.container}>
+              <div className={styles.box}>
+                <div className={styles.avatar}>
+                  <img
+                    style={{
+                      width: "150px",
+                      height: "150px",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      border: "5px solid #eae7e7be",
+                    }}
+                    src={imageSrc || student?.picture}
+                    // imageSrc ||
+                    // "https://media.istockphoto.com/id/1200064810/vector/user-profile-login-or-access-authentication-icon-button-people-account-sign-in-logo-sign.jpg?s=612x612&w=0&k=20&c=p7KoaWP5NLXGldaUjJ1daqJhDK2YNYB_fbz7X-TmpyQ="
+                    // "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+
+                    alt=""
+                    onClick={handleImageClick}
+                  />
+                  <input
+                    ref={inputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    style={{ display: "none" }}
+                  />
+                  <div style={{ marginTop: "1rem", fontSize: "20px" }}>
+                    {student ? `${student.name} ${student.surname}` : "Loading..."  }
+                  </div>
                 </div>
+                <form onSubmit={confirm}>
+                  <div className={styles.details}>
+                    <div className={styles.detailsContainer}>
+                      {/* {student ? ( */}
+                      <div className={styles.name}>
+                        <div className={styles.title}>Name</div>
+                        <div>
+                          {student ? (
+                            <input
+                              type="text"
+                              placeholder={student.name}
+                              className={styles.input}
+                              onChange={handleChange}
+                              value={formData.name}
+                              name="name"
+                            />
+                          ) : (
+                            <input
+                              type="text"
+                              placeholder="Your name is not registered yet"
+                              className={styles.input}
+                              onChange={handleChange}
+                              name="name"
+                              // value={formData.name}
+                              // value={student.name}
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <div className={styles.name}>
+                        <div className={styles.title}>Enrollment No</div>
+                        <div>
+                          {student ? (
+                            <input
+                              type="text"
+                              placeholder={student.enrollment_no}
+                              className={styles.input}
+                              onChange={handleChange}
+                            />
+                          ) : (
+                            <input
+                              type="text"
+                              placeholder="Your enrollment number is not registered yet"
+                              className={styles.input}
+                              onChange={handleChange}
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <div className={styles.name}>
+                        <div className={styles.title}>Address</div>
+                        <div>
+                          {student ? (
+                            <input
+                              type="text"
+                              placeholder={student.address.street}
+                              className={styles.input}
+                              onChange={handleChange}
+                            />
+                          ) : (
+                            <input
+                              type="text"
+                              placeholder="Your address is not registered yet"
+                              className={styles.input}
+                              onChange={handleChange}
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <div className={styles.name}>
+                        <div className={styles.title}>Parents Mobile No</div>
+                        <div>
+                          {student ? (
+                            <input
+                              type="text"
+                              placeholder={student.father_mobile}
+                              className={styles.input}
+                              onChange={handleChange}
+                            />
+                          ) : (
+                            <input
+                              type="text"
+                              placeholder="Your father's mobile number is not registered yet"
+                              className={styles.input}
+                              onChange={handleChange}
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <div className={styles.name}>
+                        <div className={styles.title}>Alternate Mobile No</div>
+                        <div>
+                          {student ? (
+                            <input
+                              type="text"
+                              placeholder={student.mother_mobile}
+                              className={styles.input}
+                              onChange={handleChange}
+                            />
+                          ) : (
+                            <input
+                              type="text"
+                              placeholder="Your mother's mobile number is not registered yet"
+                              className={styles.input}
+                              onChange={handleChange}
+                            />
+                          )}
+                        </div>
+                      </div>
+                      {/* ) : (
+                        <p>Loading...</p>
+          )} */}
+                    </div>
+                    <div className={styles.update}>
+                      <Popconfirm
+                        title="Are you sure you want to update your details?"
+                        onConfirm={confirm}
+                        onCancel={cancel}
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        <div className={styles.item}>Update</div>
+                      </Popconfirm>
+                    </div>
+                  </div>
+                </form>
               </div>
-              <form onSubmit={confirm}>
-                <div className={styles.details}>
-                  <div className={styles.detailsContainer}>
-                    <div className={styles.name}>
-                      <div className={styles.title}>Name</div>
-                      <div>
-                        <input
-                          type="text"
-                          placeholder={student.name}
-                          className={styles.input}
-                          onChange={handleChange}
-                          name="name"
-                          value={student.name}
-                        />
-                      </div>
-                    </div>
-                    <div className={styles.name}>
-                      <div className={styles.title}>Enrollment No</div>
-                      <div>
-                        <input
-                          type="text"
-                          placeholder={student.enrollment_no}
-                          className={styles.input}
-                          onChange={handleChange}
-                        />
-                      </div>
-                    </div>
-                    <div className={styles.name}>
-                      <div className={styles.title}>Address</div>
-                      <div>
-                        <input
-                          type="text"
-                          placeholder={student.address.street}
-                          className={styles.input}
-                          onChange={handleChange}
-                        />
-                      </div>
-                    </div>
-                    <div className={styles.name}>
-                      <div className={styles.title}>Parents Mobile No</div>
-                      <div>
-                        <input
-                          type="text"
-                          placeholder={student.father_mobile}
-                          className={styles.input}
-                          onChange={handleChange}
-                        />
-                      </div>
-                    </div>
-                    <div className={styles.name}>
-                      <div className={styles.title}>Alternate Mobile No</div>
-                      <div>
-                        <input
-                          type="text"
-                          placeholder={student.mother_mobile}
-                          className={styles.input}
-                          onChange={handleChange}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className={styles.update}>
-                    <button type="submit"> Submit</button>
-                    <Popconfirm
-                      title="Are you sure you want to update your details?"
-                      onConfirm={confirm}
-                      onCancel={cancel}
-                      okText="Yes"
-                      cancelText="No"
-                    >
-                      <div className={styles.item}>Update</div>
-                    </Popconfirm>
-                  </div>
-                </div>
-              </form>
             </div>
-          </div>      
+          )}
+        </>
       ) : null}
-      </>
+    </>
   );
 }
 

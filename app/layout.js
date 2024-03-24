@@ -6,6 +6,7 @@ import "./globals.css";
 import styles from "./layout.module.css";
 import {React, useState, useEffect} from "react";
 import { MdOutlineMenu } from 'react-icons/md';
+import ProtectedRoute from "./protected/page";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -57,6 +58,7 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <div className={styles.main}>
+            <ProtectedRoute>
             <div
             className={`${styles.sidebar} ${isActive ? 'active' : ''} ${SidebarIsActive ? 'active' : ''}`}
             style={{
@@ -69,6 +71,7 @@ export default function RootLayout({ children }) {
           >
             <Sidebar onLinkClick={handleLinkClick} />
           </div>
+          </ProtectedRoute>
 
             <div
               className={styles.right}
@@ -79,17 +82,24 @@ export default function RootLayout({ children }) {
                 // animation: isActive && SidebarIsActive ? 'showMenu .8s' : 'hideRight .8s'
               }}
             >
+          <ProtectedRoute>
+
               <div className={styles.rest}>
                 <div className={styles.title}>
+                  <ProtectedRoute>
                   {typeof window !== 'undefined' && window.innerWidth < 768  &&
                     !isActive && (
                     <MdOutlineMenu className={styles.menuIcon} onClick={toggleMenu} />
                   )}
+                  </ProtectedRoute>
                   <div className={styles.bus}>Bus Tracker Pro</div>
                 </div>
               </div>
+          </ProtectedRoute>
+
               <div className={styles.dock}>{children}</div>
             </div>
+
           </div>
         <style jsx>{`
           @keyframes showMenu {

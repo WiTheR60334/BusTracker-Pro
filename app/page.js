@@ -3,7 +3,7 @@ import { signIn, useSession, signOut} from "next-auth/react";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import styles from "./page.module.css";
-import React,{useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import { useRouter } from "next/navigation";
 import { SessionProvider } from "next-auth/react";
 

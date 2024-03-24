@@ -131,3 +131,53 @@
   color: red;
   font-weight: bold;
 }
+
+@media (max-width: 2560px) {
+  .main{
+    margin-right: 21rem;
+  }
+  .container{
+    width: 40%;
+  }
+}
+@media (max-width: 1440px) {
+  .main{
+    margin-right: 18rem;
+  }
+}
+@media (max-width: 1024px) {
+  .main{
+    width: 100%;
+    margin-left: -8rem;
+  }
+}
+@media (max-width: 768px) {
+  .main{
+    width: auto;
+    margin-right: 10rem;
+    margin-left: -6rem;
+  }
+  .container{
+    width: auto;
+  }
+}
+@media (max-width: 767px) {
+  .main{
+    width: auto;
+    margin-right: 0;
+    margin-left: -0;
+  }
+  .container{
+    width: auto;
+  }
+}
+@media (max-width: 359px) {
+  .main{
+    width: auto;
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+  .container{
+    width: auto;
+  }
+}

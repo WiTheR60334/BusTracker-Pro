@@ -7,20 +7,15 @@ import Table from "../../components/Table/Table";
 import { useSession } from "next-auth/react";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
+import ProtectedRoute from "../protected/page";
 
 function ManageBuses() {
   const { status } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    if (status !== "authenticated") {
-      router.push("/");
-      message.info("You need to login to access this page");
-    }
-  }, [status, router]);
   return (
     <>
-      {status === "authenticated" ? (
+      <ProtectedRoute>
         <div className={styles.container}>
           <div className={styles.box}>
             <div className={styles.title}>
@@ -39,7 +34,7 @@ function ManageBuses() {
             </div>
           </div>
         </div>
-      ) : null}
+      </ProtectedRoute>
     </>
   );
 }

@@ -5,6 +5,7 @@ import { Popconfirm, message } from "antd";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Tooltip } from "antd";
+import ProtectedRoute from "../protected/page";
 
 function Profile() {
   const { data: session, status } = useSession();
@@ -24,12 +25,12 @@ function Profile() {
     busNo: "",
     email: session?.user.email,
   });
-  console.log("hi");
+  // console.log("hi");
 
-  if (session) {
-    console.log("loggged in");
-    const { user } = session;
-  }
+  // if (session) {
+  //   console.log("loggged in");
+  //   const { user } = session;
+  // }
   const router = useRouter();
 
   useEffect(() => {
@@ -61,12 +62,12 @@ function Profile() {
     fetchStudentData();
   }, [session]);
 
-  useEffect(() => {
-    if (status !== "authenticated") {
-      router.push("/");
-      message.info("You need to login to access this page");
-    }
-  }, [status, router]);
+  // useEffect(() => {
+  //   if (status !== "authenticated") {
+  //     router.push("/");
+  //     message.info("You need to login to access this page");
+  //   }
+  // }, [status, router]);
 
   const [imageSrc, setImageSrc] = useState("");
   const inputRef = useRef(null);
@@ -127,7 +128,7 @@ function Profile() {
 
   return (
     <>
-      {status === "authenticated" ? (
+      <ProtectedRoute>
         <>
           {session && (
             <div className={styles.container}>
@@ -383,7 +384,7 @@ function Profile() {
             </div>
           )}
         </>
-      ) : null}
+        </ProtectedRoute>
     </>
   );
 }

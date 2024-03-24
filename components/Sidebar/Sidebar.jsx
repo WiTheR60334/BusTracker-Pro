@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import ProtectedRoute from "../../app/protected/page";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { React, useState, useEffect } from "react";
 import { FaBus, FaRoute, FaUser } from "react-icons/fa";
@@ -80,7 +81,7 @@ function Sidebar({ onLinkClick }) {
 
   return (
     <>
-      {status === "authenticated" ? (
+      <ProtectedRoute>
         <div className={styles.container}>
           <div style={{ color: "inherit", textDecoration: "none" }}>
             <div className={styles.logo}>
@@ -290,8 +291,8 @@ function Sidebar({ onLinkClick }) {
             </Link> */}
           </div>
         </div>
-      ) : (
-        <div
+      {/* ) : ( */}
+        {/* <div
           style={{
             color: "inherit",
             textDecoration: "none",
@@ -327,8 +328,9 @@ function Sidebar({ onLinkClick }) {
           >
             Login in AU credentials only, to access the app
           </div>
-        </div>
-      )}
+        </div> */}
+      {/* )} */}
+</ProtectedRoute>
     </>
   );
 }

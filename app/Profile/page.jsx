@@ -128,7 +128,7 @@ function Profile() {
 
   return (
     <>
-      <ProtectedRoute>
+      <ProtectedRoute />
         <>
           {session && (
             <div className={styles.container}>
@@ -384,7 +384,7 @@ function Profile() {
             </div>
           )}
         </>
-        </ProtectedRoute>
+        {/* </ProtectedRoute> */}
     </>
   );
 }

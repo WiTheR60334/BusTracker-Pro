@@ -13,12 +13,12 @@ function Notifications() {
 
   return (
     <>
-      <ProtectedRoute>
+      <ProtectedRoute />
         <div className={styles.container}>
           <div className={styles.busTitle}>Notifications : </div>
           <Notification />
         </div>
-      </ProtectedRoute>
+      {/* </ProtectedRoute> */}
     </>
   );
 }

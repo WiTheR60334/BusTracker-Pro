@@ -58,7 +58,7 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <div className={styles.main}>
-            <ProtectedRoute>
+            <ProtectedRoute />
             <div
             className={`${styles.sidebar} ${isActive ? 'active' : ''} ${SidebarIsActive ? 'active' : ''}`}
             style={{
@@ -71,7 +71,7 @@ export default function RootLayout({ children }) {
           >
             <Sidebar onLinkClick={handleLinkClick} />
           </div>
-          </ProtectedRoute>
+          {/* </ProtectedRoute> */}
 
             <div
               className={styles.right}
@@ -82,20 +82,20 @@ export default function RootLayout({ children }) {
                 // animation: isActive && SidebarIsActive ? 'showMenu .8s' : 'hideRight .8s'
               }}
             >
-          <ProtectedRoute>
+          <ProtectedRoute />
 
               <div className={styles.rest}>
                 <div className={styles.title}>
-                  <ProtectedRoute>
+                  <ProtectedRoute />
                   {typeof window !== 'undefined' && window.innerWidth < 768  &&
                     !isActive && (
                     <MdOutlineMenu className={styles.menuIcon} onClick={toggleMenu} />
                   )}
-                  </ProtectedRoute>
+                  {/* </ProtectedRoute> */}
                   <div className={styles.bus}>Bus Tracker Pro</div>
                 </div>
               </div>
-          </ProtectedRoute>
+          {/* </ProtectedRoute> */}
 
               <div className={styles.dock}>{children}</div>
             </div>

@@ -14,7 +14,7 @@ function ManageStudents() {
 
   return (
     <>
-      <ProtectedRoute>
+      <ProtectedRoute />
         <div className={styles.container}>
           <div className={styles.box}>
             <div className={styles.title}>
@@ -33,7 +33,7 @@ function ManageStudents() {
             </div>
           </div>
         </div>
-      </ProtectedRoute>
+      {/* </ProtectedRoute> */}
     </>
   );
 }

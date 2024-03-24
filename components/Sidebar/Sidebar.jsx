@@ -81,7 +81,7 @@ function Sidebar({ onLinkClick }) {
 
   return (
     <>
-      <ProtectedRoute>
+      {/* <ProtectedRoute /> */}
         <div className={styles.container}>
           <div style={{ color: "inherit", textDecoration: "none" }}>
             <div className={styles.logo}>
@@ -330,7 +330,7 @@ function Sidebar({ onLinkClick }) {
           </div>
         </div> */}
       {/* )} */}
-</ProtectedRoute>
+{/* </ProtectedRoute> */}
     </>
   );
 }

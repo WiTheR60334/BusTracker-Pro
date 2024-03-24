@@ -11,9 +11,9 @@ function ManageDrivers() {
 
   return (
     <>
-      <ProtectedRoute>
+      <ProtectedRoute />
         <div>ManageDrivers</div>
-      </ProtectedRoute>
+      {/* </ProtectedRoute> */}
     </>
   );
 }

@@ -1,247 +1,240 @@
-// "use client";
-// import { Table, Icon } from "antd";
-// import React from "react";
-
-// const dataSource = [
-//   {
-//     busNumber: "1",
-//     key: "1",
-//     name: "Mike",
-//     RegistrationNumber: "GJ 1234",
-//     noofSeats: "40",
-//     age: 32,
-//     actions: "delete",
-//   },
-//   {
-//     key: "2",
-//     name: "John",
-//     busNumber: "2",
-//     RegistrationNumber: "GJ 4567",
-//     noofSeats: "30",
-//     age: 42,
-//     actions: 'delete',
-//   },
-// ];
-
-// const columns = [
-//   {
-//     title: "Bus Number",
-//     dataIndex: "busNumber",
-//     key: "busNumber",
-//   },
-//   {
-//     title: "Name",
-//     dataIndex: "name",
-//     key: "name",
-//   },
-//   {
-//     title: "Age",
-//     dataIndex: "age",
-//     key: "age",
-//   },
-//   {
-//     title: "Registration Number",
-//     dataIndex: "RegistrationNumber",
-//     key: "RegistrationNumber",
-//   },
-//   {
-//     title: "No of Seats",
-//     dataIndex: "noofSeats",
-//     key: "noofSeats",
-//   },
-//   {
-//     title: "Actions",
-//     dataIndex: "actions",
-//     key: "actions",
-//   },
-// ];
-
-// function Table2() {
-//   return (
-//     <div>
-//       <Table dataSource={dataSource} columns={columns} />
-//     </div>
-//   );
-// }
-// export default Table2;
-
 "use client";
+import { useState, useEffect } from "react";
 import { Button, Table, Modal, Input } from "antd";
-import { useState } from "react";
-import styles from "./Table2.module.css";
+import { message } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 function Table2() {
   const [isEditing, setIsEditing] = useState(false);
-  const [editingStudent, setEditingStudent] = useState(null);
-  const [dataSource, setDataSource] = useState([
-    {
-      id: 1,
-      name: "John",
-      email: "john@gmail.com",
-      address: "John Address",
-    },
-    {
-      id: 2,
-      name: "David",
-      email: "david@gmail.com",
-      address: "David Address",
-    },
-    {
-      id: 3,
-      name: "James",
-      email: "james@gmail.com",
-      address: "James Address",
-    },
-    {
-      id: 4,
-      name: "Sam",
-      email: "sam@gmail.com",
-      address: "Sam Address",
-    },
-  ]);
+  const [editingBus, setEditingBus] = useState(null);
+  const [dataSource, setDataSource] = useState([]);
+  const [isAdding, setIsAdding] = useState(false);
+  const [newBus, setNewBus] = useState({
+    bus_no: "",
+    registration_no: "",
+    model: "",
+    color: "",
+    seats: "",
+  });
+
+  const handleAddBus = () => {
+    setIsAdding(true);
+    setIsEditing(false); 
+    setNewBus({
+      bus_no: "",
+      registration_no: "",
+      model: "",
+      color: "",
+      seats: "",
+    });
+  };
+
+  const handleCancelAdd = () => {
+    setIsAdding(false);
+  };
+
+  const handleSaveAdd = async () => {
+    try {
+      const response = await fetch("/api/NewBus", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newBus),
+      });
+
+      if (response.ok) {
+        message.success("Bus added successfully!");
+        window.location.reload();
+        handleCancelAdd();
+      } else {
+        throw new Error("Failed to add bus");
+      }
+    } catch (error) {
+      console.error("Error adding bus:", error);
+      message.error("Failed to add bus. Please try again later.");
+    }
+  };
+
   const columns = [
     {
-      key: "1",
-      title: "ID",
-      dataIndex: "id",
+      title: "Bus No",
+      dataIndex: "bus_no",
+      key: "bus_no",
     },
     {
-      key: "2",
-      title: "Name",
-      dataIndex: "name",
+      title: "Registration No",
+      dataIndex: "registration_no",
+      key: "registration_no",
     },
     {
-      key: "3",
-      title: "Email",
-      dataIndex: "email",
+      title: "Model",
+      dataIndex: "model",
+      key: "model",
     },
     {
-      key: "4",
-      title: "Address",
-      dataIndex: "address",
+      title: "Color",
+      dataIndex: "color",
+      key: "color",
     },
     {
-      key: "5",
+      title: "Seats",
+      dataIndex: "seats",
+      key: "seats",
+    },
+    {
       title: "Actions",
-      render: (record) => {
-        return (
-          <>
-            <EditOutlined
-              onClick={() => {
-                onEditStudent(record);
-              }}
-            />
-            <DeleteOutlined
-              onClick={() => {
-                onDeleteStudent(record);
-              }}
-              style={{ color: "red", marginLeft: 12 }}
-            />
-          </>
-        );
-      },
+      key: "actions",
+      render: (_, record) => (
+        <div>
+          <EditOutlined onClick={() => handleEdit(record)} />
+          <DeleteOutlined
+            onClick={() => handleDelete(record)}
+            style={{ marginLeft: 8, color: "red" }}
+          />
+        </div>
+      ),
     },
   ];
 
-  const onAddStudent = () => {
-    const randomNumber = parseInt(Math.random() * 1000);
-    const newStudent = {
-      id: randomNumber,
-      name: "Name " + randomNumber,
-      email: randomNumber + "@gmail.com",
-      address: "Address " + randomNumber,
-    };
-    setDataSource((pre) => {
-      return [...pre, newStudent];
-    });
-  };
-  const onDeleteStudent = (record) => {
-    Modal.confirm({
-      title: "Are you sure, you want to delete this student record?",
-      okText: "Yes",
-      okType: "danger",
-      onOk: () => {
-        setDataSource((pre) => {
-          return pre.filter((student) => student.id !== record.id);
+  const [busDetails, setBusDetails] = useState({
+    _id: "",
+    bus_no: "",
+    registration_no: "",
+    model: "",
+    color: "",
+    seats: 0,
+  });
+
+  useEffect(() => {
+    const fetchAllBusDetails = async () => {
+      try {
+        const response = await fetch("/api/AllBusConnector", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
-      },
-    });
-  };
-  const onEditStudent = (record) => {
-    setIsEditing(true);
-    setEditingStudent({ ...record });
-  };
-  const resetEditing = () => {
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch student data");
+        }
+
+        const data = await response.json();
+        setDataSource(data.body);
+      } catch (error) {
+        console.error("Error fetching student data:", error);
+      }
+    };
+
+    fetchAllBusDetails();
+  }, []);
+
+  const handleSaveEdit = async (event) => {
+    event.preventDefault();
+    try {
+      const res = await fetch("/api/Managebuses", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ _id: editingBus._id, ...editingBus }),
+      });
+
+      if (res.ok) {
+        message.success("Bus details updated successfully");
+        setIsEditing(false);
+        setEditingBus(null);
+        window.location.reload();
+      } else {
+        throw new Error("Failed to update bus details");
+      }
+    } catch (error) {
+      console.error("Error updating bus details:", error);
+      message.error("Failed to update bus details");
+    }
+
     setIsEditing(false);
-    setEditingStudent(null);
+    setEditingBus(null);
+  };
+
+  const handleEdit = (record) => {
+    setEditingBus(record);
+    setIsEditing(true);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditingBus(null);
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Button
-          style={{
-            marginBottom: "2rem",
-            backgroundColor: "#3A6FF8",
-            color: "white",
-          }}
-          onClick={onAddStudent}
-        >
-          Add a new Bus
-        </Button>
-        <Table
-          columns={columns}
-          dataSource={dataSource}
-          //   rowClassName={handleRowClassName}
-        ></Table>
-        <Modal
-          title="Edit Student"
-          visible={isEditing}
-          okText="Save"
-          onCancel={() => {
-            resetEditing();
-          }}
-          onOk={() => {
-            setDataSource((pre) => {
-              return pre.map((student) => {
-                if (student.id === editingStudent.id) {
-                  return editingStudent;
-                } else {
-                  return student;
-                }
-              });
-            });
-            resetEditing();
-          }}
-        >
-          <Input
-            value={editingStudent?.name}
-            onChange={(e) => {
-              setEditingStudent((pre) => {
-                return { ...pre, name: e.target.value };
-              });
-            }}
-          />
-          <Input
-            value={editingStudent?.email}
-            onChange={(e) => {
-              setEditingStudent((pre) => {
-                return { ...pre, email: e.target.value };
-              });
-            }}
-          />
-          <Input
-            value={editingStudent?.address}
-            onChange={(e) => {
-              setEditingStudent((pre) => {
-                return { ...pre, address: e.target.value };
-              });
-            }}
-          />
-        </Modal>
-      </header>
-    </div>
+    <>
+      <Button style={{ marginBottom: "1rem" }} onClick={handleAddBus}>
+        Add Bus
+      </Button>
+      <Table columns={columns} dataSource={dataSource} rowKey="id" />
+      <Modal
+        title={isEditing ? "Edit Bus" : "Add New Bus"}
+        visible={isEditing || isAdding}
+        onCancel={isEditing ? handleCancelEdit : handleCancelAdd}
+        onOk={isEditing ? handleSaveEdit : handleSaveAdd}
+      >
+        <Input
+          placeholder="Bus No"
+          value={isEditing ? editingBus?.bus_no : newBus.bus_no}
+          onChange={(e) =>
+            isEditing
+              ? setEditingBus({ ...editingBus, bus_no: e.target.value })
+              : setNewBus({ ...newBus, bus_no: e.target.value })
+          }
+        />
+        <Input
+          placeholder="Registration No"
+          value={
+            isEditing ? editingBus?.registration_no : newBus.registration_no
+          }
+          onChange={(e) =>
+            isEditing
+              ? setEditingBus({
+                  ...editingBus,
+                  registration_no: e.target.value,
+                })
+              : setNewBus({ ...newBus, registration_no: e.target.value })
+          }
+        />
+        <Input
+          placeholder="Model"
+          value={isEditing ? editingBus?.model : newBus.model}
+          onChange={(e) =>
+            isEditing
+              ? setEditingBus({ ...editingBus, model: e.target.value })
+              : setNewBus({ ...newBus, model: e.target.value })
+          }
+        />
+        <Input
+          placeholder="Color"
+          value={isEditing ? editingBus?.color : newBus.color}
+          onChange={(e) =>
+            isEditing
+              ? setEditingBus({ ...editingBus, color: e.target.value })
+              : setNewBus({ ...newBus, color: e.target.value })
+          }
+        />
+        <Input
+          placeholder="Seats"
+          value={isEditing ? editingBus?.seats : newBus.seats}
+          onChange={(e) =>
+            isEditing
+              ? setEditingBus({
+                  ...editingBus,
+                  seats: parseInt(e.target.value),
+                })
+              : setNewBus({ ...newBus, seats: parseInt(e.target.value) })
+          }
+        />
+      </Modal>
+    </>
   );
 }
 

@@ -7,7 +7,11 @@ const busDetailsSchema = new Schema({
     registration_no: String,
     model: String,
     color: String,
-    seats: Number
+    seats: Number,
+    longitude: Number,
+    latitude: Number,
+    speed: Number,
+    time: String
 },{ collection: 'BusDetails' });
 
 

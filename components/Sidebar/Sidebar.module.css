@@ -18,7 +18,7 @@
     align-items: center; 
     /* justify-content: center;  */
     border-radius: 10px;
-    height: 40%;
+    height: 65px;
     text-align: start;
     padding-left: 2rem;
 }
@@ -61,10 +61,11 @@
         padding-left: .8rem;
     }
 }
-@media (max-width: 768px) {
+@media (max-width: 769px) {
     .item{
         padding-left: 1.2rem;
         font-size: 14px;
+        height: 60px;
     }
 }
 

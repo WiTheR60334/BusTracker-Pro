@@ -18,6 +18,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { IoNotificationsSharp } from "react-icons/io5";
 import Box from "@mui/material/Box";
 import Badge from "@mui/material/Badge";
+import AdminProtectedRoute from "../../app/adminprotected/page";
 import styles from "./Sidebar.module.css";
 
 function Sidebar({ onLinkClick }) {
@@ -165,6 +166,8 @@ function Sidebar({ onLinkClick }) {
                 Notifications
               </div>
             </Link>
+            <AdminProtectedRoute>
+
             <Link
               href="/ManageBuses"
               style={{ color: "inherit", textDecoration: "none" }}
@@ -233,6 +236,7 @@ function Sidebar({ onLinkClick }) {
                 Set Routes
               </div>
             </Link>
+            </AdminProtectedRoute>
             <Link
               href="/Profile"
               style={{ color: "inherit", textDecoration: "none" }}

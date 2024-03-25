@@ -1,4 +1,6 @@
-import mongoose, { Schema, models } from "mongoose";
+import mongoose from "mongoose";
+
+const {Schema} = mongoose;
 
 const userSchema = new Schema(
   {
@@ -11,9 +13,14 @@ const userSchema = new Schema(
         type: String,
         required: false,
       },
+      role: {
+        type: String,
+        enum: ['admin', 'student', 'driver'], 
+        default: 'student', 
+      },
     },
+    { collection: 'users' },
     { timestamps: true }
 );
 
-const User = models.User || mongoose.model("User", userSchema);
-export default User;
+export default mongoose.models.User || mongoose.model("User", userSchema);

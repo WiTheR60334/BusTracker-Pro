@@ -10,6 +10,8 @@ import { useSession } from "next-auth/react";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
 import ProtectedRoute from "../protected/page";
+import AdminProtectedRoute from "../adminprotected/page";
+import StudentProtectedRoute from "../studentprotected/page";
 
 function Dashboard() {
   const { status } = useSession();
@@ -19,15 +21,19 @@ function Dashboard() {
     <>
       <ProtectedRoute>
         <div>
-          {/* <div className={styles.adminPanel}>
+          <AdminProtectedRoute>
+          <div className={styles.adminPanel}>
             <Grid />
             <Info />
-          </div> */}
+          </div>
+          </AdminProtectedRoute>
           <div className={styles.userPanel}>
             <div className={styles.busTitle}>Bus Details : </div>
             <BasicTimeline />
-            <div className={styles.busDriverTitle}>Skip My House: </div>
+            <StudentProtectedRoute>
+             <div className={styles.busDriverTitle}>Skip My House: </div>
             <SkipMyHouse />
+            </StudentProtectedRoute>
             <div className={styles.busDriverTitle}>Bus Driver Details : </div>
             <BusDriverDetails />
           </div>

@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import {Account, User as AuthUser } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import Google from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import User from "../../../../models/User";
@@ -13,25 +14,46 @@ const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      
+      scope: 'openid email profile',
+      profile(profile) {
+        let role = 'student'; 
+
+        if (profile.email === 'romir.b@ahduni.edu.in') {
+          role = 'admin';
+        }
+        console.log(role);
+
+        return {
+              id: profile.sub,
+              name: profile.name,
+              firstname: profile.given_name,
+              lastname: profile.family_name,
+              email: profile.email,
+              image: profile.picture,
+              role: role,
+         };
+      }
     }),
   ],
   callbacks: {
     async signIn({ user, account }) {
       if (account.provider === "google") {
-        const { email, password } = user;
+        const { email,password, role } = user;
         try {
           await connectDB();
           const userExists = await User.findOne({ email });
 
           if (!userExists) {
-            const res = await fetch("/api/Student", {
+            const res = await fetch("https://bus-tracker-pro.vercel.app/api/Student", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
                 email,
-                password
+                password,
+                role
               }),
             });
 
@@ -50,5 +72,4 @@ const authOptions = {
 };
 
 const handler = NextAuth(authOptions);
-
 export { handler as GET, handler as POST };

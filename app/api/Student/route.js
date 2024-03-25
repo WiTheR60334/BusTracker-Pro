@@ -4,8 +4,8 @@ const Student = require('../../../models/Student');
 import User from "../../../models/User";
 
 export async function POST(request) {
-  const { email, password } = await request.json();
+  const { email,password, role } = await request.json();
   await connectDB();
-  await User.create({ email, password });
+  await User.create({ email,password, role });
   return NextResponse.json({ message: "User Registered" }, { status: 201 });
 }

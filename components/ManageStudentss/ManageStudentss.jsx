@@ -5,28 +5,32 @@ import { message } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { flightRouterStateSchema } from "next/dist/server/app-render/types";
 
-function Table2() {
+function ManageStudentss() {
   const [isEditing, setIsEditing] = useState(false);
   const [editingBus, setEditingBus] = useState(null);
   const [dataSource, setDataSource] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newBus, setNewBus] = useState({
-    bus_no: "",
-    registration_no: "",
-    model: "",
-    color: "",
-    seats: "",
+    enrollment_no: "",
+    name: "",
+    surname: "",
+    standard: "",
+    section: "",
+    email: "",
+    busNo: "",
   });
 
   const handleAddBus = () => {
     setIsAdding(true);
     setIsEditing(false);
     setNewBus({
-      bus_no: "",
-      registration_no: "",
-      model: "",
-      color: "",
-      seats: "",
+      enrollment_no: "",
+      name: "",
+      surname: "",
+      standard: "",
+      section: "",
+      email: "",
+      busNo: "",
     });
   };
 
@@ -89,29 +93,39 @@ function Table2() {
 
   const columns = [
     {
+      title: "Enrollment No",
+      dataIndex: "enrollment_no",
+      key: "enrollment_no",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Surname",
+      dataIndex: "surname",
+      key: "surname",
+    },
+    {
+      title: "Standard",
+      dataIndex: "standard",
+      key: "standard",
+    },
+    {
+      title: "Section",
+      dataIndex: "section",
+      key: "section",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
       title: "Bus No",
-      dataIndex: "bus_no",
-      key: "bus_no",
-    },
-    {
-      title: "Registration No",
-      dataIndex: "registration_no",
-      key: "registration_no",
-    },
-    {
-      title: "Model",
-      dataIndex: "model",
-      key: "model",
-    },
-    {
-      title: "Color",
-      dataIndex: "color",
-      key: "color",
-    },
-    {
-      title: "Seats",
-      dataIndex: "seats",
-      key: "seats",
+      dataIndex: "busNo",
+      key: "busNo",
     },
     {
       title: "Actions",
@@ -130,17 +144,19 @@ function Table2() {
 
   const [busDetails, setBusDetails] = useState({
     _id: "",
-    bus_no: "",
-    registration_no: "",
-    model: "",
-    color: "",
-    seats: 0,
+    enrollment_no: "",
+    name: "",
+    surname: "",
+    standard: "",
+    section: "",
+    email: "",
+    busNo: "",
   });
 
   useEffect(() => {
     const fetchAllBusDetails = async () => {
       try {
-        const response = await fetch("/api/AllBusConnector", {
+        const response = await fetch("/api/AllStudentsConnector", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -164,7 +180,7 @@ function Table2() {
   const handleSaveEdit = async (event) => {
     event.preventDefault();
     try {
-      const res = await fetch("/api/Managebuses", {
+      const res = await fetch("/api/Managestudents", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -219,72 +235,99 @@ function Table2() {
             }}
             onClick={handleAddBus}
           >
-            Add Bus
+            Add Student
           </Button>
         </div>
 
         <Table columns={columns} dataSource={dataSource} rowKey="id" />
         <Modal
-          title={isEditing ? "Edit Bus" : "Add New Bus"}
+          title={isEditing ? "Edit Student" : "Add New Bus"}
           visible={isEditing || isAdding}
           onCancel={isEditing ? handleCancelEdit : handleCancelAdd}
           onOk={isEditing ? handleSaveEdit : handleSaveAdd}
         >
           <Input
+            placeholder="Enrollment No"
+            value={isEditing ? editingBus?.enrollment_no : newBus.enrollment_no}
+            onChange={(e) =>
+              isEditing
+                ? setEditingBus({
+                    ...editingBus,
+                    enrollment_no: e.target.value,
+                  })
+                : setNewBus({ ...newBus, enrollment_no: e.target.value })
+            }
+            style={{ marginBottom: "1rem" }}
+          />
+          <Input
+            placeholder="Name"
+            value={isEditing ? editingBus?.name : newBus.name}
+            onChange={(e) =>
+              isEditing
+                ? setEditingBus({
+                    ...editingBus,
+                    name: e.target.value,
+                  })
+                : setNewBus({ ...newBus, name: e.target.value })
+            }
+            style={{ marginBottom: "1rem" }}
+          />
+          <Input
+            placeholder="Surname"
+            value={isEditing ? editingBus?.surname : newBus.surname}
+            onChange={(e) =>
+              isEditing
+                ? setEditingBus({ ...editingBus, surname: e.target.value })
+                : setNewBus({ ...newBus, surname: e.target.value })
+            }
+            style={{ marginBottom: "1rem" }}
+          />
+          <Input
+            placeholder="Standard"
+            value={isEditing ? editingBus?.standard : newBus.standard}
+            onChange={(e) =>
+              isEditing
+                ? setEditingBus({ ...editingBus, standard: e.target.value })
+                : setNewBus({ ...newBus, standard: e.target.value })
+            }
+            style={{ marginBottom: "1rem" }}
+          />
+          <Input
+            placeholder="Section"
+            value={isEditing ? editingBus?.section : newBus.section}
+            onChange={(e) =>
+              isEditing
+                ? setEditingBus({
+                    ...editingBus,
+                    section: e.target.value,
+                  })
+                : setNewBus({ ...newBus, section: e.target.value })
+            }
+            style={{ marginBottom: "1rem" }}
+          />
+          <Input
+            placeholder="Email"
+            value={isEditing ? editingBus?.email : newBus.email}
+            onChange={(e) =>
+              isEditing
+                ? setEditingBus({
+                    ...editingBus,
+                    email: e.target.value,
+                  })
+                : setNewBus({ ...newBus, email: e.target.value })
+            }
+            style={{ marginBottom: "1rem" }}
+          />
+          <Input
             placeholder="Bus No"
-            value={isEditing ? editingBus?.bus_no : newBus.bus_no}
-            onChange={(e) =>
-              isEditing
-                ? setEditingBus({ ...editingBus, bus_no: e.target.value })
-                : setNewBus({ ...newBus, bus_no: e.target.value })
-            }
-            style={{ marginBottom: "1rem" }}
-          />
-          <Input
-            placeholder="Registration No"
-            value={
-              isEditing ? editingBus?.registration_no : newBus.registration_no
-            }
+            value={isEditing ? editingBus?.busNo : newBus.busNo}
             onChange={(e) =>
               isEditing
                 ? setEditingBus({
                     ...editingBus,
-                    registration_no: e.target.value,
+                    busNo: e.target.value,
                   })
-                : setNewBus({ ...newBus, registration_no: e.target.value })
-            }
-            style={{ marginBottom: "1rem" }}
-          />
-          <Input
-            placeholder="Model"
-            value={isEditing ? editingBus?.model : newBus.model}
-            onChange={(e) =>
-              isEditing
-                ? setEditingBus({ ...editingBus, model: e.target.value })
-                : setNewBus({ ...newBus, model: e.target.value })
-            }
-            style={{ marginBottom: "1rem" }}
-          />
-          <Input
-            placeholder="Color"
-            value={isEditing ? editingBus?.color : newBus.color}
-            onChange={(e) =>
-              isEditing
-                ? setEditingBus({ ...editingBus, color: e.target.value })
-                : setNewBus({ ...newBus, color: e.target.value })
-            }
-            style={{ marginBottom: "1rem" }}
-          />
-          <Input
-            placeholder="Seats"
-            value={isEditing ? editingBus?.seats : newBus.seats}
-            onChange={(e) =>
-              isEditing
-                ? setEditingBus({
-                    ...editingBus,
-                    seats: parseInt(e.target.value),
-                  })
-                : setNewBus({ ...newBus, seats: parseInt(e.target.value) })
+                : setNewBus({ ...newBus, busNo: e.target.value })
             }
             style={{ marginBottom: "1rem" }}
           />
@@ -294,4 +337,4 @@ function Table2() {
   );
 }
 
-export default Table2;
+export default ManageStudentss;

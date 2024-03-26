@@ -1,7 +1,7 @@
 "use client";
 import styles from "./ManageStudents.module.css";
 import { FaBus } from "react-icons/fa";
-import Table2 from "../../components/Table2/Table2";
+import ManageStudentss from "../../components/ManageStudentss/ManageStudentss";
 import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { message } from "antd";
@@ -30,8 +30,7 @@ function ManageStudents() {
                 />
                 Manage Buses
                 <div style={{ marginTop: "2rem" }}>
-                  <Table2 />
-                  {/* <Table /> */}
+                  <ManageStudentss />
                 </div>
               </div>
             </div>

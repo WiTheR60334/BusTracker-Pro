@@ -18,6 +18,8 @@ import { FaUserCircle } from "react-icons/fa";
 import { IoNotificationsSharp } from "react-icons/io5";
 import Box from "@mui/material/Box";
 import Badge from "@mui/material/Badge";
+import { BorderTopOutlined } from "@ant-design/icons";
+import { Button, notification, Space } from "antd";
 import AdminProtectedRoute from "../../app/adminprotected/page";
 import styles from "./Sidebar.module.css";
 
@@ -25,8 +27,17 @@ function Sidebar({ onLinkClick }) {
   const [marginLeft, setMarginLeft] = useState("-2px");
   const [showCloseIcon, setShowCloseIcon] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const { status } = useSession();
-  const router = useRouter();
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = (placement) => {
+    api.info({
+      // message: `Notification ${placement}`,
+      message:
+        "Bus No 1234 has reached your location. Please be ready to board the bus.",
+      // description:
+      //   "Bus No 1234 has reached your location. Please be ready to board the bus.",
+      placement,
+    });
+  };
 
   const onClick = () => {
     setIsClicked(true);
@@ -83,91 +94,94 @@ function Sidebar({ onLinkClick }) {
   return (
     <>
       {/* <ProtectedRoute /> */}
-        <div className={styles.container}>
-          <div style={{ color: "inherit", textDecoration: "none" }}>
-            <div className={styles.logo}>
-              <span style={{ flex: 1, textAlign: "center" }}>Logo</span>
-              {showCloseIcon && (
-                <IoCloseSharp
-                  style={{
-                    fontSize: "25px",
-                    alignSelf: "center",
-                    marginRight: "15px",
-                  }}
-                  onClick={closeSidebar}
-                />
-              )}
-            </div>
+      <div className={styles.container}>
+        <div style={{ color: "inherit", textDecoration: "none" }}>
+          <div className={styles.logo}>
+            <span style={{ flex: 1, textAlign: "center" }}>Logo</span>
+            {showCloseIcon && (
+              <IoCloseSharp
+                style={{
+                  fontSize: "25px",
+                  alignSelf: "center",
+                  marginRight: "15px",
+                }}
+                onClick={closeSidebar}
+              />
+            )}
           </div>
-          <div className={styles.content}>
-            <Link
-              href="/dashboard"
-              style={{ color: "inherit", textDecoration: "none" }}
-              onClick={onLinkClick}
-            >
-              <div className={styles.item}>
-                <MdOutlineSpaceDashboard
-                  style={{
-                    color: "#235ff4",
-                    fontSize: "23px",
-                    marginRight: "8px",
-                    marginLeft: parseInt(marginLeft) - 2,
-                  }}
-                />
-                {"   "}
-                Dashboard
-              </div>
-            </Link>
-            <Link
-              href="/Notifications"
-              style={{ color: "inherit", textDecoration: "none" }}
-              onClick={onLinkClick}
-            >
-              <div className={styles.item} onClick={onClick}>
-                <Box
-                  sx={{ color: "action.active" }}
-                  style={{ marginRight: "2px" }}
-                >
-                  {isClicked ? (
-                    <Badge
-                      color="error"
-                      overlap="circular"
-                      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                    >
-                      <IoNotificationsSharp
-                        style={{
-                          color: "#235ff4",
-                          fontSize: "23px",
-                          marginRight: "8px",
-                          marginLeft: "-5px",
-                        }}
-                      />
-                    </Badge>
-                  ) : (
-                    <Badge
-                      color="error"
-                      overlap="circular"
-                      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                      style={{ marginRight: "5px" }}
-                      variant="dot"
-                    >
-                      <IoNotificationsSharp
-                        style={{
-                          color: "#235ff4",
-                          fontSize: "23px",
-                          marginRight: "8px",
-                          marginLeft: "-5px",
-                        }}
-                      />
-                    </Badge>
-                  )}
-                </Box>
-                {"   "}
-                Notifications
-              </div>
-            </Link>
-            <AdminProtectedRoute>
-
+        </div>
+        <div className={styles.content}>
+          <Link
+            href="/dashboard"
+            style={{ color: "inherit", textDecoration: "none" }}
+            onClick={onLinkClick}
+          >
+            <div className={styles.item}>
+              <MdOutlineSpaceDashboard
+                style={{
+                  color: "#235ff4",
+                  fontSize: "23px",
+                  marginRight: "8px",
+                  marginLeft: parseInt(marginLeft) - 2,
+                }}
+              />
+              {"   "}
+              Dashboard
+            </div>
+          </Link>
+          {contextHolder}
+          <Link
+            href="/Notifications"
+            style={{ color: "inherit", textDecoration: "none" }}
+            onClick={() => {
+              onLinkClick();
+              openNotification("top");
+            }}
+          >
+            <div className={styles.item} onClick={onClick}>
+              <Box
+                sx={{ color: "action.active" }}
+                style={{ marginRight: "2px" }}
+              >
+                {isClicked ? (
+                  <Badge
+                    color="error"
+                    overlap="circular"
+                    anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                  >
+                    <IoNotificationsSharp
+                      style={{
+                        color: "#235ff4",
+                        fontSize: "23px",
+                        marginRight: "8px",
+                        marginLeft: "-5px",
+                      }}
+                    />
+                  </Badge>
+                ) : (
+                  <Badge
+                    color="error"
+                    overlap="circular"
+                    anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                    style={{ marginRight: "5px" }}
+                    variant="dot"
+                  >
+                    <IoNotificationsSharp
+                      style={{
+                        color: "#235ff4",
+                        fontSize: "23px",
+                        marginRight: "8px",
+                        marginLeft: "-5px",
+                      }}
+                    />
+                  </Badge>
+                )}
+              </Box>
+              {"   "}
+              Notifications
+            </div>
+          </Link>
+          <AdminProtectedRoute>
             <Link
               href="/ManageBuses"
               style={{ color: "inherit", textDecoration: "none" }}
@@ -236,46 +250,46 @@ function Sidebar({ onLinkClick }) {
                 Set Routes
               </div>
             </Link>
-            </AdminProtectedRoute>
-            <Link
-              href="/Profile"
-              style={{ color: "inherit", textDecoration: "none" }}
-              onClick={onLinkClick}
-            >
-              <div className={styles.item}>
-                <FaUserCircle
-                  style={{
-                    color: "#235ff4",
-                    fontSize: "20px",
-                    marginRight: "10px",
-                    marginLeft: marginLeft,
-                  }}
-                />
-                Profile
-              </div>
-            </Link>
-            <Popconfirm
-              title="Are you sure you want to log out?"
-              onConfirm={confirmLogout}
-              onCancel={cancelLogout}
-              okText="Yes"
-              cancelText="No"
-            >
-              <div className={styles.item}>
-                <MdLogout
-                  icon="fas fa-sign-out-alt"
-                  style={{
-                    fontWeight: "bolder",
-                    color: "#235ff4",
-                    fontSize: "20px",
-                    marginRight: "10px",
-                    marginLeft: marginLeft,
-                  }}
-                />
-                Log Out
-              </div>
-            </Popconfirm>
-            {/* <Link
+          </AdminProtectedRoute>
+          <Link
+            href="/Profile"
+            style={{ color: "inherit", textDecoration: "none" }}
+            onClick={onLinkClick}
+          >
+            <div className={styles.item}>
+              <FaUserCircle
+                style={{
+                  color: "#235ff4",
+                  fontSize: "20px",
+                  marginRight: "10px",
+                  marginLeft: marginLeft,
+                }}
+              />
+              Profile
+            </div>
+          </Link>
+          <Popconfirm
+            title="Are you sure you want to log out?"
+            onConfirm={confirmLogout}
+            onCancel={cancelLogout}
+            okText="Yes"
+            cancelText="No"
+          >
+            <div className={styles.item}>
+              <MdLogout
+                icon="fas fa-sign-out-alt"
+                style={{
+                  fontWeight: "bolder",
+                  color: "#235ff4",
+                  fontSize: "20px",
+                  marginRight: "10px",
+                  marginLeft: marginLeft,
+                }}
+              />
+              Log Out
+            </div>
+          </Popconfirm>
+          {/* <Link
               href="/SetRoutes"
               style={{ color: "inherit", textDecoration: "none" }}
             >
@@ -293,10 +307,10 @@ function Sidebar({ onLinkClick }) {
                 Log Out
               </div>
             </Link> */}
-          </div>
         </div>
+      </div>
       {/* ) : ( */}
-        {/* <div
+      {/* <div
           style={{
             color: "inherit",
             textDecoration: "none",
@@ -334,7 +348,7 @@ function Sidebar({ onLinkClick }) {
           </div>
         </div> */}
       {/* )} */}
-{/* </ProtectedRoute> */}
+      {/* </ProtectedRoute> */}
     </>
   );
 }

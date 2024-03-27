@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./dashboard.module.css";
 import Grid from "../../components/Grid/Grid";
 import Info from "../../components/Info/Info";
@@ -22,23 +22,29 @@ function Dashboard() {
       <ProtectedRoute>
         <div>
           <AdminProtectedRoute>
-          <div className={styles.adminPanel}>
-            <Grid />
-            <Info />
-          </div>
+            <div className={styles.adminPanel}>
+              <Grid />
+              <Info />
+            </div>
+            <div className={styles.userPanel}>
+              <div className={styles.busTitle}>Bus Details : </div>
+              <BasicTimeline />
+              <div className={styles.busDriverTitle}>Bus Driver Details : </div>
+              <BusDriverDetails />
+            </div>
           </AdminProtectedRoute>
-          <div className={styles.userPanel}>
-            <div className={styles.busTitle}>Bus Details : </div>
-            <BasicTimeline />
-            <StudentProtectedRoute>
-             <div className={styles.busDriverTitle}>Skip My House: </div>
-            <SkipMyHouse />
-            </StudentProtectedRoute>
-            <div className={styles.busDriverTitle}>Bus Driver Details : </div>
-            <BusDriverDetails />
-          </div>
+          <StudentProtectedRoute>
+            <div className={styles.userPanel}>
+              <div className={styles.busTitle}>Bus Details : </div>
+              <BasicTimeline />
+              <div className={styles.busDriverTitle}>Skip My House: </div>
+              <SkipMyHouse />
+              <div className={styles.busDriverTitle}>Bus Driver Details : </div>
+              <BusDriverDetails />
+            </div>
+          </StudentProtectedRoute>
         </div>
-        </ProtectedRoute>
+      </ProtectedRoute>
     </>
   );
 }

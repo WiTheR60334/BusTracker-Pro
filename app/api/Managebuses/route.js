@@ -18,7 +18,6 @@ export async function PUT(request) {
       });
     }
 
-    console.log("Updated bus:", updatedBus);
     return new NextResponse(JSON.stringify({ body: updatedBus }), { status: 200 });
 
   } catch (error) {

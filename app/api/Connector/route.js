@@ -10,7 +10,6 @@ export async function POST(request) {
         await connectDB();
 
         const student = await Student.findOne({ email });
-        console.log("Student:", student);
 
         if (!student) {
             return new NextResponse(JSON.stringify({ error: 'Student not found' }), { status: 404 });

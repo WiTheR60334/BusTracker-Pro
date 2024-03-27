@@ -107,7 +107,7 @@ function Profile() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ email: session.user.email, address: formData.address, father_mobile: formData.father_mobile, mother_mobile: formData.mother_mobile}),
       });
 
       if (res.ok) {
@@ -384,7 +384,7 @@ function Profile() {
             </div>
           )}
         </>
-        </ProtectedRoute>
+      </ProtectedRoute>
     </>
   );
 }

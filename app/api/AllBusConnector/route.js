@@ -7,7 +7,6 @@ export async function POST() {
         await connectDB();
 
         const allBuses = await BusDetails.find({});
-        console.log("All Buses:", allBuses);
         
         return new NextResponse(JSON.stringify({ body: allBuses }), { status: 201 });
 

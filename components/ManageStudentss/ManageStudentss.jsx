@@ -49,7 +49,7 @@ function ManageStudentss() {
 
   const handleSaveAdd = async () => {
     try {
-      const response = await fetch("/api/NewBus", {
+      const response = await fetch("/api/NewStudent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -58,15 +58,15 @@ function ManageStudentss() {
       });
 
       if (response.ok) {
-        message.success("Bus added successfully!");
+        message.success("Student added successfully!");
         window.location.reload();
         handleCancelAdd();
       } else {
-        throw new Error("Failed to add bus");
+        throw new Error("Failed to add Student");
       }
     } catch (error) {
-      console.error("Error adding bus:", error);
-      message.error("Failed to add bus. Please try again later.");
+      console.error("Error adding Student:", error);
+      message.error("Failed to add Student. Please try again later.");
     }
   };
 
@@ -123,7 +123,7 @@ function ManageStudentss() {
       key: "email",
     },
     {
-      title: "Bus No",
+      title: "Registration No",
       dataIndex: "busNo",
       key: "busNo",
     },
@@ -319,7 +319,7 @@ function ManageStudentss() {
             style={{ marginBottom: "1rem" }}
           />
           <Input
-            placeholder="Bus No"
+            placeholder="Registration No"
             value={isEditing ? editingBus?.busNo : newBus.busNo}
             onChange={(e) =>
               isEditing

@@ -1,5 +1,5 @@
 import connectDB from "../../../util/DB";
-import Student from "../../../models/Student";
+import SetRoutes from "../../../models/SetRoutes";
 import { NextResponse } from "next/server";
 
 export async function PUT(request) {
@@ -8,12 +8,12 @@ export async function PUT(request) {
 
     const { _id, ...updatedBusDetails } = await request.json();
 
-    const updatedBus = await Student.findByIdAndUpdate(_id, updatedBusDetails, {
+    const updatedBus = await SetRoutes.findByIdAndUpdate(_id, updatedBusDetails, {
       new: true, 
     });
 
     if (!updatedBus) {
-      return new NextResponse(JSON.stringify({ error: "Bus not found" }), {
+      return new NextResponse(JSON.stringify({ error: "Route not found" }), {
         status: 404,
       });
     }

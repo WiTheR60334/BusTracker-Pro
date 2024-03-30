@@ -1,6 +1,6 @@
 "use client";
 import styles from "./ManageStudents.module.css";
-import { FaBus } from "react-icons/fa";
+import { PiStudentBold } from "react-icons/pi";
 import ManageStudentss from "../../components/ManageStudentss/ManageStudentss";
 import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
@@ -21,14 +21,17 @@ function ManageStudents() {
           <div className={styles.container}>
             <div className={styles.box}>
               <div className={styles.title}>
-                <FaBus
-                  style={{
-                    color: "#235ff4",
-                    fontSize: "18px",
-                    marginRight: "8px",
-                  }}
-                />
-                Manage Buses
+                <div className={styles.titlebar}>
+                  <PiStudentBold
+                    style={{
+                      color: "#235ff4",
+                      fontSize: "21px",
+                      marginRight: "8px",
+                      display: "flex",
+                    }}
+                  />
+                  <div style={{ display: "flex" }}>Manage Students</div>
+                </div>
                 <div style={{ marginTop: "2rem" }}>
                   <ManageStudentss />
                 </div>

@@ -1,0 +1,21 @@
+.container{
+    margin-top: -1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+.box{
+    background-color: white;
+    width: 92%;
+    height: 100%;
+    border-radius: 30px;
+}
+
+.title{
+    margin-left: 2rem;
+    margin-top: 1.5rem;
+    font-weight: bolder;
+    font-size: 19px;
+}

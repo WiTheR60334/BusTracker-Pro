@@ -13,6 +13,7 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import AllBusDetails from "../AllBusDetails/AllBusDetails";
 import AllRoutesDetails from "../AllRoutesDetails/AllRoutesDetails";
+import AllBusLocationDetails from "../AllBusLocationDetails/AllBusLocationDetails";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { IoWarningOutline } from "react-icons/io5";
 import AdminProtectedRoute from "../../app/adminprotected/page";
@@ -50,6 +51,7 @@ function BasicTimeline() {
   const isBelow716px = useMediaQuery(theme.breakpoints.down(716));
   const [allBusDetails, setAllBusDetails] = useState([]);
   const [allBusRoutes, setAllBusRoutes] = useState([]);
+  const [allBusLocation, setAllBusLocation] = useState([]);
   const [student, setStudent] = useState(null);
 
   useEffect(() => {
@@ -59,6 +61,9 @@ function BasicTimeline() {
 
       const busRoutes = await AllRoutesDetails();
       setAllBusRoutes(busRoutes);
+
+      const busLocation = await AllBusLocationDetails();
+      setAllBusLocation(busLocation);
     };
     fetchAllBusData();
   }, []);
@@ -289,22 +294,40 @@ function BasicTimeline() {
                       <div className={styles.busDetails}>
                         <div className={styles.items}>
                           <div className={styles.itemName}>Average Speed:</div>
-                          <div className={styles.itemValue}>30 km/hr</div>
-                        </div>
-                        <div className={styles.items}>
-                          <div className={styles.itemName}>Distance:</div>
-                          <div className={styles.itemValue}>200 m</div>
-                        </div>
-                        <div className={styles.items}>
-                          <div className={styles.itemName}>Estimated Time:</div>
-                          <div className={styles.itemValue}>5 m</div>
-                        </div>
-                        <div className={styles.items}>
-                          <div className={styles.itemName}>Live Location:</div>
+                          {allBusLocation.map((location) => {
+                      if (location.registration_no === bus.registration_no) {
+                        return (
                           <div className={styles.itemValue}>
-                            Commerce Six Roads
+                            {location.speed} km/h
                           </div>
-                        </div>
+                        );
+                      } else {
+                        <div>Location is updating.....</div>;
+                      }
+                    })}
+                  </div>
+                  {/* <div className={styles.items}>
+                    <div className={styles.itemName}>Distance:</div>
+                    <div className={styles.itemValue}>200 m</div>
+                  </div> */}
+                  <div className={styles.items}>
+                    <div className={styles.itemName}>Estimated Time:</div>
+                    <div className={styles.itemValue}>5 m</div>
+                  </div>
+                  <div className={styles.items}>
+                    <div className={styles.itemName}>Live Location:</div>
+                    {allBusLocation.map((location) => {
+                      if (location.registration_no === bus.registration_no) {
+                        return (
+                          <div className={styles.itemValue}>
+                            {location.lattitude} {location.longitude}
+                          </div>
+                        );
+                      } else {
+                        <div>Location is updating.....</div>;
+                      }
+                    })}
+                  </div>
                         <div className={styles.items}>
                           <div className={styles.itemName}>Total Seats:</div>
                           <div className={styles.itemValue}>40</div>
@@ -520,19 +543,39 @@ function BasicTimeline() {
                 <div className={styles.busDetails}>
                   <div className={styles.items}>
                     <div className={styles.itemName}>Average Speed:</div>
-                    <div className={styles.itemValue}>30 km/hr</div>
+                    {allBusLocation.map((location) => {
+                      if (location.registration_no === student) {
+                        return (
+                          <div className={styles.itemValue}>
+                            {location.speed} km/h
+                          </div>
+                        );
+                      } else {
+                        <div>Location is updating.....</div>;
+                      }
+                    })}
                   </div>
-                  <div className={styles.items}>
+                  {/* <div className={styles.items}>
                     <div className={styles.itemName}>Distance:</div>
                     <div className={styles.itemValue}>200 m</div>
-                  </div>
+                  </div> */}
                   <div className={styles.items}>
                     <div className={styles.itemName}>Estimated Time:</div>
                     <div className={styles.itemValue}>5 m</div>
                   </div>
                   <div className={styles.items}>
                     <div className={styles.itemName}>Live Location:</div>
-                    <div className={styles.itemValue}>Commerce Six Roads</div>
+                    {allBusLocation.map((location) => {
+                      if (location.registration_no === student) {
+                        return (
+                          <div className={styles.itemValue}>
+                            {location.lattitude} {location.longitude}
+                          </div>
+                        );
+                      } else {
+                        <div>Location is updating.....</div>;
+                      }
+                    })}
                   </div>
                   <div className={styles.items}>
                     <div className={styles.itemName}>Total Seats:</div>

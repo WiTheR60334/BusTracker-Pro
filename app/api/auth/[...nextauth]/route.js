@@ -14,7 +14,7 @@ const authOptions = {
       profile(profile) {
         let role = 'student'; 
 
-        if (profile.email === 'romirr.b@ahduni.edu.in') {
+        if (profile.email === 'romir.b@ahduni.edu.in') {
           role = 'admin';
         }
         console.log(role);

@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import styles from "./BasicTimeline.module.css";
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem, { timelineItemClasses } from "@mui/lab/TimelineItem";
@@ -11,6 +12,7 @@ import TimelineDot from "@mui/lab/TimelineDot";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import AllBusDetails from "../AllBusDetails/AllBusDetails";
+import AllRoutesDetails from "../AllRoutesDetails/AllRoutesDetails";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { IoWarningOutline } from "react-icons/io5";
 import AdminProtectedRoute from "../../app/adminprotected/page";
@@ -43,231 +45,303 @@ const getTextColorClassName = (text) => {
 };
 
 function BasicTimeline() {
+  const { data: session, status } = useSession();
   const theme = useTheme();
   const isBelow716px = useMediaQuery(theme.breakpoints.down(716));
   const [allBusDetails, setAllBusDetails] = useState([]);
+  const [allBusRoutes, setAllBusRoutes] = useState([]);
+  const [student, setStudent] = useState(null);
 
   useEffect(() => {
     const fetchAllBusData = async () => {
       const allBusData = await AllBusDetails();
       setAllBusDetails(allBusData);
+
+      const busRoutes = await AllRoutesDetails();
+      setAllBusRoutes(busRoutes);
     };
     fetchAllBusData();
   }, []);
 
+  useEffect(() => {
+    const fetchStudentData = async () => {
+      try {
+        const response = await fetch("/api/Connector", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: session.user.email }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch student data");
+        }
+
+        const data = await response.json();
+        setStudent(data.body.busNo);
+      } catch (error) {
+        console.error("Error fetching student data:", error);
+      }
+    };
+
+    fetchStudentData();
+  }, [session]);
+
   return (
-     <>
+    <>
       <AdminProtectedRoute>
-      {allBusDetails && Array.isArray(allBusDetails) && (
+        {allBusDetails &&
+          Array.isArray(allBusDetails) &&
           allBusDetails.map((bus) => (
-    <div className={styles.container}>
-
-        <div key={bus._id}>
-          <div className={styles.title}>Bus No: {bus.registration_no}</div>
-          <div className={styles.details}>
-            <div className={styles.timeline}>
-              <Timeline
-                sx={{
-                  [`& .${timelineItemClasses.root}:before`]: {
-                    flex: isBelow716px ? 0.1 : 0.2,
-                    padding: 0,
-                  },
-                }}
-              >
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot style={{ backgroundColor: "blue" }} />
-                    <TimelineConnector style={{ height: "4rem" }} />
-                  </TimelineSeparator>
-                  <TimelineContent color="textSecondary">
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        marginTop: "-.3rem",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontSize: "20px",
-                          color: "black",
-                          fontWeight: "750",
-                        }}
-                      >
-                        Departure from Depot
-                      </div>
-                      <div>6:15 am</div>
-                    </div>
-                  </TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot style={{ backgroundColor: "blue" }} />
-                    <TimelineConnector style={{ height: "4rem" }} />
-                  </TimelineSeparator>
-                  <TimelineContent color="textSecondary">
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        marginTop: "-.3rem",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontSize: "20px",
-                          color: "black",
-                          fontWeight: "750",
-                        }}
-                      >
-                        House 1
-                      </div>
-                      <div>6:30 am</div>
-                    </div>
-                  </TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot style={{ backgroundColor: "red" }} />
-                    <TimelineConnector style={{ height: "4rem" }} />
-                  </TimelineSeparator>
-                  <TimelineContent color="textSecondary">
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        marginTop: "-.3rem",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontSize: "20px",
-                          color: "black",
-                          fontWeight: "750",
-                        }}
-                      >
-                        House 2 (Skipped)
-                      </div>
-                      <div>6:35 am</div>
-                    </div>
-                  </TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot />
-                    <TimelineConnector style={{ height: "4rem" }} />
-                  </TimelineSeparator>
-                  <TimelineContent color="textSecondary">
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        marginTop: "-.3rem",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontSize: "20px",
-                          color: "black",
-                          fontWeight: "750",
-                        }}
-                      >
-                        House 3
-                      </div>
-                      <div>6:40 am</div>
-                    </div>
-                  </TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot />
-                    {/* <TimelineConnector style={{ height: "4rem" }} /> */}
-                  </TimelineSeparator>
-                  <TimelineContent color="textSecondary">
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        marginTop: "-.3rem",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontSize: "20px",
-                          color: "black",
-                          fontWeight: "750",
-                        }}
-                      >
-                        School
-                      </div>
-                      <div>7:00 am</div>
-                    </div>
-                  </TimelineContent>
-                </TimelineItem>
-              </Timeline>
-            </div>
-            <div className={styles.content}>
-              <div className={styles.wrapper}>
-                <div className={styles.busStatus}>
-                  Bus Status :{/* {getTextColorClassName("High")} */}
-                  {getTextColorClassName("Avg")}
-                  {/* {getTextColorClassName("Low")} */}
+            <div className={styles.container}>
+              <div key={bus._id}>
+                <div className={styles.title}>
+                  Bus No: {bus.registration_no}
                 </div>
-                <div className={styles.busDetails}>
-                  <div className={styles.items}>
-                    <div className={styles.itemName}>Average Speed:</div>
-                    <div className={styles.itemValue}>30 km/hr</div>
+                <div className={styles.details}>
+                  <div className={styles.timeline}>
+                    <Timeline
+                      sx={{
+                        [`& .${timelineItemClasses.root}:before`]: {
+                          flex: isBelow716px ? 0.1 : 0.2,
+                          padding: 0,
+                        },
+                      }}
+                    >
+                      <TimelineItem>
+                        <TimelineSeparator>
+                          <TimelineDot style={{ backgroundColor: "blue" }} />
+                          <TimelineConnector style={{ height: "4rem" }} />
+                        </TimelineSeparator>
+                        <TimelineContent color="textSecondary">
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginTop: "-.3rem",
+                            }}
+                          >
+                            <div
+                              style={{
+                                fontSize: "20px",
+                                color: "black",
+                                fontWeight: "750",
+                              }}
+                            >
+                              Departure from Depot
+                            </div>
+                            <div>6:15 am</div>
+                          </div>
+                        </TimelineContent>
+                      </TimelineItem>
+                      <TimelineItem>
+                        <TimelineSeparator>
+                          <TimelineDot style={{ backgroundColor: "blue" }} />
+                          <TimelineConnector style={{ height: "4rem" }} />
+                        </TimelineSeparator>
+                        <TimelineContent color="textSecondary">
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginTop: "-.3rem",
+                            }}
+                          >
+                            {allBusRoutes.map((route) => {
+                              if (
+                                route.registration_no === bus.registration_no
+                              ) {
+                                return (
+                                  <div
+                                    key={route._id}
+                                    style={{
+                                      fontSize: "20px",
+                                      color: "black",
+                                      fontWeight: "750",
+                                    }}
+                                  >
+                                    {route.area1}
+                                  </div>
+                                );
+                              } else {
+                                <div>
+                                  None bus has been assigned this route
+                                </div>;
+                              }
+                            })}
+                            <div>6:30 am</div>
+                          </div>
+                        </TimelineContent>
+                      </TimelineItem>
+                      <TimelineItem>
+                        <TimelineSeparator>
+                          <TimelineDot style={{ backgroundColor: "blue" }} />
+                          <TimelineConnector style={{ height: "4rem" }} />
+                        </TimelineSeparator>
+                        <TimelineContent color="textSecondary">
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginTop: "-.3rem",
+                            }}
+                          >
+                            {allBusRoutes.map((route) => {
+                              if (
+                                route.registration_no === bus.registration_no
+                              ) {
+                                return (
+                                  <div
+                                    key={route._id}
+                                    style={{
+                                      fontSize: "20px",
+                                      color: "black",
+                                      fontWeight: "750",
+                                    }}
+                                  >
+                                    {route.area2}
+                                  </div>
+                                );
+                              } else {
+                                <div>
+                                  None bus has been assigned this route
+                                </div>;
+                              }
+                            })}
+                            <div>6:35 am</div>
+                          </div>
+                        </TimelineContent>
+                      </TimelineItem>
+                      <TimelineItem>
+                        <TimelineSeparator>
+                          <TimelineDot />
+                          {/* <TimelineConnector style={{ height: "4rem" }} /> */}
+                        </TimelineSeparator>
+                        <TimelineContent color="textSecondary">
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginTop: "-.3rem",
+                            }}
+                          >
+                            {allBusRoutes.map((route) => {
+                              if (
+                                route.registration_no === bus.registration_no
+                              ) {
+                                return (
+                                  <div
+                                    key={route._id}
+                                    style={{
+                                      fontSize: "20px",
+                                      color: "black",
+                                      fontWeight: "750",
+                                    }}
+                                  >
+                                    {route.area3}
+                                  </div>
+                                );
+                              } else {
+                                <div>
+                                  None bus has been assigned this route
+                                </div>;
+                              }
+                            })}
+                            <div>6:40 am</div>
+                          </div>
+                        </TimelineContent>
+                      </TimelineItem>
+                      {/* <TimelineItem>
+                        <TimelineSeparator>
+                          <TimelineDot />
+                        </TimelineSeparator>
+                        <TimelineContent color="textSecondary">
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginTop: "-.3rem",
+                            }}
+                          >
+                            <div
+                              style={{
+                                fontSize: "20px",
+                                color: "black",
+                                fontWeight: "750",
+                              }}
+                            >
+                              School
+                            </div>
+                            <div>7:00 am</div>
+                          </div>
+                        </TimelineContent>
+                      </TimelineItem> */}
+                    </Timeline>
                   </div>
-                  <div className={styles.items}>
-                    <div className={styles.itemName}>Distance:</div>
-                    <div className={styles.itemValue}>200 m</div>
-                  </div>
-                  <div className={styles.items}>
-                    <div className={styles.itemName}>Estimated Time:</div>
-                    <div className={styles.itemValue}>5 m</div>
-                  </div>
-                  <div className={styles.items}>
-                    <div className={styles.itemName}>Live Location:</div>
-                    <div className={styles.itemValue}>Commerce Six Roads</div>
-                  </div>
-                  <div className={styles.items}>
-                    <div className={styles.itemName}>Total Seats:</div>
-                    <div className={styles.itemValue}>40</div>
-                  </div>
-                  <div className={styles.items}>
-                    <div className={styles.itemName}>Available Seats:</div>
-                    <div className={styles.itemValue}>22</div>
-                  </div>
-                </div>
-                <div className={styles.fault}>
-                  <RiErrorWarningFill
-                    style={{
-                      color: "red",
-                      marginRight: ".3rem",
-                    }}
-                  />
-                  Fault Type :{" "}
-                  <div style={{ marginLeft: ".5rem", fontWeight: "bolder" }}>
-                    {" "}
-                    Traffic
+                  <div className={styles.content}>
+                    <div className={styles.wrapper}>
+                      <div className={styles.busStatus}>
+                        Bus Status :{getTextColorClassName("High")}
+                        {/* {getTextColorClassName("Avg")} */}
+                        {/* {getTextColorClassName("Low")} */}
+                      </div>
+                      <div className={styles.busDetails}>
+                        <div className={styles.items}>
+                          <div className={styles.itemName}>Average Speed:</div>
+                          <div className={styles.itemValue}>30 km/hr</div>
+                        </div>
+                        <div className={styles.items}>
+                          <div className={styles.itemName}>Distance:</div>
+                          <div className={styles.itemValue}>200 m</div>
+                        </div>
+                        <div className={styles.items}>
+                          <div className={styles.itemName}>Estimated Time:</div>
+                          <div className={styles.itemValue}>5 m</div>
+                        </div>
+                        <div className={styles.items}>
+                          <div className={styles.itemName}>Live Location:</div>
+                          <div className={styles.itemValue}>
+                            Commerce Six Roads
+                          </div>
+                        </div>
+                        <div className={styles.items}>
+                          <div className={styles.itemName}>Total Seats:</div>
+                          <div className={styles.itemValue}>40</div>
+                        </div>
+                        <div className={styles.items}>
+                          <div className={styles.itemName}>
+                            Available Seats:
+                          </div>
+                          <div className={styles.itemValue}>22</div>
+                        </div>
+                      </div>
+                      <div className={styles.fault}>
+                        <RiErrorWarningFill
+                          style={{
+                            color: "red",
+                            marginRight: ".3rem",
+                          }}
+                        />
+                        Fault Type :{" "}
+                        <div
+                          style={{ marginLeft: ".5rem", fontWeight: "bolder" }}
+                        >
+                          {" "}
+                          None
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-    </div>
-      ))
-      )}
-
+          ))}
       </AdminProtectedRoute>
-      <StudentProtectedRoute>
-      {allBusDetails && Array.isArray(allBusDetails) && (
-          allBusDetails.map((bus) => (
-    <div className={styles.container}>
 
-        <div key={bus._id}>
-          <div className={styles.title}>Bus No: {bus.registration_no}</div>
+      <StudentProtectedRoute>
+        <div className={styles.container}>
+          <div className={styles.title}>Bus No: {student}</div>
           <div className={styles.details}>
             <div className={styles.timeline}>
               <Timeline
@@ -317,22 +391,31 @@ function BasicTimeline() {
                         marginTop: "-.3rem",
                       }}
                     >
-                      <div
-                        style={{
-                          fontSize: "20px",
-                          color: "black",
-                          fontWeight: "750",
-                        }}
-                      >
-                        House 1
-                      </div>
+                      {allBusRoutes.map((route) => {
+                        if (route.registration_no === student) {
+                          return (
+                            <div
+                              key={route._id}
+                              style={{
+                                fontSize: "20px",
+                                color: "black",
+                                fontWeight: "750",
+                              }}
+                            >
+                              {route.area1}
+                            </div>
+                          );
+                        } else {
+                          <div>None bus has been assigned this route</div>;
+                        }
+                      })}
                       <div>6:30 am</div>
                     </div>
                   </TimelineContent>
                 </TimelineItem>
                 <TimelineItem>
                   <TimelineSeparator>
-                    <TimelineDot style={{ backgroundColor: "red" }} />
+                    <TimelineDot style={{ backgroundColor: "blue" }} />
                     <TimelineConnector style={{ height: "4rem" }} />
                   </TimelineSeparator>
                   <TimelineContent color="textSecondary">
@@ -343,42 +426,25 @@ function BasicTimeline() {
                         marginTop: "-.3rem",
                       }}
                     >
-                      <div
-                        style={{
-                          fontSize: "20px",
-                          color: "black",
-                          fontWeight: "750",
-                        }}
-                      >
-                        House 2 (Skipped)
-                      </div>
+                      {allBusRoutes.map((route) => {
+                        if (route.registration_no === student) {
+                          return (
+                            <div
+                              key={route._id}
+                              style={{
+                                fontSize: "20px",
+                                color: "black",
+                                fontWeight: "750",
+                              }}
+                            >
+                              {route.area2}
+                            </div>
+                          );
+                        } else {
+                          <div>None bus has been assigned this route</div>;
+                        }
+                      })}
                       <div>6:35 am</div>
-                    </div>
-                  </TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot />
-                    <TimelineConnector style={{ height: "4rem" }} />
-                  </TimelineSeparator>
-                  <TimelineContent color="textSecondary">
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        marginTop: "-.3rem",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontSize: "20px",
-                          color: "black",
-                          fontWeight: "750",
-                        }}
-                      >
-                        House 3
-                      </div>
-                      <div>6:40 am</div>
                     </div>
                   </TimelineContent>
                 </TimelineItem>
@@ -395,26 +461,60 @@ function BasicTimeline() {
                         marginTop: "-.3rem",
                       }}
                     >
-                      <div
-                        style={{
-                          fontSize: "20px",
-                          color: "black",
-                          fontWeight: "750",
-                        }}
-                      >
-                        School
-                      </div>
-                      <div>7:00 am</div>
+                      {allBusRoutes.map((route) => {
+                        if (route.registration_no === student) {
+                          return (
+                            <div
+                              key={route._id}
+                              style={{
+                                fontSize: "20px",
+                                color: "black",
+                                fontWeight: "750",
+                              }}
+                            >
+                              {route.area3}
+                            </div>
+                          );
+                        } else {
+                          <div>None bus has been assigned this route</div>;
+                        }
+                      })}
+                      <div>6:40 am</div>
                     </div>
                   </TimelineContent>
                 </TimelineItem>
+                {/* <TimelineItem>
+                    <TimelineSeparator>
+                      <TimelineDot />
+                    </TimelineSeparator>
+                    <TimelineContent color="textSecondary">
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          marginTop: "-.3rem",
+                        }}
+                      >
+                        <div
+                          style={{
+                            fontSize: "20px",
+                            color: "black",
+                            fontWeight: "750",
+                          }}
+                        >
+                          School
+                        </div>
+                        <div>7:00 am</div>
+                      </div>
+                    </TimelineContent>
+                  </TimelineItem> */}
               </Timeline>
             </div>
             <div className={styles.content}>
               <div className={styles.wrapper}>
                 <div className={styles.busStatus}>
-                  Bus Status :{/* {getTextColorClassName("High")} */}
-                  {getTextColorClassName("Avg")}
+                  Bus Status :{getTextColorClassName("High")}
+                  {/* {getTextColorClassName("Avg")} */}
                   {/* {getTextColorClassName("Low")} */}
                 </div>
                 <div className={styles.busDetails}>
@@ -453,19 +553,15 @@ function BasicTimeline() {
                   Fault Type :{" "}
                   <div style={{ marginLeft: ".5rem", fontWeight: "bolder" }}>
                     {" "}
-                    Traffic
+                    None
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-    </div>
-      ))
-      )}
-
       </StudentProtectedRoute>
-     </>
+    </>
   );
 }
 

@@ -189,16 +189,16 @@ function ManageStudentss() {
       });
 
       if (res.ok) {
-        message.success("Bus details updated successfully");
+        message.success("Student details updated successfully");
         setIsEditing(false);
         setEditingBus(null);
         window.location.reload();
       } else {
-        throw new Error("Failed to update bus details");
+        throw new Error("Failed to update Student details");
       }
     } catch (error) {
-      console.error("Error updating bus details:", error);
-      message.error("Failed to update bus details");
+      console.error("Error updating Student details:", error);
+      message.error("Failed to update Student details");
     }
 
     setIsEditing(false);

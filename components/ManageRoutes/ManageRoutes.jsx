@@ -151,16 +151,16 @@ function ManageStudentss() {
       });
 
       if (res.ok) {
-        message.success("Bus details updated successfully");
+        message.success("Route details updated successfully");
         setIsEditing(false);
         setEditingBus(null);
         window.location.reload();
       } else {
-        throw new Error("Failed to update bus details");
+        throw new Error("Failed to update Route details");
       }
     } catch (error) {
-      console.error("Error updating bus details:", error);
-      message.error("Failed to update bus details");
+      console.error("Error updating Route details:", error);
+      message.error("Failed to update Route details");
     }
 
     setIsEditing(false);

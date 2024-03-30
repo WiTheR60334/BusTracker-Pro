@@ -49,7 +49,6 @@ function Sidebar({ onLinkClick }) {
   };
 
   const handleLogout = (redirect = true) => {
-    console.log("Logging out...");
     if (redirect) {
       signOut({ callbackUrl: "/" });
     }

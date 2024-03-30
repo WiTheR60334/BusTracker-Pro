@@ -26,10 +26,6 @@ function AdminProtectedRoute(props) {
 
         const data = await response.json();
         setUser(data.body);
-        console.log(
-          "this is the message received on client side : ",
-          data.body
-        );
       } catch (error) {
         console.error("Error fetching student data:", error);
       }

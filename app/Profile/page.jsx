@@ -25,12 +25,6 @@ function Profile() {
     busNo: "",
     email: session?.user.email,
   });
-  // console.log("hi");
-
-  // if (session) {
-  //   console.log("loggged in");
-  //   const { user } = session;
-  // }
   const router = useRouter();
 
   useEffect(() => {
@@ -57,13 +51,6 @@ function Profile() {
 
     fetchStudentData();
   }, [session]);
-
-  // useEffect(() => {
-  //   if (status !== "authenticated") {
-  //     router.push("/");
-  //     message.info("You need to login to access this page");
-  //   }
-  // }, [status, router]);
 
   const [imageSrc, setImageSrc] = useState("");
   const inputRef = useRef(null);

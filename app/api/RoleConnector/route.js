@@ -5,7 +5,6 @@ import User from "../../../models/User";
 
 export async function POST(request) {
     const { email } = await request.json();
-    console.log("Received POST request for user email:", email);
     try {
         await connectDB();
 

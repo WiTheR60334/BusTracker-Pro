@@ -39,14 +39,12 @@ export default function RootLayout({ children }) {
   const toggleMenu = () => {
     setIsActive(!isActive);
     setSidebarIsActive(true);
-    console.log('clicked!!', isActive);
   };
   
   const handleLinkClick = () => {
     if (windowWidth < 768) {
       setSidebarIsActive(false);
       setIsActive(false);
-      console.log('done!!', SidebarIsActive);
     }
   };
 

@@ -11,12 +11,12 @@ function ManageStudentss() {
   const [editingBus, setEditingBus] = useState(null);
   const [dataSource, setDataSource] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
-  const [allRoutesDetails, setAllRoutesDetails] = useState([]);
   const [newBus, setNewBus] = useState({
     route_id: "",
     area1: "",
     area2: "",
     area3: "",
+    registration_no: "",
   });
 
   const handleAddBus = () => {
@@ -27,6 +27,7 @@ function ManageStudentss() {
       area1: "",
       area2: "",
       area3: "",
+      registration_no: "",
     });
   };
 
@@ -94,6 +95,11 @@ function ManageStudentss() {
       key: "route_id",
     },
     {
+      title: "Registration No",
+      dataIndex: "registration_no",
+      key: "registration_no",
+    },
+    {
       title: "Area1",
       dataIndex: "area1",
       key: "area1",
@@ -129,6 +135,7 @@ function ManageStudentss() {
     area1: "",
     area2: "",
     area3: "",
+    registration_no: "",
   });
 
   useEffect(() => {
@@ -218,6 +225,19 @@ function ManageStudentss() {
                     route_id: e.target.value,
                   })
                 : setNewBus({ ...newBus, route_id: e.target.value })
+            }
+            style={{ marginBottom: "1rem" }}
+          />
+          <Input
+            placeholder="Registration No"
+            value={isEditing ? editingBus?.registration_no : newBus.registration_no}
+            onChange={(e) =>
+              isEditing
+                ? setEditingBus({
+                    ...editingBus,
+                    registration_no: e.target.value,
+                  })
+                : setNewBus({ ...newBus, registration_no: e.target.value })
             }
             style={{ marginBottom: "1rem" }}
           />

@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
 import connectDB from '../../../util/DB';
-import Student from "../../../models/Student"; 
-import User from "../../../models/User";
+import Student from "../../../models/Student";
 
 export async function POST(request) {
     const { email } = await request.json();
-    console.log("Received POST request for student email:", email);
     try {
         await connectDB();
 

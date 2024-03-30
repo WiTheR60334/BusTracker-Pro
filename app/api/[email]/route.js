@@ -5,8 +5,6 @@ import { NextResponse } from "next/server";
 export async function PUT(request) {
   try {
     const { email, address, father_mobile, mother_mobile } = await request.json();
-    console.log("Received PUT request for student email:", email);
-    console.log("Received updated data:", { address, father_mobile, mother_mobile });
 
     const updateObject = {};
     if (address) updateObject.address = address;
@@ -19,8 +17,6 @@ export async function PUT(request) {
       { $set: updateObject }, 
       { new: true } 
     );
-
-    console.log("Updated student:", updatedStudent);
 
     if (!updatedStudent) {
       return new NextResponse("Student not found", { status: 404 });

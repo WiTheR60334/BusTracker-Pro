@@ -19,3 +19,9 @@
     font-weight: bolder;
     font-size: 19px;
 }
+
+.titlebar{
+    display: flex;
+    align-items: center;
+    margin-bottom: -1rem;
+}

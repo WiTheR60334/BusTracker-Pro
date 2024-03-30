@@ -36,7 +36,7 @@ function ManageStudentss() {
 
   const handleDeleteBus = (record) => {
     Modal.confirm({
-      title: "Are you sure you want to delete this bus?",
+      title: "Are you sure you want to delete this Student?",
       okText: "Yes",
       okType: "danger",
       onOk: () => handleSaveDelete(record),
@@ -72,22 +72,22 @@ function ManageStudentss() {
 
   const handleSaveDelete = async (record) => {
     try {
-      const response = await fetch(`/api/DeleteBus/${record}`, {
+      const response = await fetch(`/api/DeleteStudent/${record}`, {
         method: "DELETE",
       });
 
       if (response.ok) {
-        message.success("Bus deleted successfully!");
+        message.success("Student deleted successfully!");
         window.location.reload();
         setDataSource((prevDataSource) =>
           prevDataSource.filter((bus) => bus._id !== record._id)
         );
       } else {
-        throw new Error("Failed to delete bus");
+        throw new Error("Failed to delete Student");
       }
     } catch (error) {
-      console.error("Error deleting bus:", error);
-      message.error("Failed to delete bus. Please try again later.");
+      console.error("Error deleting Student:", error);
+      message.error("Failed to delete Student. Please try again later.");
     }
   };
 

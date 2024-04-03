@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import styles from "./BasicTimeline.module.css";
 import Timeline from "@mui/lab/Timeline";
@@ -53,6 +54,8 @@ function BasicTimeline() {
   const [allBusRoutes, setAllBusRoutes] = useState([]);
   const [allBusLocation, setAllBusLocation] = useState([]);
   const [student, setStudent] = useState(null);
+  const [addresses, setAddresses] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAllBusData = async () => {
@@ -92,6 +95,26 @@ function BasicTimeline() {
 
     fetchStudentData();
   }, [session]);
+
+  useEffect(() => {
+    const fetchAddresses = async () => {
+      const updatedAddresses = {};
+      for (const location of allBusLocation) {
+        const { lattitude, longitude, registration_no } = location;
+        const response = await fetch(
+          `https://api.geoapify.com/v1/geocode/reverse?lat=${lattitude}&lon=${longitude}&apiKey=${process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY}`
+        );
+        const data = await response.json();
+        updatedAddresses[registration_no] =
+          data.features[0].properties.formatted;
+      }
+      setAddresses(updatedAddresses);
+    };
+
+    if (allBusLocation.length > 0) {
+      fetchAddresses();
+    }
+  }, [allBusLocation]);
 
   return (
     <>
@@ -295,39 +318,43 @@ function BasicTimeline() {
                         <div className={styles.items}>
                           <div className={styles.itemName}>Average Speed:</div>
                           {allBusLocation.map((location) => {
-                      if (location.registration_no === bus.registration_no) {
-                        return (
-                          <div className={styles.itemValue}>
-                            {location.speed} km/h
-                          </div>
-                        );
-                      } else {
-                        <div>Location is updating.....</div>;
-                      }
-                    })}
-                  </div>
-                  {/* <div className={styles.items}>
+                            if (
+                              location.registration_no === bus.registration_no
+                            ) {
+                              return (
+                                <div className={styles.itemValue}>
+                                  {location.speed} km/h
+                                </div>
+                              );
+                            } else {
+                              <div>Location is updating.....</div>;
+                            }
+                          })}
+                        </div>
+                        {/* <div className={styles.items}>
                     <div className={styles.itemName}>Distance:</div>
                     <div className={styles.itemValue}>200 m</div>
                   </div> */}
-                  <div className={styles.items}>
-                    <div className={styles.itemName}>Estimated Time:</div>
-                    <div className={styles.itemValue}>5 m</div>
-                  </div>
-                  <div className={styles.items}>
-                    <div className={styles.itemName}>Live Location:</div>
-                    {allBusLocation.map((location) => {
-                      if (location.registration_no === bus.registration_no) {
-                        return (
-                          <div className={styles.itemValue}>
-                            {location.lattitude} {location.longitude}
-                          </div>
-                        );
-                      } else {
-                        <div>Location is updating.....</div>;
-                      }
-                    })}
-                  </div>
+                        <div className={styles.items}>
+                          <div className={styles.itemName}>Estimated Time:</div>
+                          <div className={styles.itemValue}>5 m</div>
+                        </div>
+                        <div className={styles.items}>
+                          <div className={styles.itemName}>Live Location:</div>
+                          {allBusLocation.map((location) => {
+                            if (
+                              location.registration_no === bus.registration_no
+                            ) {
+                              return (
+                                <div className={styles.itemValue}>
+                                   {addresses[location.registration_no] || "Address is updating..."}
+                                </div>
+                              );
+                            } else {
+                              <div>Location is updating.....</div>;
+                            }
+                          })}
+                        </div>
                         <div className={styles.items}>
                           <div className={styles.itemName}>Total Seats:</div>
                           <div className={styles.itemValue}>40</div>
@@ -569,7 +596,7 @@ function BasicTimeline() {
                       if (location.registration_no === student) {
                         return (
                           <div className={styles.itemValue}>
-                            {location.lattitude} {location.longitude}
+                            {addresses[location.registration_no] || "Address is updating..."}
                           </div>
                         );
                       } else {

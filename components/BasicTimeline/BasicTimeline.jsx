@@ -154,7 +154,7 @@ function BasicTimeline() {
                     >
                       <TimelineItem>
                         <TimelineSeparator>
-                          <TimelineDot style={{ backgroundColor: "blue" }} />
+                          <TimelineDot />
                           <TimelineConnector style={{ height: "4rem" }} />
                         </TimelineSeparator>
                         <TimelineContent color="textSecondary">
@@ -180,7 +180,7 @@ function BasicTimeline() {
                       </TimelineItem>
                       <TimelineItem>
                         <TimelineSeparator>
-                          <TimelineDot style={{ backgroundColor: "blue" }} />
+                          <TimelineDot />
                           <TimelineConnector style={{ height: "4rem" }} />
                         </TimelineSeparator>
                         <TimelineContent color="textSecondary">
@@ -219,7 +219,7 @@ function BasicTimeline() {
                       </TimelineItem>
                       <TimelineItem>
                         <TimelineSeparator>
-                          <TimelineDot style={{ backgroundColor: "blue" }} />
+                          <TimelineDot />
                           <TimelineConnector style={{ height: "4rem" }} />
                         </TimelineSeparator>
                         <TimelineContent color="textSecondary">
@@ -474,7 +474,7 @@ function BasicTimeline() {
               >
                 <TimelineItem>
                   <TimelineSeparator>
-                    <TimelineDot style={{ backgroundColor: "blue" }} />
+                    <TimelineDot  />
                     <TimelineConnector style={{ height: "4rem" }} />
                   </TimelineSeparator>
                   <TimelineContent color="textSecondary">
@@ -500,7 +500,7 @@ function BasicTimeline() {
                 </TimelineItem>
                 <TimelineItem>
                   <TimelineSeparator>
-                    <TimelineDot style={{ backgroundColor: "blue" }} />
+                    <TimelineDot  />
                     <TimelineConnector style={{ height: "4rem" }} />
                   </TimelineSeparator>
                   <TimelineContent color="textSecondary">
@@ -535,7 +535,7 @@ function BasicTimeline() {
                 </TimelineItem>
                 <TimelineItem>
                   <TimelineSeparator>
-                    <TimelineDot style={{ backgroundColor: "blue" }} />
+                    <TimelineDot  />
                     <TimelineConnector style={{ height: "4rem" }} />
                   </TimelineSeparator>
                   <TimelineContent color="textSecondary">
@@ -571,7 +571,7 @@ function BasicTimeline() {
                 <TimelineItem>
                   <TimelineSeparator>
                     <TimelineDot />
-                    {/* <TimelineConnector style={{ height: "4rem" }} /> */}
+                    <TimelineConnector style={{ height: "4rem" }} />
                   </TimelineSeparator>
                   <TimelineContent color="textSecondary">
                     <div

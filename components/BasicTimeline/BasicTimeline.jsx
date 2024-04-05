@@ -259,7 +259,7 @@ function BasicTimeline() {
                       <TimelineItem>
                         <TimelineSeparator>
                           <TimelineDot />
-                          {/* <TimelineConnector style={{ height: "4rem" }} /> */}
+                          <TimelineConnector style={{ height: "4rem" }} />
                         </TimelineSeparator>
                         <TimelineContent color="textSecondary">
                           <div
@@ -292,6 +292,45 @@ function BasicTimeline() {
                               }
                             })}
                             <div>6:40 am</div>
+                          </div>
+                        </TimelineContent>
+                      </TimelineItem>
+                      <TimelineItem>
+                        <TimelineSeparator>
+                          <TimelineDot />
+                          {/* <TimelineConnector style={{ height: "4rem" }} /> */}
+                        </TimelineSeparator>
+                        <TimelineContent color="textSecondary">
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginTop: "-.3rem",
+                            }}
+                          >
+                            {allBusRoutes.map((route) => {
+                              if (
+                                route.registration_no === bus.registration_no
+                              ) {
+                                return (
+                                  <div
+                                    key={route._id}
+                                    style={{
+                                      fontSize: "20px",
+                                      color: "black",
+                                      fontWeight: "750",
+                                    }}
+                                  >
+                                    {route.area4}
+                                  </div>
+                                );
+                              } else {
+                                <div>
+                                  None bus has been assigned this route
+                                </div>;
+                              }
+                            })}
+                            <div>6:45 am</div>
                           </div>
                         </TimelineContent>
                       </TimelineItem>
@@ -330,7 +369,7 @@ function BasicTimeline() {
                         {/* {getTextColorClassName("Low")} */}
                       </div>
                       <div className={styles.busDetails}>
-                        <div className={styles.items}>
+                        {/* <div className={styles.items}>
                           <div className={styles.itemName}>Average Speed:</div>
                           {allBusLocation.map((location) => {
                             if (
@@ -345,14 +384,28 @@ function BasicTimeline() {
                               <div>Location is updating.....</div>;
                             }
                           })}
-                        </div>
+                        </div> */}
                         {/* <div className={styles.items}>
                     <div className={styles.itemName}>Distance:</div>
                     <div className={styles.itemValue}>200 m</div>
                   </div> */}
                         <div className={styles.items}>
                           <div className={styles.itemName}>Estimated Time:</div>
-                          <div className={styles.itemValue}>5 m</div>
+                          {allBusLocation.map((location) => {
+                            if (
+                              location.registration_no === bus.registration_no
+                            ) {
+                              return (
+                                <div className={styles.itemValue}>
+                                  {location.estimated_time ||
+                                    "Time is calculating..."}{" "}
+                                  m
+                                </div>
+                              );
+                            } else {
+                              <div>Location is updating.....</div>;
+                            }
+                          })}
                         </div>
                         <div className={styles.items}>
                           <div className={styles.itemName}>Live Location:</div>
@@ -373,7 +426,7 @@ function BasicTimeline() {
                           })}
                         </div>
                         <div className={styles.items}>
-                          <div className={styles.itemName}>Total Seats:</div>
+                          <div className={styles.itemName}>Total Seats : </div>
                           <div className={styles.itemValue}>40</div>
                         </div>
                         <div className={styles.items}>
@@ -550,6 +603,42 @@ function BasicTimeline() {
                     </div>
                   </TimelineContent>
                 </TimelineItem>
+                <TimelineItem>
+                  <TimelineSeparator>
+                    <TimelineDot />
+                    {/* <TimelineConnector style={{ height: "4rem" }} /> */}
+                  </TimelineSeparator>
+                  <TimelineContent color="textSecondary">
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        marginTop: "-.3rem",
+                      }}
+                    >
+                      {allBusRoutes.map((route) => {
+                        if (route.registration_no === student) {
+                          return (
+                            <div
+                              key={route._id}
+                              style={{
+                                fontSize: "20px",
+                                color: "black",
+                                fontWeight: "750",
+                              }}
+                            >
+                              {route.area4}
+                            </div>
+                          );
+                        } else {
+                          <div>None bus has been assigned this route</div>;
+                        }
+                      })}
+                      <div>6:45 am</div>
+                    </div>
+                  </TimelineContent>
+                </TimelineItem>
+
                 {/* <TimelineItem>
                     <TimelineSeparator>
                       <TimelineDot />
@@ -585,7 +674,7 @@ function BasicTimeline() {
                   {/* {getTextColorClassName("Low")} */}
                 </div>
                 <div className={styles.busDetails}>
-                  <div className={styles.items}>
+                  {/* <div className={styles.items}>
                     <div className={styles.itemName}>Average Speed:</div>
                     {allBusLocation.map((location) => {
                       if (location.registration_no === student) {
@@ -598,14 +687,27 @@ function BasicTimeline() {
                         <div>Location is updating.....</div>;
                       }
                     })}
-                  </div>
+                  </div> */}
                   {/* <div className={styles.items}>
                     <div className={styles.itemName}>Distance:</div>
                     <div className={styles.itemValue}>200 m</div>
                   </div> */}
                   <div className={styles.items}>
                     <div className={styles.itemName}>Estimated Time:</div>
-                    <div className={styles.itemValue}>5 m</div>
+                    {allBusLocation.map((location) => {
+                      if (location.registration_no === student) {
+                        return (
+                          <div className={styles.itemValue}>
+                            {/* {addresses[location.registration_no] ||
+                              "Address is updating..."} */}
+                            {location.estimated_time ||
+                              "Address is updating..."}
+                          </div>
+                        );
+                      } else {
+                        <div>Location is updating.....</div>;
+                      }
+                    })}
                   </div>
                   <div className={styles.items}>
                     <div className={styles.itemName}>Live Location:</div>
@@ -615,7 +717,7 @@ function BasicTimeline() {
                           <div className={styles.itemValue}>
                             {/* {addresses[location.registration_no] ||
                               "Address is updating..."} */}
-                                  {location.address || "Address is updating..."}
+                            {location.address || "Address is updating..."}
                           </div>
                         );
                       } else {

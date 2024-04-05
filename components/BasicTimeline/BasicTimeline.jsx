@@ -65,10 +65,25 @@ function BasicTimeline() {
       const busRoutes = await AllRoutesDetails();
       setAllBusRoutes(busRoutes);
 
+      // const busLocation = await AllBusLocationDetails();
+      // setAllBusLocation(busLocation);
+    };
+    fetchAllBusData();
+  }, []);
+
+  useEffect(() => {
+    const fetchAllBusLocationData = async () => {
       const busLocation = await AllBusLocationDetails();
       setAllBusLocation(busLocation);
     };
-    fetchAllBusData();
+
+    fetchAllBusLocationData();
+
+    const interval = setInterval(() => {
+      fetchAllBusLocationData();
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {

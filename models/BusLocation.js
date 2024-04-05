@@ -6,6 +6,7 @@ const busLocationSchema = new Schema({
     registration_no: String,
     longitude: Number,
     lattitude: Number,
+    address: String,
     speed: Number,
     time: String
 },{ collection: 'BusLocation' });

@@ -347,8 +347,9 @@ function BasicTimeline() {
                             ) {
                               return (
                                 <div className={styles.itemValue}>
-                                  {addresses[location.registration_no] ||
-                                    "Address is updating..."}
+                                  {/* {addresses[location.registration_no] ||
+                                    "Address is updating..."} */}
+                                  {location.address || "Address is updating..."}
                                 </div>
                               );
                             } else {
@@ -597,8 +598,9 @@ function BasicTimeline() {
                       if (location.registration_no === student) {
                         return (
                           <div className={styles.itemValue}>
-                            {addresses[location.registration_no] ||
-                              "Address is updating..."}
+                            {/* {addresses[location.registration_no] ||
+                              "Address is updating..."} */}
+                                  {location.address || "Address is updating..."}
                           </div>
                         );
                       } else {

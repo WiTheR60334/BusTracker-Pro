@@ -106,7 +106,7 @@ function BasicTimeline() {
         );
         const data = await response.json();
         updatedAddresses[registration_no] =
-          data.features[0].properties.formatted;
+          data.features[0].properties.address_line1;
       }
       setAddresses(updatedAddresses);
     };
@@ -347,7 +347,8 @@ function BasicTimeline() {
                             ) {
                               return (
                                 <div className={styles.itemValue}>
-                                   {addresses[location.registration_no] || "Address is updating..."}
+                                  {addresses[location.registration_no] ||
+                                    "Address is updating..."}
                                 </div>
                               );
                             } else {
@@ -596,7 +597,8 @@ function BasicTimeline() {
                       if (location.registration_no === student) {
                         return (
                           <div className={styles.itemValue}>
-                            {addresses[location.registration_no] || "Address is updating..."}
+                            {addresses[location.registration_no] ||
+                              "Address is updating..."}
                           </div>
                         );
                       } else {
